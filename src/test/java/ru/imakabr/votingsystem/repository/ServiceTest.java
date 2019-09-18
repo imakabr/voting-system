@@ -1,6 +1,6 @@
 package ru.imakabr.votingsystem.repository;
 
-import javassist.NotFoundException;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,8 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import ru.imakabr.votingsystem.TimingExtension;
 import ru.imakabr.votingsystem.model.Role;
 import ru.imakabr.votingsystem.model.User;
+import ru.imakabr.votingsystem.service.UserService;
+import ru.imakabr.votingsystem.util.exception.NotFoundException;
 
 
 import java.util.Collections;
@@ -21,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.imakabr.votingsystem.UserTestData.*;
 
 @SpringJUnitConfig(locations = {
-//        "classpath:spring/spring-app.xml",
+        "classpath:spring/spring-app.xml",
         "classpath:spring/spring-db.xml"
 })
 //@ExtendWith(SpringExtension.class)
@@ -30,65 +32,65 @@ import static ru.imakabr.votingsystem.UserTestData.*;
 class ServiceTest {
 
     @Autowired
-    protected CrudUserRepository userRepository;
+    protected UserService userService;
 
-//    @Test
-//    void create() throws Exception {
-//        User newUser = new User(null, "New", "new@gmail.com", "newPass", 1555, false, new Date(), Collections.singleton(Role.ROLE_USER));
-//        User created = userRepository.create(new User(newUser));
-//        newUser.setId(created.getId());
-//        assertMatch(created, newUser);
-//        assertMatch(userRepository.getAll(), ADMIN, newUser, USER);
-//    }
-//
-//    @Test
-//    void duplicateMailCreate() throws Exception {
-//        assertThrows(DataAccessException.class, () ->
-//                userRepository.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER)));
-//    }
+    @Test
+    void create() throws Exception {
+        User newUser = new User(null, "New", "new@gmail.com", "newPass",false, new Date(), Collections.singleton(Role.ROLE_USER));
+        User created = userService.create(new User(newUser));
+        newUser.setId(created.getId());
+        assertMatch(created, newUser);
+        assertMatch(userService.getAll(), ADMIN, newUser, USER);
+    }
+
+    @Test
+    void duplicateMailCreate() throws Exception {
+        assertThrows(DataAccessException.class, () ->
+                userService.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER)));
+    }
 
     @Test
     void delete() throws Exception {
-        userRepository.delete(USER_ID);
-        assertMatch(userRepository.getAll(), ADMIN);
+        userService.delete(USER_ID);
+        assertMatch(userService.getAll(), ADMIN);
     }
 
     @Test
     void deletedNotFound() throws Exception {
         assertThrows(NotFoundException.class, () ->
-                userRepository.delete(1));
+                userService.delete(1111));
     }
 
     @Test
     void get() throws Exception {
-        User user = userRepository.get(ADMIN_ID);
+        User user = userService.get(ADMIN_ID);
         assertMatch(user, ADMIN);
     }
 
     @Test
     void getNotFound() throws Exception {
         assertThrows(NotFoundException.class, () ->
-                userRepository.get(1));
+                userService.get(1));
     }
 
     @Test
     void getByEmail() throws Exception {
-        User user = userRepository.getByEmail("admin@gmail.com");
+        User user = userService.getByEmail("admin@gmail.com");
         assertMatch(user, ADMIN);
     }
 
-//    @Test
-//    void update() throws Exception {
-//        User updated = new User(USER);
-//        updated.setName("UpdatedName");
-//        updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
-//        userRepository.update(new User(updated));
-//        assertMatch(userRepository.get(USER_ID), updated);
-//    }
+    @Test
+    void update() throws Exception {
+        User updated = new User(USER);
+        updated.setName("UpdatedName");
+        updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
+        userService.update(new User(updated));
+        assertMatch(userService.get(USER_ID), updated);
+    }
 
     @Test
     void getAll() throws Exception {
-        List<User> all = userRepository.getAll();
+        List<User> all = userService.getAll();
         assertMatch(all, ADMIN, USER);
     }
 

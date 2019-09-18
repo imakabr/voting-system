@@ -12,24 +12,14 @@ import ru.imakabr.votingsystem.model.User;
 import java.util.List;
 
 @Transactional(readOnly = true)
-public interface CrudUserRepository extends JpaRepository<User, Integer> {
-
-    static final Sort SORT_NAME_EMAIL = new Sort(Sort.Direction.ASC, "name", "email");
+public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Transactional
     @Modifying
     @Query("DELETE FROM User u WHERE u.id=:id")
     int delete(@Param("id") int id);
 
-    default User get(int id) {
-        return findById(id).orElse(null);
-    }
-
-    default List<User> getAll() {
-        return findAll(SORT_NAME_EMAIL);
-    }
-
-        User getByEmail(String email);
+    User getByEmail(String email);
 
     //    https://stackoverflow.com/a/46013654/548473
     @EntityGraph(attributePaths = {"meals"}, type = EntityGraph.EntityGraphType.LOAD)
