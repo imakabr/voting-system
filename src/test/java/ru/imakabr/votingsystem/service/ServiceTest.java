@@ -1,4 +1,4 @@
-package ru.imakabr.votingsystem.repository;
+package ru.imakabr.votingsystem.service;
 
 
 import org.junit.jupiter.api.Test;
