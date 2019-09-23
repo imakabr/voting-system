@@ -65,7 +65,7 @@ public class RestaurantService {
 
     @Transactional
     public List<Restaurant> getAllByDate(LocalDateTime date) {
-        Filter filter = (Filter) entityManager.unwrap(Session.class).enableFilter("filterByDate");
+        Filter filter = entityManager.unwrap(Session.class).enableFilter("filterByDate");
         filter.setParameter("date_time", date);
         List<Restaurant> restaurants = repository.findAll();
         entityManager.unwrap(Session.class).disableFilter("filterByDate");

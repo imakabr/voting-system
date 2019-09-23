@@ -38,6 +38,10 @@ public class Restaurant extends AbstractNamedEntity {
         this.items = items;
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
+
     public Restaurant() {
     }
 
