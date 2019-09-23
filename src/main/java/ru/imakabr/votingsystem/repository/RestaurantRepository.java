@@ -9,14 +9,17 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.model.User;
 
+import java.util.List;
+
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
 
-//    @Transactional
-//    @Modifying
-//    @Query("DELETE FROM Restaurant u WHERE u.id=:id")
-//    int delete(@Param("id") int id);
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Restaurant r WHERE r.id=:id")
+    int delete(@Param("id") int id);
 
-    //    https://stackoverflow.com/a/46013654/548473
+
+//        https://stackoverflow.com/a/46013654/548473
 //    @EntityGraph(attributePaths = {"menus"}, type = EntityGraph.EntityGraphType.LOAD)
 //    @Query("SELECT u FROM Restaurant u WHERE u.id=?1")
 //    User getWithMenus(int id);

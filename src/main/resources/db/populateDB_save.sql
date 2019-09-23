@@ -1,17 +1,13 @@
-DELETE
-FROM user_roles;
-DELETE
-FROM users;
+DELETE FROM user_roles;
+DELETE FROM users;
 -- DELETE
 -- FROM MENUS;
-DELETE
-FROM ITEMS;
+DELETE FROM ITEMS_TEST;
 -- DELETE
 -- FROM ITEMS;
 -- DELETE
 -- FROM RESTAURANTS;
-DELETE
-FROM RESTAURANTS;
+DELETE FROM RESTAURANTS_TEST;
 
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 -- ALTER SEQUENCE RESTAURANT_SEQ RESTART WITH 100000;
@@ -34,11 +30,12 @@ VALUES ('ROLE_USER', 100000),
 --        ('ХАЧАПУРИ И ВИНО'), /* 100002 */
 --        ('KWAKINN'); /* 100003 */
 
-INSERT INTO RESTAURANTS (NAME)
+INSERT INTO RESTAURANTS_TEST (NAME)
 VALUES ('TOKYO-CITY'), /* 100002 */
        ('KETCH-UP'), /* 100003 */
        ('ХАЧАПУРИ И ВИНО'), /* 100004 */
-       ('KWAKINN'); /* 100005 */
+       ('KWAKINN');
+/* 100005 */
 
 -- INSERT INTO ITEMS (NAME, PRICE)
 -- VALUES ('beer', 250), /* 100000 */
@@ -61,7 +58,7 @@ VALUES ('TOKYO-CITY'), /* 100002 */
 --        (100002, 100000, '2019-09-30 10:00:00'),
 --        (100002, 100005, '2019-09-30 10:00:00');
 
-INSERT INTO ITEMS (rest_id, name, price, date_time)
+INSERT INTO ITEMS_TEST (rest_id, name, price, date_time)
 VALUES (100002, 'beer', 150, '2019-09-20 10:00:00'),
        (100002, 'wok', 200, '2019-09-20 10:00:00'),
        (100003, 'beer', 300, '2019-09-20 10:00:00'),
