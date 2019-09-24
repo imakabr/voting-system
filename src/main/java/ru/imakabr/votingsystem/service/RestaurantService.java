@@ -72,6 +72,10 @@ public class RestaurantService {
         return restaurants;
     }
 
+    public Restaurant getWithVotes(int id) {
+        return checkNotFoundWithId(repository.getWithVotes(id), id);
+    }
+
 //    public User getWithMenus(int id) {
 //        return checkNotFoundWithId(repository.getWithMenus(id), id);
 //    }

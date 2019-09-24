@@ -21,7 +21,7 @@ public class UserTestData {
     public static final List<User> USERS = List.of(USER, ADMIN);
 
     public static void assertMatch(User actual, User expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "meals");
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "meals", "votes");
     }
 
     public static void assertMatch(Iterable<User> actual, User... expected) {

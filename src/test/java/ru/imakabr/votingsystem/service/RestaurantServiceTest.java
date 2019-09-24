@@ -3,7 +3,10 @@ package ru.imakabr.votingsystem.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.imakabr.votingsystem.ItemTestData;
+import ru.imakabr.votingsystem.UserTestData;
+import ru.imakabr.votingsystem.VoteTestData;
 import ru.imakabr.votingsystem.model.Restaurant;
+import ru.imakabr.votingsystem.model.Vote;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +24,14 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         Restaurant expected = new Restaurant(TOKYO_CITY);
         expected.setItems(ItemTestData.ITEMS_FOR_TOKYO_ALL);
         assertMatch(actual, expected);
+    }
+
+    @Test
+    void getWithVotes() throws Exception {
+        Restaurant actual = restaurantService.getWithVotes(TOKYO_CITY_ID);
+        Vote vote = actual.getVotes().get(0);
+        UserTestData.assertMatch(vote.getUser(), UserTestData.USER);
+        assertMatch(vote.getRestaurant(), TOKYO_CITY);
     }
 
 //    @Test

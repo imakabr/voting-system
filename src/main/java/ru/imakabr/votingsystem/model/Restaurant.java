@@ -34,12 +34,23 @@ public class Restaurant extends AbstractNamedEntity {
 //    @JsonIgnore
     protected List<Item> items;
 
+    @OneToMany(mappedBy = "restaurant")
+    protected List<Vote> votes;
+
     public void setItems(List<Item> items) {
         this.items = items;
     }
 
     public List<Item> getItems() {
         return items;
+    }
+
+    public List<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
     }
 
     public Restaurant() {
@@ -49,13 +60,13 @@ public class Restaurant extends AbstractNamedEntity {
         super(id, name);
     }
 
+    public Restaurant(Restaurant restaurant) {
+        super(restaurant.id, restaurant.name);
+    }
+
     public Restaurant(int id, String name, List<Item> items) {
         super(id, name);
         this.items = items;
-    }
-
-    public Restaurant(Restaurant restaurant) {
-        super(restaurant.id, restaurant.name);
     }
 
 }

@@ -11,12 +11,17 @@ import ru.imakabr.votingsystem.model.User;
 
 import java.util.List;
 
+@Transactional(readOnly = true)
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
 
     @Transactional
     @Modifying
     @Query("DELETE FROM Restaurant r WHERE r.id=:id")
     int delete(@Param("id") int id);
+
+    @EntityGraph(attributePaths = {"votes"}, type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT r FROM Restaurant r WHERE r.id=?1")
+    Restaurant getWithVotes(int id);
 
 
 //        https://stackoverflow.com/a/46013654/548473
