@@ -4,6 +4,7 @@ import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -45,15 +46,6 @@ public class RestaurantService {
         return checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
 
-    @Transactional
-    public Restaurant getByDate(int id, LocalDateTime date) {
-        Filter filter = entityManager.unwrap(Session.class).enableFilter("filterByDate");
-        filter.setParameter("date_time", date);
-        Restaurant restaurant = checkNotFoundWithId(repository.findById(id).orElse(null), id);
-        entityManager.unwrap(Session.class).disableFilter("filterByDate");
-        return restaurant;
-    }
-
     public List<Restaurant> getAll() {
         return repository.findAll(SORT_NAME);
     }
@@ -72,11 +64,16 @@ public class RestaurantService {
         return restaurants;
     }
 
+    public List<Restaurant> getAllWithItemsByDate(LocalDateTime dateTime) {
+        return repository.getAllWithItemsByDate(dateTime);
+    }
+
     public Restaurant getWithVotes(int id) {
         return checkNotFoundWithId(repository.getWithVotes(id), id);
     }
 
-//    public User getWithMenus(int id) {
-//        return checkNotFoundWithId(repository.getWithMenus(id), id);
-//    }
+    public Restaurant getWithItems(int id) {
+        return checkNotFoundWithId(repository.getWithItems(id), id);
+    }
+
 }

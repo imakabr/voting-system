@@ -24,17 +24,17 @@ public class Restaurant extends AbstractNamedEntity {
     @Filters({
             @Filter(name = "filterByDate", condition = ":date_time = date_time")
     })
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "rest_id",
             nullable = false
     )
-    @OrderBy("date_time, name asc")
+//    @OrderBy("date_time, name asc")
     @BatchSize(size = 200)
 //    @JsonIgnore
     protected List<Item> items;
 
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     protected List<Vote> votes;
 
     public void setItems(List<Item> items) {
@@ -68,5 +68,6 @@ public class Restaurant extends AbstractNamedEntity {
         super(id, name);
         this.items = items;
     }
+
 
 }

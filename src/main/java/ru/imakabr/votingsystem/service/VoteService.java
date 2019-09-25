@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.model.Vote;
 import ru.imakabr.votingsystem.repository.UserRepository;
@@ -35,6 +36,14 @@ public class VoteService {
 
     public List<Vote> getAll() {
         return repository.findAll(SORT_NAME_EMAIL);
+    }
+
+    public List<Restaurant> getAllRestaurantsByUserId(int id) {
+        return repository.getAllRestaurantsByUserId(id);
+    }
+
+    public List<User> getAllUsersByRestaurantId(int id) {
+        return repository.getAllUsersByRestaurantId(id);
     }
 
 //    public void update(Vote vote) {

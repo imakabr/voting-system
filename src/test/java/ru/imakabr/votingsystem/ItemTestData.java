@@ -22,9 +22,9 @@ public class ItemTestData {
 
 
     public static final List<Item> ITEMS_FOR_TOKYO_ALL = List.of(
+            new Item(100009, "beer", 150, LocalDateTime.of(2019, 9, 21, 10, 0)),
             new Item(100006, "beer", 150, LocalDateTime.of(2019, 9, 20, 10, 0)),
-            new Item(100007, "wok", 200, LocalDateTime.of(2019, 9, 20, 10, 0)),
-            new Item(100009, "beer", 150, LocalDateTime.of(2019, 9, 21, 10, 0))
+            new Item(100007, "wok", 200, LocalDateTime.of(2019, 9, 20, 10, 0))
     );
 
     public static final List<Item> ITEMS_FOR_TOKYO_20_09 = List.of(

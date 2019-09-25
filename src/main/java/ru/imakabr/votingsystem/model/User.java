@@ -1,6 +1,8 @@
 package ru.imakabr.votingsystem.model;
 
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -46,11 +48,12 @@ public class User extends AbstractNamedEntity {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
-//    @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 200)
     private Set<Role> roles;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+
+    //@Fetch(FetchMode.SUBSELECT)
     protected List<Vote> votes;
 
     public List<Vote> getVotes() {
@@ -129,6 +132,7 @@ public class User extends AbstractNamedEntity {
                 ", name=" + name +
                 ", enabled=" + enabled +
                 ", roles=" + roles +
+                ", votes=" + votes +
                 '}';
     }
 }

@@ -14,7 +14,7 @@ import static ru.imakabr.votingsystem.TestUtil.readListFromJsonMvcResult;
 
 public class VoteTestData {
 
-    public static final Vote VOTE_FROM_USER_FOR_TOKYO_20_09 = new Vote(UserTestData.USER, RestaurantTestData.TOKYO_CITY, LocalDateTime.of(2019, 9, 20, 10, 0));
+    public static final Vote VOTE_FROM_USER_FOR_TOKYO_20_09 = new Vote(100011, UserTestData.USER, RestaurantTestData.TOKYO_CITY, LocalDateTime.of(2019, 9, 20, 10, 0));
 
     public static void assertMatch(Vote actual, Vote expected) {
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);

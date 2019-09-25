@@ -24,10 +24,10 @@ public class RestaurantTestData {
     public static final Restaurant KWAKINN = new Restaurant(KWAKINN_ID, "KWAKINN");
 
 
-    public static final List<Restaurant> RESTAURANTS = List.of(TOKYO_CITY, KETCH_UP);
+    public static final List<Restaurant> RESTAURANTS = List.of(KETCH_UP, KWAKINN, TOKYO_CITY, HACHAPURI_AND_WINE);
 
     public static void assertMatch(Restaurant actual, Restaurant expected) {
-        assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);
+        assertThat(actual).isEqualToIgnoringGivenFields(expected,  "items", "votes");
     }
 
     public static void assertMatch(Iterable<Restaurant> actual, Restaurant... expected) {
@@ -35,7 +35,7 @@ public class RestaurantTestData {
     }
 
     public static void assertMatch(Iterable<Restaurant> actual, Iterable<Restaurant> expected) {
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("items", "votes").isEqualTo(expected);
     }
 
     public static ResultMatcher contentJson(Restaurant... expected) {

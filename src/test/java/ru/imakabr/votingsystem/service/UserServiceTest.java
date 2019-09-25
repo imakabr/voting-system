@@ -3,6 +3,8 @@ package ru.imakabr.votingsystem.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import ru.imakabr.votingsystem.RestaurantTestData;
+import ru.imakabr.votingsystem.VoteTestData;
 import ru.imakabr.votingsystem.model.Role;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.util.exception.NotFoundException;
@@ -61,6 +63,14 @@ public class UserServiceTest extends AbstractServiceTest {
     void getByEmail() throws Exception {
         User user = userService.getByEmail("admin@gmail.com");
         assertMatch(user, ADMIN);
+    }
+
+    @Test
+    void getWithVotes() throws Exception {
+        User user = userService.getWithVotes(USER_ID);
+        assertMatch(user, USER);
+        VoteTestData.assertMatch(user.getVotes().get(0), VoteTestData.VOTE_FROM_USER_FOR_TOKYO_20_09);
+        RestaurantTestData.assertMatch(user.getVotes().get(0).getRestaurant(), RestaurantTestData.TOKYO_CITY);
     }
 
     @Test

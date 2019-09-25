@@ -6,6 +6,7 @@ import ru.imakabr.votingsystem.ItemTestData;
 import ru.imakabr.votingsystem.UserTestData;
 import ru.imakabr.votingsystem.VoteTestData;
 import ru.imakabr.votingsystem.model.Restaurant;
+import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.model.Vote;
 
 import java.time.LocalDateTime;
@@ -21,9 +22,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     void get() throws Exception {
         Restaurant actual = restaurantService.get(TOKYO_CITY_ID);
-        Restaurant expected = new Restaurant(TOKYO_CITY);
-        expected.setItems(ItemTestData.ITEMS_FOR_TOKYO_ALL);
-        assertMatch(actual, expected);
+        assertMatch(actual, TOKYO_CITY);
     }
 
     @Test
@@ -34,13 +33,12 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         assertMatch(vote.getRestaurant(), TOKYO_CITY);
     }
 
-//    @Test
-//    void getByDate() {
-//        Restaurant actual = restaurantService.getByDate(TOKYO_CITY_ID, LocalDateTime.of(2019, 9, 21, 10, 0));
-//        Restaurant expected = new Restaurant(TOKYO_CITY);
-//        expected.setItems(ItemTestData.ITEMS_FOR_TOKYO_21_09);
-//        assertMatch(actual, expected);
-//    }
+    @Test
+    void getWithItems() throws Exception {
+        Restaurant actual = restaurantService.getWithItems(TOKYO_CITY_ID);
+        assertMatch(actual, TOKYO_CITY);
+        ItemTestData.assertMatch(actual.getItems(), ItemTestData.ITEMS_FOR_TOKYO_ALL);
+    }
 
     @Test
     void getAllByDate() {
@@ -51,9 +49,17 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    void getAllWithItemsByDate() {
+        List<Restaurant> actual = restaurantService.getAllWithItemsByDate(LocalDateTime.of(2019, 9, 20, 10, 0));
+        ItemTestData.assertMatch(actual.get(0).getItems(), ItemTestData.ITEMS_FOR_TOKYO_20_09);
+        ItemTestData.assertMatch(actual.get(1).getItems(), ItemTestData.ITEMS_FOR_KETCHUP_20_09);
+        assertMatch(actual, TOKYO_CITY, KETCH_UP);
+    }
+
+    @Test
     void getAll() {
         List<Restaurant> actual = restaurantService.getAll();
-        assertMatch(actual, RESTAURANTS);
+        assertMatch(actual,  RESTAURANTS);
     }
 
 }
