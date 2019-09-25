@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.imakabr.votingsystem.ItemTestData;
 import ru.imakabr.votingsystem.RestaurantTestData;
 import ru.imakabr.votingsystem.UserTestData;
+import ru.imakabr.votingsystem.VoteTestData;
 import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.model.Vote;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static ru.imakabr.votingsystem.RestaurantTestData.*;
@@ -19,19 +21,34 @@ public class VoteServiceTest extends AbstractServiceTest {
     protected VoteService voteService;
 
     @Test
-    void get() throws Exception {
-
+    void create() throws Exception {
+        Vote newVote = new Vote(null, UserTestData.USER, TOKYO_CITY, LocalDateTime.of(2019, 9, 22, 10, 0));
+        Vote created = voteService.create(newVote);
+        newVote.setId(created.getId());
+        VoteTestData.assertMatch(created, newVote);
     }
 
     @Test
     void getAllRestaurantsByUserId() {
-        List<Restaurant> votes = voteService.getAllRestaurantsByUserId(UserTestData.USER_ID);
-        RestaurantTestData.assertMatch(votes, TOKYO_CITY, KETCH_UP);
+        List<Restaurant> restaurants = voteService.getAllRestaurantsByUserId(UserTestData.USER_ID);
+        RestaurantTestData.assertMatch(restaurants, TOKYO_CITY, KETCH_UP);
     }
 
     @Test
     void getAllUsersByRestaurantId() {
         List<User> users = voteService.getAllUsersByRestaurantId(TOKYO_CITY_ID);
-        UserTestData.assertMatch(users, UserTestData.USER);
+        UserTestData.assertMatch(users, UserTestData.USER, UserTestData.ADMIN);
+    }
+
+    @Test
+    void getRestaurantByUserIdAndDateTime() {
+        Restaurant restaurant = voteService.getRestaurantByUserIdAndDateTime(UserTestData.USER_ID, LocalDateTime.of(2019, 9, 20, 10, 0));
+        RestaurantTestData.assertMatch(restaurant, TOKYO_CITY);
+    }
+
+    @Test
+    void getAllUsersByRestaurantIdAndDateTime() {
+        List<User> users = voteService.getAllUsersByRestaurantIdAndDateTime(TOKYO_CITY_ID, LocalDateTime.of(2019, 9, 20, 10, 0));
+        UserTestData.assertMatch(users.get(0), UserTestData.USER);
     }
 }

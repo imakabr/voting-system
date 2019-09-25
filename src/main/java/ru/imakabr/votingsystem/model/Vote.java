@@ -48,13 +48,11 @@ public class Vote extends AbstractBaseEntity{
 
     @ManyToOne
     @JoinColumn(
-            name = "user_id",
-            insertable = false, updatable = false)
+            name = "user_id")
     protected User user;
     @ManyToOne
     @JoinColumn(
-            name = "rest_id",
-            insertable = false, updatable = false)
+            name = "rest_id")
     @BatchSize(size = 200)
     protected Restaurant restaurant;
 
@@ -66,10 +64,6 @@ public class Vote extends AbstractBaseEntity{
         this.user = user;
         this.restaurant = restaurant;
         this.dateTime = dateTime;
-//        this.id.userId = user.getId();
-//        this.id.restId = restaurant.getId();
-//        restaurant.getVotes().add(this);
-//        user.getVotes().add(this);
     }
 
     public LocalDateTime getDateTime() {
