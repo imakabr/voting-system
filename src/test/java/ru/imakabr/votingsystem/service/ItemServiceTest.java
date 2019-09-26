@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static ru.imakabr.votingsystem.ItemTestData.*;
+import static ru.imakabr.votingsystem.RestaurantTestData.TOKYO_CITY;
 import static ru.imakabr.votingsystem.UserTestData.*;
 
 public class ItemServiceTest extends AbstractServiceTest {
@@ -27,11 +28,17 @@ public class ItemServiceTest extends AbstractServiceTest {
 
     @Test
     void update() throws Exception {
-        Item updated = new Item(null,  RestaurantTestData.TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 21, 10, 0));
+        Item updated = new Item(ITEM1);
         updated.setPrice(200);
         itemService.update(updated);
         Integer id = updated.getId();
-        assertMatch(new Item(id,  RestaurantTestData.TOKYO_CITY, "beer", 200, LocalDateTime.of(2019, 9, 21, 10, 0)), updated);
+        assertMatch(itemService.get(id), updated);
+    }
+
+    @Test
+    void get() throws Exception {
+        Item actual = itemService.get(ITEM1.getId());
+        assertMatch(actual, ITEM1);
     }
 
     @Test

@@ -38,9 +38,9 @@ public class RestaurantService {
         return repository.save(restaurant);
     }
 
-//    public void delete(int id) {
-//        checkNotFoundWithId(repository.delete(id) != 0, id);
-//    }
+    public void delete(int id) {
+        checkNotFoundWithId(repository.delete(id) != 0, id);
+    }
 
     public Restaurant get(int id) {
         return checkNotFoundWithId(repository.findById(id).orElse(null), id);

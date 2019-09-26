@@ -38,10 +38,11 @@ public class Item extends AbstractNamedEntity{
         this.dateTime = dateTime;
     }
 
-    public Item(Integer id, Item item) {
-        super(id, item.name);
-        this.price = price;
-        this.dateTime = dateTime;
+    public Item(Item item) {
+        super(item.id, item.name);
+        this.price = item.price;
+        this.dateTime = item.dateTime;
+        this.restaurant = item.restaurant;
     }
 
     public int getPrice() {
