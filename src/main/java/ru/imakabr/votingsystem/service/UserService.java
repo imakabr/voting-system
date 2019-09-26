@@ -36,7 +36,8 @@ public class UserService {
     }
 
     public User get(int id) {
-        return checkNotFoundWithId(repository.findById(id).orElse(null), id);
+        //return checkNotFoundWithId(repository.findById(id).orElse(null), id);
+        return checkNotFoundWithId(repository.findById(id), id);
     }
 
     public User getByEmail(String email) {

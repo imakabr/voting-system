@@ -32,6 +32,11 @@ public class VoteService {
         return repository.save(vote);
     }
 
+    public void update(Vote vote) {
+        Assert.notNull(vote, "vote must not be null");
+        checkNotFoundWithId(repository.save(vote), vote.getId());
+    }
+
     public Vote get(int id) {
         return checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
@@ -56,8 +61,4 @@ public class VoteService {
         return repository.getAllUsersByRestaurantIdAndDateTime(RestId, dateTime);
     }
 
-//    public void update(Vote vote) {
-//        Assert.notNull(vote, "vote must not be null");
-//        checkNotFoundWithId(repository.save(vote), vote.getId());
-//    }
 }

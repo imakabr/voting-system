@@ -7,13 +7,16 @@ import ru.imakabr.votingsystem.RestaurantTestData;
 import ru.imakabr.votingsystem.UserTestData;
 import ru.imakabr.votingsystem.VoteTestData;
 import ru.imakabr.votingsystem.model.Restaurant;
+import ru.imakabr.votingsystem.model.Role;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.model.Vote;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 import static ru.imakabr.votingsystem.RestaurantTestData.*;
+import static ru.imakabr.votingsystem.UserTestData.*;
 
 public class VoteServiceTest extends AbstractServiceTest {
 
@@ -26,6 +29,14 @@ public class VoteServiceTest extends AbstractServiceTest {
         Vote created = voteService.create(newVote);
         newVote.setId(created.getId());
         VoteTestData.assertMatch(created, newVote);
+    }
+
+    @Test
+    void update() throws Exception {
+        Vote updated = new Vote(100011, UserTestData.USER, TOKYO_CITY, LocalDateTime.of(2019, 9, 20, 10, 0));
+        updated.setRestaurant(KWAKINN);
+        voteService.update(updated);
+        assertMatch(voteService.getRestaurantByUserIdAndDateTime(USER_ID, LocalDateTime.of(2019, 9, 20, 10, 0)), KWAKINN);
     }
 
     @Test

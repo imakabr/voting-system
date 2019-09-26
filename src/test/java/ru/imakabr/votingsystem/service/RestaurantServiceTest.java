@@ -5,14 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.imakabr.votingsystem.ItemTestData;
 import ru.imakabr.votingsystem.UserTestData;
 import ru.imakabr.votingsystem.VoteTestData;
-import ru.imakabr.votingsystem.model.Restaurant;
-import ru.imakabr.votingsystem.model.User;
-import ru.imakabr.votingsystem.model.Vote;
+import ru.imakabr.votingsystem.model.*;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import static ru.imakabr.votingsystem.RestaurantTestData.*;
+import static ru.imakabr.votingsystem.UserTestData.*;
 
 public class RestaurantServiceTest extends AbstractServiceTest {
 
@@ -23,6 +24,15 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     void get() throws Exception {
         Restaurant actual = restaurantService.get(TOKYO_CITY_ID);
         assertMatch(actual, TOKYO_CITY);
+    }
+
+    @Test
+    void create() throws Exception {
+        Restaurant newRest = new Restaurant(null, "Rock Pub");
+        Restaurant created = restaurantService.create(newRest);
+        newRest.setId(created.getId());
+        assertMatch(created, newRest);
+        assertMatch(restaurantService.getAll(), KETCH_UP, KWAKINN, newRest, TOKYO_CITY, HACHAPURI_AND_WINE);
     }
 
     @Test

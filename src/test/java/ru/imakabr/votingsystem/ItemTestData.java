@@ -10,38 +10,47 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static ru.imakabr.votingsystem.TestUtil.readFromJsonMvcResult;
 import static ru.imakabr.votingsystem.TestUtil.readListFromJsonMvcResult;
+import static ru.imakabr.votingsystem.RestaurantTestData.*;
 import static ru.imakabr.votingsystem.model.AbstractBaseEntity.START_SEQ;
 
 public class ItemTestData {
     public static final int START_ITEM_ID = START_SEQ + 6;
 
-    public static final Item BEER_20_09 = new Item(100006, "beer", 150, LocalDateTime.of(2019, 9, 20, 10, 0));
-    public static final Item BEER_21_09 = new Item(100006, "beer", 150, LocalDateTime.of(2019, 9, 21, 10, 0));
-    public static final Item WOK = new Item(100007, "wok", 200, LocalDateTime.of(2019, 9, 20, 10, 0));
-    public static final Item SALAD = new Item(100007, "wok", 200, LocalDateTime.of(2019, 9, 20, 10, 0));
+    public static final Item ITEM1 = new Item(100006, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 20, 10, 0));
+    public static final Item ITEM2 = new Item(100007, TOKYO_CITY, "wok", 200, LocalDateTime.of(2019, 9, 20, 10, 0));
+    public static final Item ITEM3 = new Item(100008, KETCH_UP, "beer", 300, LocalDateTime.of(2019, 9, 20, 10, 0));
+    public static final Item ITEM4 = new Item(100009, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 21, 10, 0));
+    public static final Item ITEM5 = new Item(100010, KETCH_UP, "salad", 200, LocalDateTime.of(2019, 9, 21, 10, 0));
 
+    public static final List<Item> ALL_ITEMS = List.of(
+            new Item(100006, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 20, 10, 0)),
+            new Item(100007, TOKYO_CITY, "wok", 200, LocalDateTime.of(2019, 9, 20, 10, 0)),
+            new Item(100008, KETCH_UP, "beer", 300, LocalDateTime.of(2019, 9, 20, 10, 0)),
+            new Item(100009, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 21, 10, 0)),
+            new Item(100010, KETCH_UP, "salad", 200, LocalDateTime.of(2019, 9, 21, 10, 0))
+    );
 
     public static final List<Item> ITEMS_FOR_TOKYO_ALL = List.of(
-            new Item(100009, "beer", 150, LocalDateTime.of(2019, 9, 21, 10, 0)),
-            new Item(100006, "beer", 150, LocalDateTime.of(2019, 9, 20, 10, 0)),
-            new Item(100007, "wok", 200, LocalDateTime.of(2019, 9, 20, 10, 0))
+            new Item(100009, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 21, 10, 0)),
+            new Item(100006, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 20, 10, 0)),
+            new Item(100007, TOKYO_CITY, "wok", 200, LocalDateTime.of(2019, 9, 20, 10, 0))
     );
 
     public static final List<Item> ITEMS_FOR_TOKYO_20_09 = List.of(
-            new Item(100006, "beer", 150, LocalDateTime.of(2019, 9, 20, 10, 0)),
-            new Item(100007, "wok", 200, LocalDateTime.of(2019, 9, 20, 10, 0))
+            new Item(100006, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 20, 10, 0)),
+            new Item(100007, TOKYO_CITY, "wok", 200, LocalDateTime.of(2019, 9, 20, 10, 0))
     );
 
     public static final List<Item> ITEMS_FOR_TOKYO_21_09 = List.of(
-            new Item(100009, "beer", 150, LocalDateTime.of(2019, 9, 21, 10, 0))
+            new Item(100009, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 21, 10, 0))
     );
 
     public static final List<Item> ITEMS_FOR_KETCHUP_20_09 = List.of(
-            new Item(100008, "beer", 300, LocalDateTime.of(2019, 9, 20, 10, 0))
+            new Item(100008, KETCH_UP, "beer", 300, LocalDateTime.of(2019, 9, 20, 10, 0))
     );
 
     public static void assertMatch(Item actual, Item expected) {
-        assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "restaurant");
     }
 
     public static void assertMatch(Iterable<Item> actual, Item... expected) {
@@ -49,7 +58,7 @@ public class ItemTestData {
     }
 
     public static void assertMatch(Iterable<Item> actual, Iterable<Item> expected) {
-        assertThat(actual).usingFieldByFieldElementComparator().isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("restaurant").isEqualTo(expected);
     }
 
     public static ResultMatcher contentJson(Item... expected) {

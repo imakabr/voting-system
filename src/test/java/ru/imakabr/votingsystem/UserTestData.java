@@ -21,7 +21,7 @@ public class UserTestData {
     public static final List<User> USERS = List.of(USER, ADMIN);
 
     public static void assertMatch(User actual, User expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "meals", "votes");
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "meals", "votes", "roles");
     }
 
     public static void assertMatch(Iterable<User> actual, User... expected) {
@@ -29,7 +29,7 @@ public class UserTestData {
     }
 
     public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("registered", "meals", "votes").isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("registered", "meals", "votes", "roles").isEqualTo(expected);
     }
 
     public static ResultMatcher contentJson(User... expected) {

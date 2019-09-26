@@ -1,11 +1,9 @@
 package ru.imakabr.votingsystem.model;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Range;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,11 +22,18 @@ public class Item extends AbstractNamedEntity{
     @NotNull
     private LocalDateTime dateTime;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "rest_id")
+    @BatchSize(size = 200)
+    protected Restaurant restaurant;
+
     public Item() {
     }
 
-    public Item(Integer id, String name, int price, LocalDateTime dateTime) {
+    public Item(Integer id, Restaurant restaurant, String name, int price, LocalDateTime dateTime) {
         super(id, name);
+        this.restaurant = restaurant;
         this.price = price;
         this.dateTime = dateTime;
     }
@@ -59,6 +64,7 @@ public class Item extends AbstractNamedEntity{
     public String toString() {
         return "Item{" +
                 "id = " + id +
+                ", restaurant = " + restaurant +
                 ", name = " + name +
                 ", date = " + dateTime +
                 ", price = " + price +
