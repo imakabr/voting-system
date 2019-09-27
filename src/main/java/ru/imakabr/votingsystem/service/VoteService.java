@@ -18,7 +18,7 @@ import static ru.imakabr.votingsystem.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class VoteService {
-    private static final Sort SORT_NAME_EMAIL = new Sort(Sort.Direction.ASC, "name", "email");
+    private static final Sort SORT_NAME = new Sort(Sort.Direction.ASC, "name", "email");
 
     private final VoteRepository repository;
 
@@ -42,7 +42,7 @@ public class VoteService {
     }
 
     public List<Vote> getAll() {
-        return repository.findAll(SORT_NAME_EMAIL);
+        return repository.findAll(SORT_NAME);
     }
 
     public List<Restaurant> getAllRestaurantsByUserId(int UserId) {
@@ -53,8 +53,8 @@ public class VoteService {
         return repository.getAllUsersByRestaurantId(RestId);
     }
 
-    public Restaurant getRestaurantByUserIdAndDateTime(int id, LocalDateTime dateTime) {
-        return repository.getRestaurantByUserIdAndDateTime(id, dateTime);
+    public Restaurant getRestaurantByUserIdAndDateTime(int userId, LocalDateTime dateTime) {
+        return repository.getRestaurantByUserIdAndDateTime(userId, dateTime);
     }
 
     List<User> getAllUsersByRestaurantIdAndDateTime(int RestId, LocalDateTime dateTime) {

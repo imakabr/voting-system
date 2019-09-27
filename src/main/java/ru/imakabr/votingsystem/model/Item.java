@@ -1,5 +1,7 @@
 package ru.imakabr.votingsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Range;
 
@@ -20,13 +22,16 @@ public class Item extends AbstractNamedEntity{
 
     @Column(name = "date_time", nullable = false)
     @NotNull
+    @JsonIgnore
     private LocalDateTime dateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "rest_id")
     @BatchSize(size = 200)
-    protected Restaurant restaurant;
+//    @JsonIgnore
+    @JsonBackReference
+    private Restaurant restaurant;
 
     public Item() {
     }

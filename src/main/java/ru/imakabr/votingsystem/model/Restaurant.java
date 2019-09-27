@@ -1,5 +1,7 @@
 package ru.imakabr.votingsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
@@ -33,9 +35,11 @@ public class Restaurant extends AbstractNamedEntity {
 //    @OrderBy("date_time, name asc")
     @BatchSize(size = 200)
 //    @JsonIgnore
+    @JsonManagedReference
     protected List<Item> items;
 
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
+    @JsonIgnore
     protected List<Vote> votes;
 
     public void setItems(List<Item> items) {
