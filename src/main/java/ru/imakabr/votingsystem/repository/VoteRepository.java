@@ -1,5 +1,6 @@
 package ru.imakabr.votingsystem.repository;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +18,10 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
 
     @Query("SELECT v.restaurant FROM Vote v WHERE v.user.id=?1")
     List<Restaurant> getAllRestaurantsByUserId(int id);
+
+    @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.FETCH)
+    @Query("SELECT v FROM Vote v WHERE v.user.id=?1")
+    List<Vote> getAllVotesByUserId(int id);
 
     @Query("SELECT v.restaurant FROM Vote v WHERE v.user.id=?1 and v.dateTime=?2")
     Restaurant getRestaurantByUserIdAndDateTime(int id, LocalDateTime dateTime);

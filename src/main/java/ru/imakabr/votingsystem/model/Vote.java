@@ -46,11 +46,12 @@ public class Vote extends AbstractBaseEntity{
     @NotNull
     private LocalDateTime dateTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "user_id")
+    @BatchSize(size = 200)
     protected User user;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "rest_id")
     @BatchSize(size = 200)

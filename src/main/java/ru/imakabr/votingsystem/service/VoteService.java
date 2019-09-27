@@ -45,6 +45,10 @@ public class VoteService {
         return repository.findAll(SORT_NAME);
     }
 
+    public List<Vote> getAllVotesByUserId(int id) {
+        return repository.getAllVotesByUserId(id);
+    }
+
     public List<Restaurant> getAllRestaurantsByUserId(int UserId) {
         return repository.getAllRestaurantsByUserId(UserId);
     }
