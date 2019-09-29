@@ -17,9 +17,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.imakabr.votingsystem.UserTestData.*;
 import static ru.imakabr.votingsystem.TestUtil.readFromJson;
 
-class AdminRestControllerTest extends AbstractControllerTest {
+class AdminRestaurantRestControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = AdminRestController.REST_URL + '/';
+    private static final String REST_URL = AdminUserRestController.REST_URL + '/';
 
     @Test
     void testGet() throws Exception {

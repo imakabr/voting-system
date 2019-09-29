@@ -13,8 +13,8 @@ import java.util.List;
 import static ru.imakabr.votingsystem.util.ValidationUtil.checkNew;
 
 @RestController
-@RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminRestController extends AbstractUserController {
+@RequestMapping(value = AdminUserRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class AdminUserRestController extends AbstractUserController {
 
     public static final String REST_URL = "/rest/admin/users";
 

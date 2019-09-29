@@ -10,37 +10,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "votes")
 public class Vote extends AbstractBaseEntity{
-//    @Embeddable
-//    public static class Id implements Serializable {
-//        @Column(name = "user_id")
-//        protected Integer userId;
-//        @Column(name = "rest_id")
-//        protected Integer restId;
-//
-//        public Id() {
-//        }
-//
-//        public Id(Integer categoryId, Integer itemId) {
-//            this.userId = categoryId;
-//            this.restId = itemId;
-//        }
-//
-//        public boolean equals(Object o) {
-//            if (o != null && o instanceof Id) {
-//                Id that = (Id) o;
-//                return this.userId.equals(that.userId)
-//                        && this.restId.equals(that.restId);
-//            }
-//            return false;
-//        }
-//
-//        public int hashCode() {
-//            return userId.hashCode() + restId.hashCode();
-//        }
-//    }
-//
-//    @EmbeddedId
-//    protected Id id = new Id();
 
     @Column(name = "date_time", nullable = false)
     @NotNull
