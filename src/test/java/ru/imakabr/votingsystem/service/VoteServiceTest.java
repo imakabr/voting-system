@@ -34,7 +34,7 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     void update() throws Exception {
-        Vote updated = new Vote(100011, UserTestData.USER, TOKYO_CITY, LocalDateTime.of(2019, 9, 20, 10, 0));
+        Vote updated = new Vote(VOTE_ID, UserTestData.USER, TOKYO_CITY, LocalDateTime.of(2019, 9, 20, 10, 0));
         updated.setRestaurant(KWAKINN);
         voteService.update(updated);
         assertMatch(voteService.getRestaurantByUserIdAndDateTime(USER_ID, LocalDateTime.of(2019, 9, 20, 10, 0)), KWAKINN);

@@ -31,22 +31,22 @@ public class ItemTestData {
     );
 
     public static final List<Item> ITEMS_FOR_TOKYO_ALL = List.of(
-            new Item(100009, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 21, 10, 0)),
-            new Item(100006, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 20, 10, 0)),
-            new Item(100007, TOKYO_CITY, "wok", 200, LocalDateTime.of(2019, 9, 20, 10, 0))
+            new Item(100009, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 21, 10, 0)), //9
+            new Item(100006, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 20, 10, 0)), //6
+            new Item(100007, TOKYO_CITY, "wok", 200, LocalDateTime.of(2019, 9, 20, 10, 0))  //7
     );
 
     public static final List<Item> ITEMS_FOR_TOKYO_20_09 = List.of(
-            new Item(100006, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 20, 10, 0)),
-            new Item(100007, TOKYO_CITY, "wok", 200, LocalDateTime.of(2019, 9, 20, 10, 0))
+            new Item(100006, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 20, 10, 0)), //6
+            new Item(100007, TOKYO_CITY, "wok", 200, LocalDateTime.of(2019, 9, 20, 10, 0)) //7
     );
 
     public static final List<Item> ITEMS_FOR_TOKYO_21_09 = List.of(
-            new Item(100009, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 21, 10, 0))
+            new Item(100009, TOKYO_CITY, "beer", 150, LocalDateTime.of(2019, 9, 21, 10, 0)) //9
     );
 
     public static final List<Item> ITEMS_FOR_KETCHUP_20_09 = List.of(
-            new Item(100008, KETCH_UP, "beer", 300, LocalDateTime.of(2019, 9, 20, 10, 0))
+            new Item(100008, KETCH_UP, "beer", 300, LocalDateTime.of(2019, 9, 20, 10, 0))  //8
     );
 
     public static void assertMatch(Item actual, Item expected) {

@@ -11,11 +11,14 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static ru.imakabr.votingsystem.TestUtil.readFromJsonMvcResult;
 import static ru.imakabr.votingsystem.TestUtil.readListFromJsonMvcResult;
+import static ru.imakabr.votingsystem.model.Vote.START_SEQ;
 
 public class VoteTestData {
 
-    public static final Vote VOTE_FROM_USER_FOR_TOKYO_20_09 = new Vote(100011, UserTestData.USER, RestaurantTestData.TOKYO_CITY, LocalDateTime.of(2019, 9, 20, 10, 0));
-    public static final Vote VOTE_FROM_USER_FOR_KETCHUP_21_09 = new Vote(100012, UserTestData.USER, RestaurantTestData.KETCH_UP, LocalDateTime.of(2019, 9, 21, 10, 0));
+    public static final int VOTE_ID = START_SEQ;
+
+    public static final Vote VOTE_FROM_USER_FOR_TOKYO_20_09 = new Vote(VOTE_ID, UserTestData.USER, RestaurantTestData.TOKYO_CITY, LocalDateTime.of(2019, 9, 20, 10, 0));
+    public static final Vote VOTE_FROM_USER_FOR_KETCHUP_21_09 = new Vote(VOTE_ID+1, UserTestData.USER, RestaurantTestData.KETCH_UP, LocalDateTime.of(2019, 9, 21, 10, 0));
 
     public static void assertMatch(Vote actual, Vote expected) {
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);

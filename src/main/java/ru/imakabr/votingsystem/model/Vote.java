@@ -1,15 +1,25 @@
 package ru.imakabr.votingsystem.model;
 
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "votes")
-public class Vote extends AbstractBaseEntity{
+@Access(AccessType.FIELD)
+public class Vote {
+    public static final int START_SEQ = 100000;
+
+    @Id
+    @SequenceGenerator(name = "VOTE_SEQ", sequenceName = "VOTE_SEQ", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VOTE_SEQ")
+    protected Integer id;
 
     @Column(name = "date_time", nullable = false)
     @NotNull
@@ -20,6 +30,7 @@ public class Vote extends AbstractBaseEntity{
             name = "user_id")
     @BatchSize(size = 200)
     protected User user;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "rest_id")
@@ -34,6 +45,18 @@ public class Vote extends AbstractBaseEntity{
         this.user = user;
         this.restaurant = restaurant;
         this.dateTime = dateTime;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public boolean isNew() {
+        return this.id == null;
     }
 
     public LocalDateTime getDateTime() {
@@ -58,5 +81,22 @@ public class Vote extends AbstractBaseEntity{
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || !getClass().equals(Hibernate.getClass(o))) {
+            return false;
+        }
+        Vote that = (Vote) o;
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id == null ? 0 : id;
     }
 }
