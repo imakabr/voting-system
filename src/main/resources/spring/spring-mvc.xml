@@ -7,8 +7,17 @@
 
     <bean class="ru.imakabr.votingsystem.web.json.JacksonObjectMapper" id="objectMapper" factory-method="getMapper"/>
 
-    <mvc:annotation-driven>
-        <mvc:message-converters>
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatters">
+            <set>
+                <bean class="ru.imakabr.votingsystem.web.format.LocalTimeFormatter" />
+                <bean class="ru.imakabr.votingsystem.web.format.LocalDateFormatter" />
+            </set>
+        </property>
+    </bean>
+
+    <mvc:annotation-driven conversion-service="conversionService">
+        <mvc:message-converters >
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper" ref="objectMapper"/>
             </bean>

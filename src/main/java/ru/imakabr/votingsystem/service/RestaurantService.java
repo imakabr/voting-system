@@ -13,6 +13,7 @@ import ru.imakabr.votingsystem.repository.RestaurantRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class RestaurantService {
     }
 
     @Transactional
-    public List<Restaurant> getAllByDate(LocalDateTime date) {
+    public List<Restaurant> getAllByDate(LocalDate date) {
         Filter filter = entityManager.unwrap(Session.class).enableFilter("filterByDate");
         filter.setParameter("date_time", date);
         List<Restaurant> restaurants = repository.findAll();
@@ -64,8 +65,8 @@ public class RestaurantService {
         return restaurants;
     }
 
-    public List<Restaurant> getAllWithItemsByDate(LocalDateTime dateTime) {
-        return repository.getAllWithItemsByDate(dateTime);
+    public List<Restaurant> getAllWithItemsByDate(LocalDate date) {
+        return repository.getAllWithItemsByDate(date);
     }
 
     public Restaurant getWithVotes(int id) {

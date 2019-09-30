@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -36,7 +37,7 @@ public class Item {
     @Column(name = "date_time", nullable = false)
     @NotNull
     @JsonIgnore
-    private LocalDateTime dateTime;
+    private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -61,19 +62,19 @@ public class Item {
     public Item() {
     }
 
-    public Item(Integer id, Restaurant restaurant, String name, int price, LocalDateTime dateTime) {
+    public Item(Integer id, Restaurant restaurant, String name, int price, LocalDate date) {
         this.id = id;
         this.name = name;
         this.restaurant = restaurant;
         this.price = price;
-        this.dateTime = dateTime;
+        this.date = date;
     }
 
     public Item(Item item) {
         this.id = item.id;
         this.name = item.name;
         this.price = item.price;
-        this.dateTime = item.dateTime;
+        this.date = item.date;
         this.restaurant = item.restaurant;
     }
 
@@ -85,12 +86,12 @@ public class Item {
         this.price = price;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     @Override
@@ -116,7 +117,7 @@ public class Item {
                 "id = " + id +
                 ", restaurant = " + restaurant +
                 ", name = " + name +
-                ", date = " + dateTime +
+                ", date = " + date +
                 ", price = " + price +
                 '}';
     }

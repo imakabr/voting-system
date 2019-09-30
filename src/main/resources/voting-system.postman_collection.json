@@ -1,0 +1,122 @@
+{
+	"info": {
+		"_postman_id": "cae1c1bb-31ba-4697-a7e2-b84c6432df3f",
+		"name": "voting-system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/voting/rest/restaurants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/restaurants",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"restaurants"
+					]
+				},
+				"description": "(USER) restaurants with menu today"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/votes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/votes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"votes"
+					]
+				},
+				"description": "(USER) all made votes"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/restaurants/filter?date=2019-09-21",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/restaurants/filter?date=2019-09-21",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"restaurants",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2019-09-21"
+						}
+					]
+				},
+				"description": "(USER) restaurants with menu by filter on date"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/admin/restaurants/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/admin/restaurants/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"admin",
+						"restaurants",
+						""
+					]
+				},
+				"description": "(ADMIN) all restaurants in system"
+			},
+			"response": []
+		}
+	]
+}

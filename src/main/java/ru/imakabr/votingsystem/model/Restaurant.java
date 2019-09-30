@@ -17,7 +17,7 @@ import java.util.List;
 @NamedQueries(
         @NamedQuery(name = Restaurant.DELETE, query = "DELETE FROM Restaurant r WHERE r.id=:id")
 )
-@FilterDef(name = "filterByDate", parameters = {@ParamDef(name = "date_time", type = "java.time.LocalDateTime")})
+@FilterDef(name = "filterByDate", parameters = {@ParamDef(name = "date_time", type = "java.time.LocalDate")})
 @Entity
 @Table(name = "restaurants")
 public class Restaurant extends AbstractNamedEntity {

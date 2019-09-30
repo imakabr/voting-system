@@ -11,6 +11,7 @@ import ru.imakabr.votingsystem.model.Vote;
 import ru.imakabr.votingsystem.repository.UserRepository;
 import ru.imakabr.votingsystem.repository.VoteRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -57,12 +58,12 @@ public class VoteService {
         return repository.getAllUsersByRestaurantId(RestId);
     }
 
-    public Restaurant getRestaurantByUserIdAndDateTime(int userId, LocalDateTime dateTime) {
-        return repository.getRestaurantByUserIdAndDateTime(userId, dateTime);
+    public Restaurant getRestaurantByUserIdAndDate(int userId, LocalDate date) {
+        return repository.getRestaurantByUserIdAndDate(userId, date);
     }
 
-    List<User> getAllUsersByRestaurantIdAndDateTime(int RestId, LocalDateTime dateTime) {
-        return repository.getAllUsersByRestaurantIdAndDateTime(RestId, dateTime);
+    List<User> getAllUsersByRestaurantIdAndDate(int RestId, LocalDate date) {
+        return repository.getAllUsersByRestaurantIdAndDate(RestId, date);
     }
 
 }

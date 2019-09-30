@@ -29,7 +29,7 @@ public class AdminRestaurantRestController {
     protected VoteService voteService;
 
     @GetMapping
-    public List<Restaurant> get() {
+    public List<Restaurant> getAll() {
         return restaurantService.getAll();
     }
 

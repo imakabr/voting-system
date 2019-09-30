@@ -5,6 +5,7 @@ import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.model.Vote;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class VoteTestData {
 
     public static final int VOTE_ID = START_SEQ;
 
-    public static final Vote VOTE_FROM_USER_FOR_TOKYO_20_09 = new Vote(VOTE_ID, UserTestData.USER, RestaurantTestData.TOKYO_CITY, LocalDateTime.of(2019, 9, 20, 10, 0));
-    public static final Vote VOTE_FROM_USER_FOR_KETCHUP_21_09 = new Vote(VOTE_ID+1, UserTestData.USER, RestaurantTestData.KETCH_UP, LocalDateTime.of(2019, 9, 21, 10, 0));
+    public static final Vote VOTE_FROM_USER_FOR_TOKYO_20_09 = new Vote(VOTE_ID, UserTestData.USER, RestaurantTestData.TOKYO_CITY, LocalDate.of(2019, 9, 20));
+    public static final Vote VOTE_FROM_USER_FOR_KETCHUP_21_09 = new Vote(VOTE_ID+1, UserTestData.USER, RestaurantTestData.KETCH_UP, LocalDate.of(2019, 9, 21));
 
     public static void assertMatch(Vote actual, Vote expected) {
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);

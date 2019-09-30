@@ -6,6 +6,7 @@ import ru.imakabr.votingsystem.RestaurantTestData;
 import ru.imakabr.votingsystem.model.Item;
 import ru.imakabr.votingsystem.model.User;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class ItemServiceTest extends AbstractServiceTest {
 
     @Test
     void create() throws Exception {
-        Item newItem = new Item(null, RestaurantTestData.TOKYO_CITY, "vodka", 700, LocalDateTime.of(2019, 9, 22, 10, 0));
+        Item newItem = new Item(null, RestaurantTestData.TOKYO_CITY, "vodka", 700, LocalDate.of(2019, 9, 22));
         Item created = itemService.create(newItem);
         newItem.setId(created.getId());
         assertMatch(created, newItem);

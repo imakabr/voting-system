@@ -10,6 +10,7 @@ import ru.imakabr.votingsystem.model.Item;
 import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.model.User;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,8 +31,8 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     Restaurant getWithItems(int id);
 
     @EntityGraph(attributePaths = {"items", }, type = EntityGraph.EntityGraphType.FETCH)
-    @Query("SELECT r FROM Restaurant r JOIN r.items i on i.dateTime=:dateTime")
-    List<Restaurant> getAllWithItemsByDate(@Param("dateTime") LocalDateTime dateTime);
+    @Query("SELECT r FROM Restaurant r JOIN r.items i on i.date=:date")
+    List<Restaurant> getAllWithItemsByDate(@Param("date") LocalDate date);
 
     @EntityGraph(attributePaths = {"items"}, type = EntityGraph.EntityGraphType.FETCH)
     List<Restaurant> findAll();

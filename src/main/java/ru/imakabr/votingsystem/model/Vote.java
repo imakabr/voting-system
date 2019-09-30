@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,7 +24,7 @@ public class Vote {
 
     @Column(name = "date_time", nullable = false)
     @NotNull
-    private LocalDateTime dateTime;
+    private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -40,11 +41,11 @@ public class Vote {
     public Vote() {
     }
 
-    public Vote(Integer id, User user, Restaurant restaurant, LocalDateTime dateTime) {
+    public Vote(Integer id, User user, Restaurant restaurant, LocalDate date) {
         this.id = id;
         this.user = user;
         this.restaurant = restaurant;
-        this.dateTime = dateTime;
+        this.date = date;
     }
 
     public void setId(Integer id) {
@@ -59,12 +60,12 @@ public class Vote {
         return this.id == null;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate dateTime) {
+        this.date = date;
     }
 
     public User getUser() {

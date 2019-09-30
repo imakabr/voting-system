@@ -7,6 +7,7 @@ import ru.imakabr.votingsystem.UserTestData;
 import ru.imakabr.votingsystem.VoteTestData;
 import ru.imakabr.votingsystem.model.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
@@ -67,7 +68,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     void getAllByDate() {
-        List<Restaurant> actual = restaurantService.getAllByDate(LocalDateTime.of(2019, 9, 20, 10, 0));
+        List<Restaurant> actual = restaurantService.getAllByDate(LocalDate.of(2019, 9, 20));
         ItemTestData.assertMatch(actual.get(0).getItems(), ItemTestData.ITEMS_FOR_TOKYO_20_09);
         ItemTestData.assertMatch(actual.get(1).getItems(), ItemTestData.ITEMS_FOR_KETCHUP_20_09);
         assertMatch(actual, TOKYO_CITY, KETCH_UP, HACHAPURI_AND_WINE, KWAKINN);
@@ -75,7 +76,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     void getAllWithItemsByDate() {
-        List<Restaurant> actual = restaurantService.getAllWithItemsByDate(LocalDateTime.of(2019, 9, 20, 10, 0));
+        List<Restaurant> actual = restaurantService.getAllWithItemsByDate(LocalDate.of(2019, 9, 20));
         ItemTestData.assertMatch(actual.get(0).getItems(), ItemTestData.ITEMS_FOR_TOKYO_20_09);
         ItemTestData.assertMatch(actual.get(1).getItems(), ItemTestData.ITEMS_FOR_KETCHUP_20_09);
         assertMatch(actual, TOKYO_CITY, KETCH_UP);

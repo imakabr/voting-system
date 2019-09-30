@@ -11,6 +11,7 @@ import ru.imakabr.votingsystem.model.Role;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.model.Vote;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +27,7 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     void create() throws Exception {
-        Vote newVote = new Vote(null, UserTestData.USER, TOKYO_CITY, LocalDateTime.of(2019, 9, 22, 10, 0));
+        Vote newVote = new Vote(null, UserTestData.USER, TOKYO_CITY, LocalDate.of(2019, 9, 22));
         Vote created = voteService.create(newVote);
         newVote.setId(created.getId());
         VoteTestData.assertMatch(created, newVote);
@@ -34,10 +35,10 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     void update() throws Exception {
-        Vote updated = new Vote(VOTE_ID, UserTestData.USER, TOKYO_CITY, LocalDateTime.of(2019, 9, 20, 10, 0));
+        Vote updated = new Vote(VOTE_ID, UserTestData.USER, TOKYO_CITY, LocalDate.of(2019, 9, 20));
         updated.setRestaurant(KWAKINN);
         voteService.update(updated);
-        assertMatch(voteService.getRestaurantByUserIdAndDateTime(USER_ID, LocalDateTime.of(2019, 9, 20, 10, 0)), KWAKINN);
+        assertMatch(voteService.getRestaurantByUserIdAndDate(USER_ID, LocalDate.of(2019, 9, 20)), KWAKINN);
     }
 
     @Test
@@ -62,13 +63,13 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     void getRestaurantByUserIdAndDateTime() {
-        Restaurant restaurant = voteService.getRestaurantByUserIdAndDateTime(UserTestData.USER_ID, LocalDateTime.of(2019, 9, 20, 10, 0));
+        Restaurant restaurant = voteService.getRestaurantByUserIdAndDate(UserTestData.USER_ID, LocalDate.of(2019, 9, 20));
         RestaurantTestData.assertMatch(restaurant, TOKYO_CITY);
     }
 
     @Test
     void getAllUsersByRestaurantIdAndDateTime() {
-        List<User> users = voteService.getAllUsersByRestaurantIdAndDateTime(TOKYO_CITY_ID, LocalDateTime.of(2019, 9, 20, 10, 0));
+        List<User> users = voteService.getAllUsersByRestaurantIdAndDate(TOKYO_CITY_ID, LocalDate.of(2019, 9, 20));
         UserTestData.assertMatch(users.get(0), UserTestData.USER);
     }
 }
