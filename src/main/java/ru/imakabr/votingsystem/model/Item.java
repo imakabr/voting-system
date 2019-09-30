@@ -2,6 +2,7 @@ package ru.imakabr.votingsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Range;
 
@@ -10,11 +11,23 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
 @Table(name = "items")
-public class Item extends AbstractNamedEntity{
+@Access(AccessType.FIELD)
+public class Item {
+
+    public static final int START_SEQ = 100000;
+
+    @Id
+    @SequenceGenerator(name = "ITEM_SEQ", sequenceName = "ITEM_SEQ", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ITEM_SEQ")
+    protected Integer id;
+
+    @NotBlank
+    @Size(min = 2, max = 100)
+    @Column(name = "name", nullable = false)
+    protected String name;
 
     @Column(name = "price", nullable = false)
     @Range(min = 10, max = 500000)
@@ -33,18 +46,32 @@ public class Item extends AbstractNamedEntity{
     @JsonBackReference
     private Restaurant restaurant;
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public boolean isNew() {
+        return this.id == null;
+    }
+
     public Item() {
     }
 
     public Item(Integer id, Restaurant restaurant, String name, int price, LocalDateTime dateTime) {
-        super(id, name);
+        this.id = id;
+        this.name = name;
         this.restaurant = restaurant;
         this.price = price;
         this.dateTime = dateTime;
     }
 
     public Item(Item item) {
-        super(item.id, item.name);
+        this.id = item.id;
+        this.name = item.name;
         this.price = item.price;
         this.dateTime = item.dateTime;
         this.restaurant = item.restaurant;
@@ -64,6 +91,23 @@ public class Item extends AbstractNamedEntity{
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || !getClass().equals(Hibernate.getClass(o))) {
+            return false;
+        }
+        Item that = (Item) o;
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id == null ? 0 : id;
     }
 
     @Override
