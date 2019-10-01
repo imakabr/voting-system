@@ -1,5 +1,6 @@
 package ru.imakabr.votingsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.BatchSize;
 
@@ -30,6 +31,7 @@ public class Vote {
     @JoinColumn(
             name = "user_id")
     @BatchSize(size = 200)
+    @JsonIgnore
     protected User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -64,7 +66,7 @@ public class Vote {
         return date;
     }
 
-    public void setDate(LocalDate dateTime) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -100,4 +102,5 @@ public class Vote {
     public int hashCode() {
         return id == null ? 0 : id;
     }
+
 }

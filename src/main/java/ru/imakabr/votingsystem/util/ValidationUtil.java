@@ -2,6 +2,7 @@ package ru.imakabr.votingsystem.util;
 
 
 import ru.imakabr.votingsystem.model.AbstractBaseEntity;
+import ru.imakabr.votingsystem.model.Vote;
 import ru.imakabr.votingsystem.util.exception.NotFoundException;
 
 public class ValidationUtil {

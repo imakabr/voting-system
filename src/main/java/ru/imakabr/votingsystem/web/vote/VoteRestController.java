@@ -3,15 +3,20 @@ package ru.imakabr.votingsystem.web.vote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.model.Vote;
 import ru.imakabr.votingsystem.service.VoteService;
 import ru.imakabr.votingsystem.web.SecurityUtil;
 
+import java.net.URI;
 import java.util.List;
+
+import static ru.imakabr.votingsystem.util.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = VoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -27,5 +32,21 @@ public class VoteRestController {
     public List<Vote> getAll() {
         log.info("getAll");
         return voteService.getAllVotesByUserId(SecurityUtil.authUserId());
+    }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void save(@PathVariable int id) {
+        log.info("save");
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Vote> create(@RequestBody Restaurant restaurant) {
+        log.info("create vote");
+        Vote created = voteService.create(restaurant, SecurityUtil.authUserId());
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
     }
 }

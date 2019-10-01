@@ -2,18 +2,14 @@ package ru.imakabr.votingsystem.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.imakabr.votingsystem.ItemTestData;
 import ru.imakabr.votingsystem.RestaurantTestData;
 import ru.imakabr.votingsystem.UserTestData;
 import ru.imakabr.votingsystem.VoteTestData;
 import ru.imakabr.votingsystem.model.Restaurant;
-import ru.imakabr.votingsystem.model.Role;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.model.Vote;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 import static ru.imakabr.votingsystem.RestaurantTestData.*;
@@ -27,8 +23,8 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     void create() throws Exception {
-        Vote newVote = new Vote(null, UserTestData.USER, TOKYO_CITY, LocalDate.of(2019, 9, 22));
-        Vote created = voteService.create(newVote);
+        Vote newVote = new Vote(null, UserTestData.USER, TOKYO_CITY, LocalDate.now());
+        Vote created = voteService.create(TOKYO_CITY, USER_ID);
         newVote.setId(created.getId());
         VoteTestData.assertMatch(created, newVote);
     }

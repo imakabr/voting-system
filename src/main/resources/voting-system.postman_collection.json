@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cae1c1bb-31ba-4697-a7e2-b84c6432df3f",
+		"_postman_id": "8e380d7d-15f5-4a2a-b98e-19957fd97d36",
 		"name": "voting-system",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -10,10 +10,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/voting/rest/restaurants",
 					"protocol": "http",
@@ -36,10 +32,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/voting/rest/votes",
 					"protocol": "http",
@@ -62,10 +54,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/voting/rest/restaurants/filter?date=2019-09-21",
 					"protocol": "http",
@@ -95,10 +83,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/voting/rest/admin/restaurants/",
 					"protocol": "http",
@@ -117,6 +101,45 @@
 				"description": "(ADMIN) all restaurants in system"
 			},
 			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/votes",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 100002,\n    \"name\": \"TOKYO-CITY\",\n    \"items\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/votes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"votes"
+					]
+				},
+				"description": "(USER) make vote for some restaurant"
+			},
+			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
