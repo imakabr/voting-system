@@ -14,15 +14,20 @@ public class ValidationUtil {
     private ValidationUtil() {
     }
 
-    public static void checkTime(LocalDate dateVote) {
+    public static LocalTime timeRestriction = LocalTime.of(23, 59);
+
+    public static void checkDateTime(LocalDate date) {
         LocalDate today = LocalDate.now();
-        LocalTime now = LocalTime.now();
-        LocalTime timeRestriction = LocalTime.of(17, 00);
-        if (!today.isEqual(dateVote)) {
-            throw new TimeVoteLimitException("You have already voted on " + dateVote + ". You can not revote today " + today);
+        if (!today.isEqual(date)) {
+            throw new TimeVoteLimitException("You voted on " + date + ". You can not change it today " + today);
         }
+        checkTime();
+    }
+
+    public static void checkTime() {
+        LocalTime now = LocalTime.now();
         if (timeRestriction.isBefore(now)) {
-            throw new TimeVoteLimitException("Time is " + now + " You can not vote after 12:00");
+            throw new TimeVoteLimitException("Time is " + now + " You can not vote after 11:59");
         }
     }
 

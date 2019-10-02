@@ -17,6 +17,11 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface VoteRepository extends JpaRepository<Vote, Integer> {
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Vote v WHERE v.user.id=?1 and v.date=?2")
+    int delete(int id, LocalDate date);
+
     @Query("SELECT v.restaurant FROM Vote v WHERE v.user.id=?1")
     List<Restaurant> getAllRestaurantsByUserId(int id);
 
@@ -24,10 +29,14 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
     @Query("SELECT v FROM Vote v WHERE v.user.id=?1")
     List<Vote> getAllVotesByUserId(int id);
 
+    @EntityGraph(attributePaths = {"user"}, type = EntityGraph.EntityGraphType.FETCH)
+    @Query("SELECT  v FROM Vote v WHERE v.restaurant.id=?1")
+    List<Vote> getAllVotesByRestaurantId(int id);
+
     @Query("SELECT v.restaurant FROM Vote v WHERE v.user.id=?1 and v.date=?2")
     Restaurant getRestaurantByUserIdAndDate(int id, LocalDate date);
 
-    @Query("SELECT v.user FROM Vote v WHERE v.restaurant.id=?1")
+    @Query("SELECT DISTINCT v.user FROM Vote v WHERE v.restaurant.id=?1")
     List<User> getAllUsersByRestaurantId(int id);
 
     @Query("SELECT v.user FROM Vote v WHERE v.restaurant.id=?1 and v.date=?2")

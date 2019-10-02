@@ -42,8 +42,8 @@ public class RestaurantRestController {
     }
 
     @GetMapping("/filter")
-    public RestaurantTO getOnDate(@RequestParam(required = false) LocalDate date) {
-        log.info("getOnDate/filter");
+    public RestaurantTO getAllOnDate(@RequestParam(required = false) LocalDate date) {
+        log.info("getAllOnDate/filter");
         Restaurant restaurant = voteService.getRestaurantByUserIdAndDate(SecurityUtil.authUserId(), date);
         List<Restaurant> restaurants = restaurantService.getAllWithItemsByDate(date);
         return new RestaurantTO(restaurants, restaurant);

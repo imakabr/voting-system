@@ -18,8 +18,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import static ru.imakabr.votingsystem.util.ValidationUtil.checkNotFoundWithId;
-import static ru.imakabr.votingsystem.util.ValidationUtil.checkTime;
+import static ru.imakabr.votingsystem.util.ValidationUtil.*;
 
 @Service
 public class VoteService {
@@ -37,6 +36,7 @@ public class VoteService {
 
     public Vote create(Restaurant restaurant, int userId) {
         Assert.notNull(restaurant, "restaurant must not be null");
+        checkTime();
         Vote vote = new Vote(null, userRepository.getOne(userId), restaurant, LocalDate.now());
         return voteRepository.save(vote);
     }
@@ -44,9 +44,15 @@ public class VoteService {
     public void update(Restaurant restaurant, int userId, int voteId) {
         Assert.notNull(restaurant, "restaurant must not be null");
         LocalDate dateVote = get(voteId).getDate();
-        checkTime(dateVote);
+        checkDateTime(dateVote);
         Vote vote = new Vote(voteId, userRepository.getOne(userId), restaurant, dateVote);
         checkNotFoundWithId(voteRepository.save(vote), voteId);
+    }
+
+    public void delete(int voteId, int userId) {
+        LocalDate dateVote = get(voteId).getDate();
+        checkDateTime(dateVote);
+        checkNotFoundWithId(voteRepository.delete(userId, dateVote) != 0, voteId);
     }
 
     public Vote get(int id) {
@@ -69,11 +75,15 @@ public class VoteService {
         return voteRepository.getAllUsersByRestaurantId(RestId);
     }
 
+    public List<Vote> getAllVotesByRestaurantId(int RestId) {
+        return voteRepository.getAllVotesByRestaurantId(RestId);
+    }
+
     public Restaurant getRestaurantByUserIdAndDate(int userId, LocalDate date) {
         return voteRepository.getRestaurantByUserIdAndDate(userId, date);
     }
 
-    List<User> getAllUsersByRestaurantIdAndDate(int RestId, LocalDate date) {
+    public List<User> getAllUsersByRestaurantIdAndDate(int RestId, LocalDate date) {
         return voteRepository.getAllUsersByRestaurantIdAndDate(RestId, date);
     }
 

@@ -4,15 +4,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.model.User;
+import ru.imakabr.votingsystem.model.Vote;
 import ru.imakabr.votingsystem.service.RestaurantService;
 import ru.imakabr.votingsystem.service.VoteService;
+import ru.imakabr.votingsystem.to.RestaurantTO;
+import ru.imakabr.votingsystem.web.SecurityUtil;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -33,9 +34,20 @@ public class AdminRestaurantRestController {
         return restaurantService.getAll();
     }
 
-    @GetMapping("/{id}")
-    public List<User> get(@PathVariable int id) {
-        return voteService.getAllUsersByRestaurantId(id);
+    //@GetMapping("/{id}")
+    //public List<User> get(@PathVariable int id) {
+    //    return voteService.getAllUsersByRestaurantId(id);
+    //}
+
+    @GetMapping("/{id}/votes")
+    public List<Vote> get(@PathVariable int id) {
+        return voteService.getAllVotesByRestaurantId(id);
+    }
+
+    @GetMapping("/{id}/users/filter")
+    public List<User> getOnDate(@PathVariable int id, @RequestParam(required = false) LocalDate date) {
+        log.info("getOnDate/filter");
+        return voteService.getAllUsersByRestaurantIdAndDate(id, date);
     }
 
 

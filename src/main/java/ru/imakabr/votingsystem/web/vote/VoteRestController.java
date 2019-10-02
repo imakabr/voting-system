@@ -50,4 +50,11 @@ public class VoteRestController {
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id) {
+        log.info("delete vote");
+        voteService.delete(id, SecurityUtil.authUserId());
+    }
 }
