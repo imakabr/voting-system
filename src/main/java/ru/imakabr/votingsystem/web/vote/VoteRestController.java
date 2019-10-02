@@ -36,8 +36,9 @@ public class VoteRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void save(@PathVariable int id) {
-        log.info("save");
+    public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
+        log.info("update vote");
+        voteService.update(restaurant, SecurityUtil.authUserId(), id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -139,6 +139,45 @@
 				"description": "(USER) make vote for some restaurant"
 			},
 			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/votes/100003",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 100002,\n    \"name\": \"TOKYO-CITY\",\n    \"items\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/votes/100003",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"votes",
+						"100003"
+					]
+				},
+				"description": "(USER) revote"
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

@@ -4,15 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.imakabr.votingsystem.RestaurantTestData;
 import ru.imakabr.votingsystem.model.Item;
-import ru.imakabr.votingsystem.model.User;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static ru.imakabr.votingsystem.ItemTestData.*;
-import static ru.imakabr.votingsystem.RestaurantTestData.TOKYO_CITY;
-import static ru.imakabr.votingsystem.UserTestData.*;
 
 public class ItemServiceTest extends AbstractServiceTest {
 
@@ -29,7 +24,7 @@ public class ItemServiceTest extends AbstractServiceTest {
 
     @Test
     void update() throws Exception {
-        Item updated = new Item(ITEM1);
+        Item updated = new Item(ITEM0);
         updated.setPrice(200);
         itemService.update(updated);
         Integer id = updated.getId();
@@ -38,14 +33,14 @@ public class ItemServiceTest extends AbstractServiceTest {
 
     @Test
     void get() throws Exception {
-        Item actual = itemService.get(ITEM1.getId());
-        assertMatch(actual, ITEM1);
+        Item actual = itemService.get(ITEM0.getId());
+        assertMatch(actual, ITEM0);
     }
 
     @Test
     void delete() throws Exception {
-        itemService.delete(ITEM1.getId());
-        assertMatch(itemService.getAll(), ITEM2, ITEM3, ITEM4, ITEM5);
+        itemService.delete(ITEM0.getId());
+        assertMatch(itemService.getAll(), ITEM1, ITEM2, ITEM3, ITEM4, ITEM5, ITEM6, ITEM7);
     }
 
     @Test

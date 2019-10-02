@@ -35,10 +35,10 @@ public class RestaurantRestController {
     @GetMapping
     public RestaurantTO getAll() {
         log.info("getAll");
-        LocalDate date = LocalDate.of(2019, 9, 20);
+        LocalDate date = LocalDate.now();
         Restaurant restaurant = voteService.getRestaurantByUserIdAndDate(SecurityUtil.authUserId(), date);
         List<Restaurant> restaurants = restaurantService.getAllWithItemsByDate(date);
-        return new RestaurantTO(restaurants, restaurant.getName());
+        return new RestaurantTO(restaurants, restaurant );
     }
 
     @GetMapping("/filter")
@@ -46,7 +46,7 @@ public class RestaurantRestController {
         log.info("getOnDate/filter");
         Restaurant restaurant = voteService.getRestaurantByUserIdAndDate(SecurityUtil.authUserId(), date);
         List<Restaurant> restaurants = restaurantService.getAllWithItemsByDate(date);
-        return new RestaurantTO(restaurants, restaurant.getName());
+        return new RestaurantTO(restaurants, restaurant);
     }
 
 

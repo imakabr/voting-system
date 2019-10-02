@@ -12,10 +12,14 @@ import ru.imakabr.votingsystem.model.Vote;
 import ru.imakabr.votingsystem.repository.UserRepository;
 import ru.imakabr.votingsystem.repository.VoteRepository;
 
+import javax.naming.TimeLimitExceededException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static ru.imakabr.votingsystem.util.ValidationUtil.checkNotFoundWithId;
+import static ru.imakabr.votingsystem.util.ValidationUtil.checkTime;
 
 @Service
 public class VoteService {
@@ -37,9 +41,12 @@ public class VoteService {
         return voteRepository.save(vote);
     }
 
-    public void update(Vote vote) {
-        Assert.notNull(vote, "vote must not be null");
-        checkNotFoundWithId(voteRepository.save(vote), vote.getId());
+    public void update(Restaurant restaurant, int userId, int voteId) {
+        Assert.notNull(restaurant, "restaurant must not be null");
+        LocalDate dateVote = get(voteId).getDate();
+        checkTime(dateVote);
+        Vote vote = new Vote(voteId, userRepository.getOne(userId), restaurant, dateVote);
+        checkNotFoundWithId(voteRepository.save(vote), voteId);
     }
 
     public Vote get(int id) {

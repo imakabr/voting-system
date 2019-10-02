@@ -2,12 +2,28 @@ package ru.imakabr.votingsystem.util;
 
 
 import ru.imakabr.votingsystem.model.AbstractBaseEntity;
-import ru.imakabr.votingsystem.model.Vote;
 import ru.imakabr.votingsystem.util.exception.NotFoundException;
+import ru.imakabr.votingsystem.util.exception.TimeVoteLimitException;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class ValidationUtil {
 
     private ValidationUtil() {
+    }
+
+    public static void checkTime(LocalDate dateVote) {
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+        LocalTime timeRestriction = LocalTime.of(17, 00);
+        if (!today.isEqual(dateVote)) {
+            throw new TimeVoteLimitException("You have already voted on " + dateVote + ". You can not revote today " + today);
+        }
+        if (timeRestriction.isBefore(now)) {
+            throw new TimeVoteLimitException("Time is " + now + " You can not vote after 12:00");
+        }
     }
 
     public static <T> T checkNotFoundWithId(T object, int id) {

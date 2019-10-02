@@ -5,10 +5,10 @@ import ru.imakabr.votingsystem.model.Restaurant;
 import java.util.List;
 
 public class RestaurantTO {
-    String selected;
+    Restaurant selected;
     List<Restaurant> restaurants;
 
-    public RestaurantTO(List<Restaurant> restaurants, String selected) {
+    public RestaurantTO(List<Restaurant> restaurants, Restaurant selected) {
         this.restaurants = restaurants;
         this.selected = selected;
     }
@@ -21,11 +21,11 @@ public class RestaurantTO {
         this.restaurants = restaurants;
     }
 
-    public String getSelected() {
+    public Restaurant getSelected() {
         return selected;
     }
 
-    public void setSelected(String selected) {
+    public void setSelected(Restaurant selected) {
         this.selected = selected;
     }
 

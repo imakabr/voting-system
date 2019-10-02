@@ -4,17 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.imakabr.votingsystem.ItemTestData;
 import ru.imakabr.votingsystem.UserTestData;
-import ru.imakabr.votingsystem.VoteTestData;
 import ru.imakabr.votingsystem.model.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import static ru.imakabr.votingsystem.RestaurantTestData.*;
-import static ru.imakabr.votingsystem.UserTestData.*;
 
 public class RestaurantServiceTest extends AbstractServiceTest {
 
