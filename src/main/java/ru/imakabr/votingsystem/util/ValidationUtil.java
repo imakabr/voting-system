@@ -2,6 +2,7 @@ package ru.imakabr.votingsystem.util;
 
 
 import ru.imakabr.votingsystem.model.AbstractBaseEntity;
+import ru.imakabr.votingsystem.model.Item;
 import ru.imakabr.votingsystem.util.exception.NotFoundException;
 import ru.imakabr.votingsystem.util.exception.TimeVoteLimitException;
 
@@ -62,6 +63,14 @@ public class ValidationUtil {
             entity.setId(id);
         } else if (entity.getId() != id) {
             throw new IllegalArgumentException(entity + " must be with id=" + id);
+        }
+    }
+
+    public static void assureItemIdConsistent(Item item, int id) {
+        if (item.isNew()) {
+            item.setId(id);
+        } else if (item.getId() != id) {
+            throw new IllegalArgumentException(item + " must be with id=" + id);
         }
     }
 

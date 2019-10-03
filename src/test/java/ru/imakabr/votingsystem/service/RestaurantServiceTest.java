@@ -35,7 +35,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     void update() throws Exception {
         Restaurant updated = new Restaurant(TOKYO_CITY);
         updated.setName("TOKYO");
-        restaurantService.update(updated);
+        restaurantService.update(updated, updated.getId());
         Integer id = updated.getId();
         assertMatch(restaurantService.get(id), updated);
     }

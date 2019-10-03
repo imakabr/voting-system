@@ -36,7 +36,7 @@ public class Item {
 
     @Column(name = "date_time", nullable = false)
     @NotNull
-    @JsonIgnore
+    //@JsonIgnore
     private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)

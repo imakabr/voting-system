@@ -26,7 +26,7 @@ public class ItemServiceTest extends AbstractServiceTest {
     void update() throws Exception {
         Item updated = new Item(ITEM0);
         updated.setPrice(200);
-        itemService.update(updated);
+        itemService.update(updated, updated.getId());
         Integer id = updated.getId();
         assertMatch(itemService.get(id), updated);
     }

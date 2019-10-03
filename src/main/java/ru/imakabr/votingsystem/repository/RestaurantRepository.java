@@ -30,6 +30,10 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     @Query("SELECT r FROM Restaurant r WHERE r.id=?1 order by date_time desc")
     Restaurant getWithItems(int id);
 
+    @EntityGraph(attributePaths = {"items"}, type = EntityGraph.EntityGraphType.FETCH)
+    @Query("SELECT r FROM Restaurant r WHERE r.id=?1 AND date_time=?2")
+    Restaurant getWithItemsByDate(int id, LocalDate date);
+
     @EntityGraph(attributePaths = {"items", }, type = EntityGraph.EntityGraphType.FETCH)
     @Query("SELECT r FROM Restaurant r JOIN r.items i on i.date=:date")
     List<Restaurant> getAllWithItemsByDate(@Param("date") LocalDate date);
