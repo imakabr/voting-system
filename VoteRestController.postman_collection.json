@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "ff2fb01b-3564-4ab5-8f62-207509a78ce8",
+		"name": "VoteRestController",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/voting/rest/votes",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 100002,\n    \"name\": \"TOKYO-CITY\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/votes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"votes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/votes/100003",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 100003,\n    \"name\": \"KETCH-UP\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/votes/100003",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"votes",
+						"100003"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/votes/100003",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/votes/100003",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"votes",
+						"100003"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/votes/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/votes/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"votes",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

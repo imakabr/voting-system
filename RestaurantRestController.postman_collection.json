@@ -1,0 +1,186 @@
+{
+	"info": {
+		"_postman_id": "c10b4387-1164-4d43-99c9-98ee4b8273c3",
+		"name": "RestaurantRestController",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/voting/rest/restaurants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/restaurants/today",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"restaurants",
+						"today"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/restaurants/filter?date=2019-09-21",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/restaurants/filter?date=2019-09-21",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"restaurants",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2019-09-21"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/restaurants/100002/today",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/restaurants/100002/today",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"restaurants",
+						"100002",
+						"today"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/restaurants/100002/today Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/restaurants/100003/filter?date=2019-09-21",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"restaurants",
+						"100003",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2019-09-21"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/restaurants/100002/today Copy Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/restaurants/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"restaurants",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/restaurants/100002/today Copy Copy Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/restaurants/vote/today",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"restaurants",
+						"vote",
+						"today"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/restaurants/vote/filter?date=2019-09-20",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/restaurants/vote/filter?date=2019-09-20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"restaurants",
+						"vote",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2019-09-20"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

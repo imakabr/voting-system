@@ -34,13 +34,6 @@ public class VoteRestController {
         return voteService.getAllVotesByUserId(SecurityUtil.authUserId());
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
-        log.info("update vote");
-        voteService.update(restaurant, SecurityUtil.authUserId(), id);
-    }
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Vote> create(@RequestBody Restaurant restaurant) {
         log.info("create vote");
@@ -49,6 +42,13 @@ public class VoteRestController {
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
+    }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
+        log.info("update vote");
+        voteService.update(restaurant, SecurityUtil.authUserId(), id);
     }
 
     @DeleteMapping("/{id}")
