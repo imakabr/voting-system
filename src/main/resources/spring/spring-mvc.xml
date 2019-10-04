@@ -10,7 +10,6 @@
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="formatters">
             <set>
-                <bean class="ru.imakabr.votingsystem.web.format.LocalTimeFormatter" />
                 <bean class="ru.imakabr.votingsystem.web.format.LocalDateFormatter" />
             </set>
         </property>

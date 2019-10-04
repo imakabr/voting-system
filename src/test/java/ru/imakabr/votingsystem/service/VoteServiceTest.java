@@ -36,11 +36,11 @@ public class VoteServiceTest extends AbstractServiceTest {
 //        assertMatch(voteService.getRestaurantByUserIdAndDate(USER_ID, LocalDate.of(2019, 9, 20)), KWAKINN);
 //    }
 
-    @Test
-    void getAllRestaurantsByUserId() {
-        List<Restaurant> restaurants = voteService.getAllRestaurantsByUserId(UserTestData.USER_ID);
-        RestaurantTestData.assertMatch(restaurants, TOKYO_CITY, KETCH_UP);
-    }
+//    @Test
+//    void getAllRestaurantsByUserId() {
+//        List<Restaurant> restaurants = voteService.getAllRestaurantsByUserId(UserTestData.USER_ID);
+//        RestaurantTestData.assertMatch(restaurants, TOKYO_CITY, KETCH_UP);
+//    }
 
     @Test
     void getAllVotesByUserId() {

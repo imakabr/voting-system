@@ -26,9 +26,6 @@ public class RestaurantService {
 
     private final RestaurantRepository repository;
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Autowired
     public RestaurantService(RestaurantRepository repository) {
         this.repository = repository;
@@ -56,21 +53,8 @@ public class RestaurantService {
         checkNotFoundWithId(repository.save(restaurant), restaurant.getId());
     }
 
-    @Transactional
-    public List<Restaurant> getAllByDate(LocalDate date) {
-        Filter filter = entityManager.unwrap(Session.class).enableFilter("filterByDate");
-        filter.setParameter("date_time", date);
-        List<Restaurant> restaurants = repository.findAll();
-        entityManager.unwrap(Session.class).disableFilter("filterByDate");
-        return restaurants;
-    }
-
     public List<Restaurant> getAllWithItemsByDate(LocalDate date) {
         return repository.getAllWithItemsByDate(date);
-    }
-
-    public Restaurant getWithVotes(int id) {
-        return checkNotFoundWithId(repository.getWithVotes(id), id);
     }
 
     public Restaurant getWithItems(int id) {

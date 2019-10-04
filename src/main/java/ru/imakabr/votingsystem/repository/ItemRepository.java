@@ -15,7 +15,4 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     @Query("DELETE FROM Item i WHERE i.id=:id")
     int delete(@Param("id") int id);
 
-//    @Override
-//    @Transactional
-//    Item save(Item item);
 }

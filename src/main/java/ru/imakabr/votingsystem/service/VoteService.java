@@ -1,7 +1,5 @@
 package ru.imakabr.votingsystem.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -12,17 +10,14 @@ import ru.imakabr.votingsystem.model.Vote;
 import ru.imakabr.votingsystem.repository.UserRepository;
 import ru.imakabr.votingsystem.repository.VoteRepository;
 
-import javax.naming.TimeLimitExceededException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 import static ru.imakabr.votingsystem.util.ValidationUtil.*;
 
 @Service
 public class VoteService {
-    private static final Sort SORT_NAME = new Sort(Sort.Direction.ASC, "name", "email");
+    private static final Sort SORT_NAME = new Sort(Sort.Direction.ASC, "name");
 
     private final VoteRepository voteRepository;
 
@@ -63,28 +58,28 @@ public class VoteService {
         return voteRepository.findAll(SORT_NAME);
     }
 
-    public List<Vote> getAllVotesByUserId(int id) {
-        return voteRepository.getAllVotesByUserId(id);
+    public List<Vote> getAllVotesByUserId(int userId) {
+        return checkNotFoundWithId(voteRepository.getAllVotesByUserId(userId), userId);
     }
 
-    public List<Restaurant> getAllRestaurantsByUserId(int UserId) {
-        return voteRepository.getAllRestaurantsByUserId(UserId);
-    }
+//    public List<Restaurant> getAllRestaurantsByUserId(int UserId) {
+//        return voteRepository.getAllRestaurantsByUserId(UserId);
+//    }
+//
+//    public List<User> getAllUsersByRestaurantId(int RestId) {
+//        return voteRepository.getAllUsersByRestaurantId(RestId);
+//    }
 
-    public List<User> getAllUsersByRestaurantId(int RestId) {
-        return voteRepository.getAllUsersByRestaurantId(RestId);
-    }
-
-    public List<Vote> getAllVotesByRestaurantId(int RestId) {
-        return voteRepository.getAllVotesByRestaurantId(RestId);
+    public List<Vote> getAllVotesByRestaurantId(int restId) {
+        return checkNotFoundWithId(voteRepository.getAllVotesByRestaurantId(restId), restId);
     }
 
     public Restaurant getRestaurantByUserIdAndDate(int userId, LocalDate date) {
-        return voteRepository.getRestaurantByUserIdAndDate(userId, date);
+        return checkNotFoundWithId(voteRepository.getRestaurantByUserIdAndDate(userId, date), userId);
     }
 
-    public List<User> getAllUsersByRestaurantIdAndDate(int RestId, LocalDate date) {
-        return voteRepository.getAllUsersByRestaurantIdAndDate(RestId, date);
+    public List<User> getAllUsersByRestaurantIdAndDate(int restId, LocalDate date) {
+        return checkNotFoundWithId(voteRepository.getAllUsersByRestaurantIdAndDate(restId, date), restId);
     }
 
 }

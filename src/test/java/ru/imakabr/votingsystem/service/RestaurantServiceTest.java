@@ -46,27 +46,19 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         assertMatch(restaurantService.getAll(), KETCH_UP, KWAKINN, HACHAPURI_AND_WINE);
     }
 
-    @Test
-    void getWithVotes() throws Exception {
-        Restaurant actual = restaurantService.getWithVotes(TOKYO_CITY_ID);
-        Vote vote = actual.getVotes().get(0);
-        UserTestData.assertMatch(vote.getUser(), UserTestData.USER);
-        assertMatch(vote.getRestaurant(), TOKYO_CITY);
-    }
+//    @Test
+//    void getWithVotes() throws Exception {
+//        Restaurant actual = restaurantService.getWithVotes(TOKYO_CITY_ID);
+//        Vote vote = actual.getVotes().get(0);
+//        UserTestData.assertMatch(vote.getUser(), UserTestData.USER);
+//        assertMatch(vote.getRestaurant(), TOKYO_CITY);
+//    }
 
     @Test
     void getWithItems() throws Exception {
         Restaurant actual = restaurantService.getWithItems(TOKYO_CITY_ID);
         assertMatch(actual, TOKYO_CITY);
         ItemTestData.assertMatch(actual.getItems(), ItemTestData.ITEMS_FOR_TOKYO_ALL);
-    }
-
-    @Test
-    void getAllByDate() {
-        List<Restaurant> actual = restaurantService.getAllByDate(LocalDate.of(2019, 9, 20));
-        ItemTestData.assertMatch(actual.get(0).getItems(), ItemTestData.ITEMS_FOR_TOKYO_20_09);
-        ItemTestData.assertMatch(actual.get(1).getItems(), ItemTestData.ITEMS_FOR_KETCHUP_20_09);
-        assertMatch(actual, TOKYO_CITY, KETCH_UP, HACHAPURI_AND_WINE, KWAKINN);
     }
 
     @Test

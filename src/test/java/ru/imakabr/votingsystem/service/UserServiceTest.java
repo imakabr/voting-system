@@ -66,14 +66,6 @@ public class UserServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    void getWithVotes() throws Exception {
-        User user = userService.getWithVotes(USER_ID);
-        assertMatch(user, USER);
-        VoteTestData.assertMatch(user.getVotes().get(0), VoteTestData.VOTE_FROM_USER_FOR_TOKYO_20_09);
-        RestaurantTestData.assertMatch(user.getVotes().get(0).getRestaurant(), RestaurantTestData.TOKYO_CITY);
-    }
-
-    @Test
     void update() throws Exception {
         User updated = new User(USER);
         updated.setName("UpdatedName");
