@@ -2,16 +2,20 @@ package ru.imakabr.votingsystem.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import ru.imakabr.votingsystem.RestaurantTestData;
 import ru.imakabr.votingsystem.UserTestData;
 import ru.imakabr.votingsystem.VoteTestData;
 import ru.imakabr.votingsystem.model.Restaurant;
+import ru.imakabr.votingsystem.model.Role;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.model.Vote;
+import ru.imakabr.votingsystem.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.imakabr.votingsystem.RestaurantTestData.*;
 import static ru.imakabr.votingsystem.UserTestData.*;
 import static ru.imakabr.votingsystem.VoteTestData.*;
@@ -27,6 +31,25 @@ public class VoteServiceTest extends AbstractServiceTest {
         Vote created = voteService.create(TOKYO_CITY, USER_ID);
         newVote.setId(created.getId());
         VoteTestData.assertMatch(created, newVote);
+    }
+
+    @Test
+    void duplicateCreate() throws Exception {
+        voteService.create(TOKYO_CITY, USER_ID);
+        assertThrows(DataAccessException.class, () ->
+                voteService.create(KWAKINN, USER_ID));
+    }
+
+    @Test
+    void deletedNotFound() throws Exception {
+        assertThrows(NotFoundException.class, () ->
+                voteService.delete(1111, USER_ID));
+    }
+
+    @Test
+    void getNotFound() throws Exception {
+        assertThrows(NotFoundException.class, () ->
+                voteService.get(1));
     }
 
 //    @Test
