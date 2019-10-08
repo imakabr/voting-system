@@ -98,4 +98,11 @@ public class Vote {
         return id == null ? 0 : id;
     }
 
+    @Override
+    public String toString() {
+        return "Vote{" +
+                "id=" + getId() +
+                ", date=" + getDate() +
+                '}';
+    }
 }

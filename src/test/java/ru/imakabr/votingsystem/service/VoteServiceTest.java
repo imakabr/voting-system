@@ -41,15 +41,30 @@ public class VoteServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    void delete() throws Exception {
+        voteService.create(TOKYO_CITY, USER_ID);
+        voteService.delete(VOTE_ID+3, USER_ID);
+        List<Vote> votes = voteService.getAllVotesByUserId(USER_ID);
+        assertMatch(votes.get(0).getRestaurant(), TOKYO_CITY);
+        assertMatch(votes.get(1).getRestaurant(), KETCH_UP);
+    }
+
+    @Test
     void deletedNotFound() throws Exception {
         assertThrows(NotFoundException.class, () ->
                 voteService.delete(1111, USER_ID));
     }
 
     @Test
+    void get() throws Exception {
+        Vote vote = voteService.get(VOTE_ID, USER_ID);
+        assertMatch(vote, VOTE_FROM_USER_FOR_TOKYO_20_09);
+    }
+
+    @Test
     void getNotFound() throws Exception {
         assertThrows(NotFoundException.class, () ->
-                voteService.get(1));
+                voteService.get(1, USER_ID));
     }
 
 //    @Test
@@ -57,12 +72,6 @@ public class VoteServiceTest extends AbstractServiceTest {
 //        Vote updated = new Vote(VOTE_ID, UserTestData.USER, KWAKINN, LocalDate.of(2019, 9, 20));
 //        voteService.update(TOKYO_CITY, USER_ID, VOTE_ID);
 //        assertMatch(voteService.getRestaurantByUserIdAndDate(USER_ID, LocalDate.of(2019, 9, 20)), KWAKINN);
-//    }
-
-//    @Test
-//    void getAllRestaurantsByUserId() {
-//        List<Restaurant> restaurants = voteService.getAllRestaurantsByUserId(UserTestData.USER_ID);
-//        RestaurantTestData.assertMatch(restaurants, TOKYO_CITY, KETCH_UP);
 //    }
 
     @Test
@@ -73,11 +82,14 @@ public class VoteServiceTest extends AbstractServiceTest {
         assertMatch(votes.get(1).getRestaurant(), KETCH_UP);
     }
 
-   // @Test
-    //void getAllUsersByRestaurantId() {
-    //    List<User> users = voteService.getAllUsersByRestaurantId(TOKYO_CITY_ID);
-    //    UserTestData.assertMatch(users, UserTestData.USER, UserTestData.ADMIN);
-    //}
+    @Test
+    void getAllVotesByRestaurantId() {
+        List<Vote> votes = voteService.getAllVotesByRestaurantId(TOKYO_CITY_ID);
+        assertMatch(votes, VOTE_FROM_USER_FOR_TOKYO_20_09, VOTE_FROM_ADMIN_FOR_TOKYO_21_09);
+        assertMatch(votes.get(0).getUser(), USER);
+        assertMatch(votes.get(1).getUser(), ADMIN);
+
+    }
 
     @Test
     void getRestaurantByUserIdAndDateTime() {

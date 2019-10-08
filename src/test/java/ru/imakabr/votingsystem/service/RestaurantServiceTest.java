@@ -2,13 +2,15 @@ package ru.imakabr.votingsystem.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import ru.imakabr.votingsystem.ItemTestData;
-import ru.imakabr.votingsystem.UserTestData;
 import ru.imakabr.votingsystem.model.*;
+import ru.imakabr.votingsystem.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.imakabr.votingsystem.RestaurantTestData.*;
 
 public class RestaurantServiceTest extends AbstractServiceTest {
@@ -23,12 +25,24 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    void getNotFound() throws Exception {
+        assertThrows(NotFoundException.class, () ->
+                restaurantService.get(1));
+    }
+
+    @Test
     void create() throws Exception {
         Restaurant newRest = new Restaurant(null, "Rock Pub");
         Restaurant created = restaurantService.create(newRest);
         newRest.setId(created.getId());
         assertMatch(created, newRest);
         assertMatch(restaurantService.getAll(), KETCH_UP, KWAKINN, newRest, TOKYO_CITY, HACHAPURI_AND_WINE);
+    }
+
+    @Test
+    void duplicateCreate() throws Exception {
+        assertThrows(DataAccessException.class, () ->
+                restaurantService.create(new Restaurant(null, "KWAKINN")));
     }
 
     @Test
@@ -45,6 +59,13 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         restaurantService.delete(TOKYO_CITY_ID);
         assertMatch(restaurantService.getAll(), KETCH_UP, KWAKINN, HACHAPURI_AND_WINE);
     }
+
+    @Test
+    void deletedNotFound() throws Exception {
+        assertThrows(NotFoundException.class, () ->
+                restaurantService.delete(1111));
+    }
+
 
 //    @Test
 //    void getWithVotes() throws Exception {
@@ -74,5 +95,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         List<Restaurant> actual = restaurantService.getAll();
         assertMatch(actual,  RESTAURANTS);
     }
+
+
 
 }

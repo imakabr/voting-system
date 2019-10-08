@@ -20,9 +20,10 @@ public class VoteTestData {
 
     public static final Vote VOTE_FROM_USER_FOR_TOKYO_20_09 = new Vote(VOTE_ID, UserTestData.USER, RestaurantTestData.TOKYO_CITY, LocalDate.of(2019, 9, 20));
     public static final Vote VOTE_FROM_USER_FOR_KETCHUP_21_09 = new Vote(VOTE_ID+1, UserTestData.USER, RestaurantTestData.KETCH_UP, LocalDate.of(2019, 9, 21));
+    public static final Vote VOTE_FROM_ADMIN_FOR_TOKYO_21_09 = new Vote(VOTE_ID+2, UserTestData.ADMIN, RestaurantTestData.TOKYO_CITY, LocalDate.of(2019, 9, 21));
 
     public static void assertMatch(Vote actual, Vote expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "user");
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "user", "restaurant");
     }
 
     public static void assertMatch(Iterable<Vote> actual, Vote... expected) {
@@ -30,7 +31,7 @@ public class VoteTestData {
     }
 
     public static void assertMatch(Iterable<Vote> actual, Iterable<Vote> expected) {
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("restaurant", "user").isEqualTo(expected);
     }
 
     public static ResultMatcher contentJson(Vote... expected) {

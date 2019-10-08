@@ -38,20 +38,20 @@ public class VoteService {
 
     public void update(Restaurant restaurant, int userId, int voteId) {
         Assert.notNull(restaurant, "restaurant must not be null");
-        LocalDate dateVote = get(voteId).getDate();
+        LocalDate dateVote = get(voteId, userId).getDate();
         checkDateTime(dateVote);
         Vote vote = new Vote(voteId, userRepository.getOne(userId), restaurant, dateVote);
         checkNotFoundWithId(voteRepository.save(vote), voteId);
     }
 
     public void delete(int voteId, int userId) {
-        LocalDate dateVote = get(voteId).getDate();
-        checkDateTime(dateVote);
-        checkNotFoundWithId(voteRepository.delete(userId, dateVote) != 0, voteId);
+        Vote vote = get(voteId, userId);
+        checkDateTime(vote.getDate());
+        checkNotFoundWithId(voteRepository.delete(voteId, userId) != 0, voteId);
     }
 
-    public Vote get(int id) {
-        return checkNotFoundWithId(voteRepository.findById(id).orElse(null), id);
+    public Vote get(int voteId, int userId) {
+        return checkNotFoundWithId(voteRepository.findById(voteId).filter(vote -> vote.getUser().getId() == userId).orElse(null), voteId);
     }
 
     public List<Vote> getAll() {
@@ -62,20 +62,12 @@ public class VoteService {
         return checkNotFoundWithId(voteRepository.getAllVotesByUserId(userId), userId);
     }
 
-//    public List<Restaurant> getAllRestaurantsByUserId(int UserId) {
-//        return voteRepository.getAllRestaurantsByUserId(UserId);
-//    }
-//
-//    public List<User> getAllUsersByRestaurantId(int RestId) {
-//        return voteRepository.getAllUsersByRestaurantId(RestId);
-//    }
-
     public List<Vote> getAllVotesByRestaurantId(int restId) {
         return checkNotFoundWithId(voteRepository.getAllVotesByRestaurantId(restId), restId);
     }
 
     public Restaurant getRestaurantByUserIdAndDate(int userId, LocalDate date) {
-        return checkNotFoundWithId(voteRepository.getRestaurantByUserIdAndDate(userId, date), userId);
+        return /*checkNotFoundWithId(*/voteRepository.getRestaurantByUserIdAndDate(userId, date)/*, userId)*/;
     }
 
     public List<User> getAllUsersByRestaurantIdAndDate(int restId, LocalDate date) {
