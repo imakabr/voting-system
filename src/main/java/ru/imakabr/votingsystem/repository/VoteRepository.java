@@ -26,11 +26,11 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
 //    List<Restaurant> getAllRestaurantsByUserId(int id);
 
     @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.FETCH)
-    @Query("SELECT v FROM Vote v WHERE v.user.id=?1")
+    @Query("SELECT v FROM Vote v WHERE v.user.id=?1 ORDER BY v.date asc")
     List<Vote> getAllVotesByUserId(int id);
 
     @EntityGraph(attributePaths = {"user"}, type = EntityGraph.EntityGraphType.FETCH)
-    @Query("SELECT  v FROM Vote v WHERE v.restaurant.id=?1")
+    @Query("SELECT  v FROM Vote v WHERE v.restaurant.id=?1 ORDER BY v.date asc")
     List<Vote> getAllVotesByRestaurantId(int id);
 
     @Query("SELECT v.restaurant FROM Vote v WHERE v.user.id=?1 and v.date=?2")
@@ -39,6 +39,6 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
 //    @Query("SELECT DISTINCT v.user FROM Vote v WHERE v.restaurant.id=?1")
 //    List<User> getAllUsersByRestaurantId(int id);
 
-    @Query("SELECT v.user FROM Vote v WHERE v.restaurant.id=?1 and v.date=?2")
+    @Query("SELECT v.user FROM Vote v WHERE v.restaurant.id=?1 and v.date=?2 ORDER BY v.date asc")
     List<User> getAllUsersByRestaurantIdAndDate(int id, LocalDate date);
 }
