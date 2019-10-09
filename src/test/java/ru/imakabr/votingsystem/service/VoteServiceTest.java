@@ -7,7 +7,6 @@ import ru.imakabr.votingsystem.RestaurantTestData;
 import ru.imakabr.votingsystem.UserTestData;
 import ru.imakabr.votingsystem.VoteTestData;
 import ru.imakabr.votingsystem.model.Restaurant;
-import ru.imakabr.votingsystem.model.Role;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.model.Vote;
 import ru.imakabr.votingsystem.util.exception.NotFoundException;
@@ -45,8 +44,8 @@ public class VoteServiceTest extends AbstractServiceTest {
         voteService.create(TOKYO_CITY, USER_ID);
         voteService.delete(VOTE_ID+3, USER_ID);
         List<Vote> votes = voteService.getAllVotesByUserId(USER_ID);
-        assertMatch(votes.get(0).getRestaurant(), TOKYO_CITY);
-        assertMatch(votes.get(1).getRestaurant(), KETCH_UP);
+        assertMatch(votes.get(0).getRestaurant(), KETCH_UP);
+        assertMatch(votes.get(1).getRestaurant(), TOKYO_CITY);
     }
 
     @Test
@@ -77,24 +76,24 @@ public class VoteServiceTest extends AbstractServiceTest {
     @Test
     void getAllVotesByUserId() {
         List<Vote> votes = voteService.getAllVotesByUserId(USER_ID);
-        assertMatch(votes, VOTE_FROM_USER_FOR_TOKYO_20_09, VOTE_FROM_USER_FOR_KETCHUP_21_09);
-        assertMatch(votes.get(0).getRestaurant(), TOKYO_CITY);
-        assertMatch(votes.get(1).getRestaurant(), KETCH_UP);
+        assertMatch(votes, VOTE_FROM_USER_FOR_KETCHUP_21_09, VOTE_FROM_USER_FOR_TOKYO_20_09);
+        assertMatch(votes.get(0).getRestaurant(), KETCH_UP);
+        assertMatch(votes.get(1).getRestaurant(), TOKYO_CITY);
     }
 
     @Test
     void getAllVotesByRestaurantId() {
         List<Vote> votes = voteService.getAllVotesByRestaurantId(TOKYO_CITY_ID);
-        assertMatch(votes, VOTE_FROM_USER_FOR_TOKYO_20_09, VOTE_FROM_ADMIN_FOR_TOKYO_21_09);
-        assertMatch(votes.get(0).getUser(), USER);
-        assertMatch(votes.get(1).getUser(), ADMIN);
+        assertMatch(votes, VOTE_FROM_ADMIN_FOR_TOKYO_21_09, VOTE_FROM_USER_FOR_TOKYO_20_09);
+        assertMatch(votes.get(0).getUser(), ADMIN);
+        assertMatch(votes.get(1).getUser(), USER);
 
     }
 
     @Test
-    void getRestaurantByUserIdAndDateTime() {
-        Restaurant restaurant = voteService.getRestaurantByUserIdAndDate(UserTestData.USER_ID, LocalDate.of(2019, 9, 20));
-        RestaurantTestData.assertMatch(restaurant, TOKYO_CITY);
+    void getVoteByUserIdAndDate() {
+        Vote vote = voteService.getVoteByUserIdAndDate(UserTestData.USER_ID, LocalDate.of(2019, 9, 20));
+        assertMatch(vote, VOTE_FROM_USER_FOR_TOKYO_20_09);
     }
 
     @Test

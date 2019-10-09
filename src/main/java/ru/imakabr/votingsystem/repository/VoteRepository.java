@@ -26,19 +26,20 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
 //    List<Restaurant> getAllRestaurantsByUserId(int id);
 
     @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.FETCH)
-    @Query("SELECT v FROM Vote v WHERE v.user.id=?1 ORDER BY v.date asc")
+    @Query("SELECT v FROM Vote v WHERE v.user.id=?1 ORDER BY v.date desc")
     List<Vote> getAllVotesByUserId(int id);
 
     @EntityGraph(attributePaths = {"user"}, type = EntityGraph.EntityGraphType.FETCH)
-    @Query("SELECT  v FROM Vote v WHERE v.restaurant.id=?1 ORDER BY v.date asc")
+    @Query("SELECT  v FROM Vote v WHERE v.restaurant.id=?1 ORDER BY v.date desc")
     List<Vote> getAllVotesByRestaurantId(int id);
 
-    @Query("SELECT v.restaurant FROM Vote v WHERE v.user.id=?1 and v.date=?2")
-    Restaurant getRestaurantByUserIdAndDate(int id, LocalDate date);
+    @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.FETCH)
+    @Query("SELECT v FROM Vote v WHERE v.user.id=?1 and v.date=?2")
+    Vote getVoteByUserIdAndDate(int id, LocalDate date);
 
 //    @Query("SELECT DISTINCT v.user FROM Vote v WHERE v.restaurant.id=?1")
 //    List<User> getAllUsersByRestaurantId(int id);
 
-    @Query("SELECT v.user FROM Vote v WHERE v.restaurant.id=?1 and v.date=?2 ORDER BY v.date asc")
+    @Query("SELECT v.user FROM Vote v WHERE v.restaurant.id=?1 and v.date=?2")
     List<User> getAllUsersByRestaurantIdAndDate(int id, LocalDate date);
 }

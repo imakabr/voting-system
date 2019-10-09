@@ -17,11 +17,13 @@ public class RestaurantTestData {
     public static final int KETCH_UP_ID = START_SEQ + 3;
     public static final int HACHAPURI_AND_WINE_ID = START_SEQ + 4;
     public static final int KWAKINN_ID = START_SEQ + 5;
+    public static final int NEW_PUB_ID = START_SEQ + 6;
 
     public static final Restaurant TOKYO_CITY = new Restaurant(TOKYO_CITY_ID, "TOKYO-CITY");
     public static final Restaurant KETCH_UP = new Restaurant(KETCH_UP_ID, "KETCH-UP");
     public static final Restaurant HACHAPURI_AND_WINE = new Restaurant(HACHAPURI_AND_WINE_ID, "ХАЧАПУРИ И ВИНО");
     public static final Restaurant KWAKINN = new Restaurant(KWAKINN_ID, "KWAKINN");
+    public static final Restaurant NEW_PUB = new Restaurant(null, "NEW_PUB");
 
 
     public static final List<Restaurant> RESTAURANTS = List.of(KETCH_UP, KWAKINN, TOKYO_CITY, HACHAPURI_AND_WINE);

@@ -78,7 +78,7 @@ public class VoteRestControllerTest extends AbstractControllerTest {
         mockMvc.perform(delete(REST_URL + "/" + id))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        assertMatch(voteService.getAllVotesByUserId(USER_ID), VOTE_FROM_USER_FOR_TOKYO_20_09, VOTE_FROM_USER_FOR_KETCHUP_21_09);
+        assertMatch(voteService.getAllVotesByUserId(USER_ID), VOTE_FROM_USER_FOR_KETCHUP_21_09, VOTE_FROM_USER_FOR_TOKYO_20_09);
     }
 
     @Test
@@ -86,6 +86,6 @@ public class VoteRestControllerTest extends AbstractControllerTest {
         mockMvc.perform(get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(VOTE_FROM_USER_FOR_TOKYO_20_09, VOTE_FROM_USER_FOR_KETCHUP_21_09));
+                .andExpect(contentJson(VOTE_FROM_USER_FOR_KETCHUP_21_09, VOTE_FROM_USER_FOR_TOKYO_20_09));
     }
 }

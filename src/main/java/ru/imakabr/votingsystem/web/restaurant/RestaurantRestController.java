@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.imakabr.votingsystem.model.Restaurant;
+import ru.imakabr.votingsystem.model.Vote;
 import ru.imakabr.votingsystem.service.RestaurantService;
 import ru.imakabr.votingsystem.service.VoteService;
 import ru.imakabr.votingsystem.to.RestaurantTO;
@@ -34,42 +35,38 @@ public class RestaurantRestController {
     }
 
     @GetMapping("/{id}/today")
-    public Restaurant getAllByRestaurantIdToday(@PathVariable int id) {
+    public Restaurant getRestaurantWithItemsToday(@PathVariable int id) {
         LocalDate date = LocalDate.now();
         return restaurantService.getWithItemsByDate(id, date);
     }
 
     @GetMapping("/{id}/filter")
-    public Restaurant getAllByRestaurantIdAndDate(@PathVariable int id, @RequestParam(required = false) LocalDate date) {
+    public Restaurant getRestaurantWithItemsByDate(@PathVariable int id, @RequestParam(required = false) LocalDate date) {
         return restaurantService.getWithItemsByDate(id, date);
     }
 
     @GetMapping("/today")
-    public RestaurantTO getAllToday() {
+    public List<Restaurant> getAllToday() {
         log.info("getAll");
         LocalDate date = LocalDate.now();
-        Restaurant restaurant = voteService.getRestaurantByUserIdAndDate(SecurityUtil.authUserId(), date);
-        List<Restaurant> restaurants = restaurantService.getAllWithItemsByDate(date);
-        return new RestaurantTO(restaurants, restaurant);
+        return restaurantService.getAllWithItemsByDate(date);
     }
 
     @GetMapping("/filter")
-    public RestaurantTO getAllByDate(@RequestParam(required = false) LocalDate date) {
+    public List<Restaurant> getAllByDate(@RequestParam(required = false) LocalDate date) {
         log.info("getAllByDate/filter");
-        Restaurant restaurant = voteService.getRestaurantByUserIdAndDate(SecurityUtil.authUserId(), date);
-        List<Restaurant> restaurants = restaurantService.getAllWithItemsByDate(date);
-        return new RestaurantTO(restaurants, restaurant);
+        return restaurantService.getAllWithItemsByDate(date);
     }
 
     @GetMapping("/vote/today")
-    public Restaurant getVoteToday() {
+    public Vote getVoteToday() {
         LocalDate date = LocalDate.now();
-        return voteService.getRestaurantByUserIdAndDate(SecurityUtil.authUserId(), date);
+        return voteService.getVoteByUserIdAndDate(SecurityUtil.authUserId(), date);
     }
 
     @GetMapping("/vote/filter")
-    public Restaurant getVoteByDate(@RequestParam(required = false) LocalDate date) {
-        return voteService.getRestaurantByUserIdAndDate(SecurityUtil.authUserId(), date);
+    public Vote getVoteByDate(@RequestParam(required = false) LocalDate date) {
+        return voteService.getVoteByUserIdAndDate(SecurityUtil.authUserId(), date);
     }
 
 }

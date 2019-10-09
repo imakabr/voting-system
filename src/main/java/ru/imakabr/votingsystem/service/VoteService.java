@@ -66,8 +66,8 @@ public class VoteService {
         return checkNotFoundWithId(voteRepository.getAllVotesByRestaurantId(restId), restId);
     }
 
-    public Restaurant getRestaurantByUserIdAndDate(int userId, LocalDate date) {
-        return /*checkNotFoundWithId(*/voteRepository.getRestaurantByUserIdAndDate(userId, date)/*, userId)*/;
+    public Vote getVoteByUserIdAndDate(int userId, LocalDate date) {
+        return /*checkNotFoundWithId(*/voteRepository.getVoteByUserIdAndDate(userId, date)/*, userId)*/;
     }
 
     public List<User> getAllUsersByRestaurantIdAndDate(int restId, LocalDate date) {
