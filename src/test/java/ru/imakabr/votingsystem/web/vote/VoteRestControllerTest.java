@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.model.Role;
 import ru.imakabr.votingsystem.model.User;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.imakabr.votingsystem.TestUtil.readFromJson;
+import static ru.imakabr.votingsystem.TestUtil.userHttpBasic;
 import static ru.imakabr.votingsystem.UserTestData.*;
 import static ru.imakabr.votingsystem.VoteTestData.*;
 import static ru.imakabr.votingsystem.RestaurantTestData.*;
@@ -33,9 +35,10 @@ public class VoteRestControllerTest extends AbstractControllerTest {
     @Test
     void testCreate() throws Exception {
         Restaurant restaurant = new Restaurant(TOKYO_CITY);
-        ResultActions action = mockMvc.perform(post(REST_URL)
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(restaurant)))
+                .content(JsonUtil.writeValue(restaurant))
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isCreated());
 
         Vote returned = readFromJson(action, Vote.class);
@@ -48,17 +51,19 @@ public class VoteRestControllerTest extends AbstractControllerTest {
     @Test
     void testUpdate() throws Exception {
         Restaurant restaurant = new Restaurant(TOKYO_CITY);
-        ResultActions action = mockMvc.perform(post(REST_URL)
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(restaurant)))
+                .content(JsonUtil.writeValue(restaurant))
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isCreated());
         Vote returned = readFromJson(action, Vote.class);
         int id = returned.getId();
 
         Restaurant updated = new Restaurant(KETCH_UP);
-        mockMvc.perform(put(REST_URL + "/" + id)
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + "/" + id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updated)))
+                .content(JsonUtil.writeValue(updated))
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isNoContent());
         Vote expected = new Vote(id, USER, KETCH_UP, LocalDate.now());
 
@@ -68,14 +73,16 @@ public class VoteRestControllerTest extends AbstractControllerTest {
     @Test
     void testDelete() throws Exception {
         Restaurant restaurant = new Restaurant(TOKYO_CITY);
-        ResultActions action = mockMvc.perform(post(REST_URL)
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(restaurant)))
+                .content(JsonUtil.writeValue(restaurant))
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isCreated());
         Vote returned = readFromJson(action, Vote.class);
         int id = returned.getId();
 
-        mockMvc.perform(delete(REST_URL + "/" + id))
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + "/" + id)
+                .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         assertMatch(voteService.getAllVotesByUserId(USER_ID), VOTE_FROM_USER_FOR_KETCHUP_21_09, VOTE_FROM_USER_FOR_TOKYO_20_09);
@@ -83,7 +90,9 @@ public class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void testGetAll() throws Exception {
-        mockMvc.perform(get(REST_URL))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL)
+                .with(userHttpBasic(USER)))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(VOTE_FROM_USER_FOR_KETCHUP_21_09, VOTE_FROM_USER_FOR_TOKYO_20_09));

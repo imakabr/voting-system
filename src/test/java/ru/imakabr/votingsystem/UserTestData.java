@@ -3,6 +3,7 @@ package ru.imakabr.votingsystem;
 import org.springframework.test.web.servlet.ResultMatcher;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.model.Role;
+import ru.imakabr.votingsystem.web.json.JsonUtil;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class UserTestData {
     public static final List<User> USERS = List.of(USER, ADMIN);
 
     public static void assertMatch(User actual, User expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "meals", "votes", "roles");
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "meals", "votes", "roles", "password");
     }
 
     public static void assertMatch(Iterable<User> actual, User... expected) {
@@ -29,7 +30,7 @@ public class UserTestData {
     }
 
     public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("registered", "meals", "votes", "roles").isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("registered", "meals", "votes", "roles", "password").isEqualTo(expected);
     }
 
     public static ResultMatcher contentJson(User... expected) {
@@ -40,4 +41,7 @@ public class UserTestData {
         return result -> assertMatch(readFromJsonMvcResult(result, User.class), expected);
     }
 
+    public static String jsonWithPassword(User user, String passw) {
+        return JsonUtil.writeAdditionProps(user, "password", passw);
+    }
 }

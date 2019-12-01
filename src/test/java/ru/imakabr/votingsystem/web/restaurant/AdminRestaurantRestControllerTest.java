@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.service.RestaurantService;
@@ -15,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.imakabr.votingsystem.RestaurantTestData.*;
+import static ru.imakabr.votingsystem.TestUtil.userHttpBasic;
 import static ru.imakabr.votingsystem.VoteTestData.*;
 import static ru.imakabr.votingsystem.UserTestData.*;
 import static ru.imakabr.votingsystem.TestUtil.readFromJson;
@@ -27,7 +29,8 @@ public class AdminRestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void testGetAll() throws Exception {
-        mockMvc.perform(get(REST_URL))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL)
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(KETCH_UP, KWAKINN, TOKYO_CITY, HACHAPURI_AND_WINE))
@@ -36,7 +39,8 @@ public class AdminRestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void testGet() throws Exception {
-        mockMvc.perform(get(REST_URL + "/" + TOKYO_CITY_ID))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/" + TOKYO_CITY_ID)
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(TOKYO_CITY))
@@ -46,9 +50,10 @@ public class AdminRestaurantRestControllerTest extends AbstractControllerTest {
     @Test
     void testCreate() throws Exception {
         Restaurant restaurant = new Restaurant(NEW_PUB);
-        ResultActions action = mockMvc.perform(post(REST_URL)
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(restaurant)))
+                .content(JsonUtil.writeValue(restaurant))
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isCreated());
 
         Restaurant returned = readFromJson(action, Restaurant.class);
@@ -60,16 +65,18 @@ public class AdminRestaurantRestControllerTest extends AbstractControllerTest {
     void testUpdate() throws Exception {
         Restaurant updated = new Restaurant(KETCH_UP);
         updated.setName("FAKETCH_UP");
-        mockMvc.perform(put(REST_URL + "/" + KETCH_UP_ID)
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + "/" + KETCH_UP_ID)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updated)))
+                .content(JsonUtil.writeValue(updated))
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isNoContent());
         assertMatch(restaurantService.get(KETCH_UP_ID), updated);
     }
 
     @Test
     void testDelete() throws Exception {
-        mockMvc.perform(delete(REST_URL + "/" + TOKYO_CITY_ID))
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + "/" + TOKYO_CITY_ID)
+                .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         assertMatch(restaurantService.getAll(), KETCH_UP, KWAKINN, HACHAPURI_AND_WINE);
@@ -77,7 +84,8 @@ public class AdminRestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getWithVotes() throws Exception {
-        mockMvc.perform(get(REST_URL + "/" + TOKYO_CITY_ID + "/votes"))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/" + TOKYO_CITY_ID + "/votes")
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(VOTE_FROM_ADMIN_FOR_TOKYO_21_09, VOTE_FROM_USER_FOR_TOKYO_20_09))
@@ -86,7 +94,8 @@ public class AdminRestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getWithVotesByDate() throws Exception {
-        mockMvc.perform(get(REST_URL + "/" + TOKYO_CITY_ID + "/users/filter").param("date", "2019-09-21"))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/" + TOKYO_CITY_ID + "/users/filter").param("date", "2019-09-21")
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(new User[]{ADMIN}))
