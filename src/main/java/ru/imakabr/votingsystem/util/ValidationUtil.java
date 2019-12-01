@@ -1,11 +1,14 @@
 package ru.imakabr.votingsystem.util;
 
 
+import org.slf4j.Logger;
 import ru.imakabr.votingsystem.model.AbstractBaseEntity;
 import ru.imakabr.votingsystem.model.Item;
+import ru.imakabr.votingsystem.util.exception.ErrorType;
 import ru.imakabr.votingsystem.util.exception.NotFoundException;
 import ru.imakabr.votingsystem.util.exception.TimeVoteLimitException;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -83,5 +86,19 @@ public class ValidationUtil {
             result = cause;
         }
         return result;
+    }
+
+    public static String getMessage(Throwable e) {
+        return e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.getClass().getName();
+    }
+
+    public static Throwable logAndGetRootCause(Logger log, HttpServletRequest req, Exception e, boolean logException, ErrorType errorType) {
+        Throwable rootCause = ValidationUtil.getRootCause(e);
+        if (logException) {
+            log.error(errorType + " at request " + req.getRequestURL(), rootCause);
+        } else {
+            log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), rootCause.toString());
+        }
+        return rootCause;
     }
 }
