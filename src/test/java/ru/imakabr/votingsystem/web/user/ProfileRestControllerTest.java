@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.imakabr.votingsystem.model.Role;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.to.UserTo;
@@ -19,6 +21,7 @@ import static ru.imakabr.votingsystem.TestUtil.readFromJson;
 import static ru.imakabr.votingsystem.TestUtil.userHttpBasic;
 import static ru.imakabr.votingsystem.UserTestData.*;
 import static ru.imakabr.votingsystem.util.exception.ErrorType.VALIDATION_ERROR;
+import static ru.imakabr.votingsystem.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
 import static ru.imakabr.votingsystem.web.user.ProfileRestController.REST_URL;
 
 class ProfileRestControllerTest extends AbstractControllerTest {
@@ -88,6 +91,20 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(errorType(VALIDATION_ERROR))
+                .andDo(print());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void updateDuplicate() throws Exception {
+        UserTo updatedTo = new UserTo(null, "newName", "admin@gmail.com", "newPassword");
+
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(USER))
+                .content(JsonUtil.writeValue(updatedTo)))
+                .andExpect(status().isConflict())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL))
                 .andDo(print());
     }
 }

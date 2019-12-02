@@ -34,9 +34,12 @@ import static ru.imakabr.votingsystem.util.exception.ErrorType.*;
 public class ExceptionInfoHandler {
     private static Logger log = LoggerFactory.getLogger(ExceptionInfoHandler.class);
 
+    public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
+    public static final String EXCEPTION_DUPLICATE_DATETIME = "You already have meal with this date/time";
+
     private static final Map<String, String> CONSTRAINS_MAP = Map.of(
-            "users_unique_email_idx", "User with this email already exists",
-            "meals_unique_user_datetime_idx", "You already have meal with this date/time");
+            "users_unique_email_idx", EXCEPTION_DUPLICATE_EMAIL,
+            "meals_unique_user_datetime_idx", EXCEPTION_DUPLICATE_DATETIME);
 
     //  http://stackoverflow.com/a/22358422/548473
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)

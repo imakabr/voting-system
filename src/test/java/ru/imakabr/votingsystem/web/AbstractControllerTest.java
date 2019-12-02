@@ -41,14 +41,6 @@ abstract public class AbstractControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-    //    @PostConstruct
-//    private void postConstruct() {
-//        mockMvc = MockMvcBuilders
-//                .webAppContextSetup(webApplicationContext)
-//                .addFilter(CHARACTER_ENCODING_FILTER)
-//                .build();
-//    }
-
     @PostConstruct
     private void postConstruct() {
         mockMvc = MockMvcBuilders
@@ -60,6 +52,10 @@ abstract public class AbstractControllerTest {
 
     public ResultMatcher errorType(ErrorType type) {
         return jsonPath("$.type").value(type.name());
+    }
+
+    public ResultMatcher detailMessage(String code) {
+        return jsonPath("$.details").value(code);
     }
 
 }
