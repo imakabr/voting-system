@@ -14,6 +14,7 @@ import ru.imakabr.votingsystem.service.ItemService;
 import ru.imakabr.votingsystem.service.RestaurantService;
 
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 
@@ -36,7 +37,7 @@ public class AdminItemRestController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Item> create(@RequestBody Item item) {
+    public ResponseEntity<Item> create(@Valid @RequestBody Item item) {
         log.info("create {}", item);
         Item created = itemService.create(item);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -47,7 +48,7 @@ public class AdminItemRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Item item, @PathVariable int id) {
+    public void update(@Valid @RequestBody Item item, @PathVariable int id) {
         log.info("update {}", item);
         itemService.update(item, id);
     }

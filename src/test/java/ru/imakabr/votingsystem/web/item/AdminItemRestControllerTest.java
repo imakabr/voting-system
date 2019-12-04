@@ -5,8 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.imakabr.votingsystem.model.Item;
 import ru.imakabr.votingsystem.model.Restaurant;
+import ru.imakabr.votingsystem.model.Role;
+import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.service.ItemService;
 import ru.imakabr.votingsystem.web.AbstractControllerTest;
 import ru.imakabr.votingsystem.web.json.JsonUtil;
@@ -22,6 +26,9 @@ import static ru.imakabr.votingsystem.RestaurantTestData.*;
 import static ru.imakabr.votingsystem.TestUtil.readFromJson;
 import static ru.imakabr.votingsystem.TestUtil.userHttpBasic;
 import static ru.imakabr.votingsystem.UserTestData.ADMIN;
+import static ru.imakabr.votingsystem.UserTestData.jsonWithPassword;
+import static ru.imakabr.votingsystem.util.exception.ErrorType.VALIDATION_ERROR;
+import static ru.imakabr.votingsystem.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
 import static ru.imakabr.votingsystem.web.item.AdminItemRestController.REST_URL;
 
 public class AdminItemRestControllerTest extends AbstractControllerTest {
@@ -46,10 +53,26 @@ public class AdminItemRestControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(expected))
                 .with(userHttpBasic(ADMIN)))
+                .andDo(print())
                 .andExpect(status().isCreated());
         Item returned = readFromJson(action, Item.class);
         expected.setId(returned.getId());
         assertMatch(returned, expected);
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void createDuplicate() throws Exception {
+        Item updated = new Item(ITEM0);
+        updated.setRestaurant(TOKYO_CITY);
+        mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JsonUtil.writeValue(updated)))
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL));
     }
 
     @Test

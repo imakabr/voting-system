@@ -2,6 +2,8 @@ package ru.imakabr.votingsystem;
 
 import org.springframework.test.web.servlet.ResultMatcher;
 import ru.imakabr.votingsystem.model.Item;
+import ru.imakabr.votingsystem.model.User;
+import ru.imakabr.votingsystem.web.json.JsonUtil;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -70,5 +72,10 @@ public class ItemTestData {
 
     public static ResultMatcher contentJson(Item expected) {
         return result -> assertMatch(readFromJsonMvcResult(result, Item.class), expected);
+    }
+
+    public static String jsonWithRestaurant(Item item, int restaurantId) {
+        return JsonUtil.writeAdditionProps(item, "restaurant", "{id: " + restaurantId +
+                 " }");
     }
 }
