@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import ru.imakabr.votingsystem.to.UserTo;
 import ru.imakabr.votingsystem.web.AbstractControllerTest;
 import ru.imakabr.votingsystem.model.Role;
 import ru.imakabr.votingsystem.model.User;
@@ -18,6 +21,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.imakabr.votingsystem.TestUtil.userHttpBasic;
 import static ru.imakabr.votingsystem.UserTestData.*;
 import static ru.imakabr.votingsystem.TestUtil.readFromJson;
+import static ru.imakabr.votingsystem.util.exception.ErrorType.VALIDATION_ERROR;
+import static ru.imakabr.votingsystem.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
+import static ru.imakabr.votingsystem.web.user.ProfileRestController.REST_URL;
 
 class AdminUserRestControllerTest extends AbstractControllerTest {
 
@@ -67,7 +73,7 @@ class AdminUserRestControllerTest extends AbstractControllerTest {
         updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
         mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updated))
+                .content(jsonWithPassword(updated, "password"))
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isNoContent());
 
@@ -98,5 +104,59 @@ class AdminUserRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(ADMIN, USER));
+    }
+
+    @Test
+    void updateInvalid() throws Exception {
+        User update = new User(null, null, "aaaaa", "newPass", Role.ROLE_USER, Role.ROLE_ADMIN);
+
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + USER_ID).contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JsonUtil.writeValue(update)))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andDo(print());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void updateDuplicate() throws Exception {
+        User updated = new User(USER);
+        updated.setEmail("admin@gmail.com");
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(jsonWithPassword(updated, "password")))
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL));
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void createDuplicate() throws Exception {
+        User expected = new User(null, "New", "user@yandex.ru", "newPass", Role.ROLE_USER, Role.ROLE_ADMIN);
+        mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(jsonWithPassword(expected, "newPass")))
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL));
+
+    }
+
+    @Test
+    void createInvalid() throws Exception {
+        User expected = new User(null, "ada", "", "newPass", Role.ROLE_USER, Role.ROLE_ADMIN);
+        mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(jsonWithPassword(expected, "newPass")))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andDo(print());
     }
 }
