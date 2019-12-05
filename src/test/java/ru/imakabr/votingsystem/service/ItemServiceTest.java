@@ -13,6 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.imakabr.votingsystem.ItemTestData.*;
 import static ru.imakabr.votingsystem.RestaurantTestData.TOKYO_CITY;
+import static ru.imakabr.votingsystem.RestaurantTestData.TOKYO_CITY_ID;
 
 public class ItemServiceTest extends AbstractServiceTest {
 
@@ -22,7 +23,7 @@ public class ItemServiceTest extends AbstractServiceTest {
     @Test
     void create() throws Exception {
         Item newItem = new Item(null, RestaurantTestData.TOKYO_CITY, "vodka", 700, LocalDate.of(2019, 9, 22));
-        Item created = itemService.create(newItem);
+        Item created = itemService.create(newItem, TOKYO_CITY_ID);
         newItem.setId(created.getId());
         assertMatch(created, newItem);
     }
@@ -30,14 +31,14 @@ public class ItemServiceTest extends AbstractServiceTest {
     @Test
     void duplicateCreate() throws Exception {
         assertThrows(DataAccessException.class, () ->
-                itemService.create(new Item(null, TOKYO_CITY, "wok", 200, LocalDate.of(2019, 9, 20))));
+                itemService.create(new Item(null, TOKYO_CITY, "wok", 200, LocalDate.of(2019, 9, 20)), TOKYO_CITY_ID));
     }
 
     @Test
     void update() throws Exception {
         Item updated = new Item(ITEM0);
         updated.setPrice(200);
-        itemService.update(updated, updated.getId());
+        itemService.update(updated, TOKYO_CITY_ID, updated.getId());
         Integer id = updated.getId();
         assertMatch(itemService.get(id), updated);
     }

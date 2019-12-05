@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.imakabr.votingsystem.model.Item;
 import ru.imakabr.votingsystem.repository.ItemRepository;
+import ru.imakabr.votingsystem.repository.RestaurantRepository;
 import ru.imakabr.votingsystem.util.ValidationUtil;
 
 import java.util.List;
@@ -16,13 +17,17 @@ public class ItemService {
 
     private ItemRepository repository;
 
+    private RestaurantRepository restaurantRepository;
+
     @Autowired
-    public ItemService(ItemRepository repository) {
+    public ItemService(ItemRepository repository, RestaurantRepository restaurantRepository) {
         this.repository = repository;
+        this.restaurantRepository = restaurantRepository;
     }
 
-    public Item create(Item item) {
+    public Item create(Item item, int restaurantId) {
         Assert.notNull(item, "item must not be null");
+        item.setRestaurant(restaurantRepository.getOne(restaurantId));
         return repository.save(item);
     }
 
@@ -38,9 +43,10 @@ public class ItemService {
         return repository.findAll();
     }
 
-    public void update(Item item, int id) {
+    public void update(Item item, int restaurantId, int itemId) {
         Assert.notNull(item, "item must not be null");
-        ValidationUtil.assureItemIdConsistent(item, id);
+        ValidationUtil.assureItemIdConsistent(item, itemId);
+        item.setRestaurant(restaurantRepository.getOne(restaurantId));
         checkNotFoundWithId(repository.save(item), item.getId());
     }
 
