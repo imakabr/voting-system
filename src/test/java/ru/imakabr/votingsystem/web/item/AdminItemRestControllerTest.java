@@ -30,6 +30,7 @@ import static ru.imakabr.votingsystem.RestaurantTestData.*;
 import static ru.imakabr.votingsystem.TestUtil.readFromJson;
 import static ru.imakabr.votingsystem.TestUtil.userHttpBasic;
 import static ru.imakabr.votingsystem.UserTestData.*;
+import static ru.imakabr.votingsystem.util.exception.ErrorType.DATA_NOT_FOUND;
 import static ru.imakabr.votingsystem.util.exception.ErrorType.VALIDATION_ERROR;
 import static ru.imakabr.votingsystem.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
 import static ru.imakabr.votingsystem.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_ITEM;
@@ -56,6 +57,15 @@ public class AdminItemRestControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(ITEM0))
                 .andDo(print());
+    }
+
+    @Test
+    void getInvalid() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/items/" + 1000)
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(DATA_NOT_FOUND));
     }
 
     @Test
@@ -146,6 +156,15 @@ public class AdminItemRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
         assertMatch(itemService.getAll(), ITEM1, ITEM2, ITEM3, ITEM4, ITEM5, ITEM6, ITEM7);
+    }
+
+    @Test
+    void deleteInvalid() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + "/items/" + 10000)
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(DATA_NOT_FOUND));
     }
 
     @Test

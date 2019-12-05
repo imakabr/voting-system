@@ -35,9 +35,11 @@ public class ExceptionInfoHandler {
 
     public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
     public static final String EXCEPTION_DUPLICATE_ITEM = "You already have item with this name and date for this restaurant";
+    public static final String EXCEPTION_DUPLICATE_RESTAURANT = "You already have restaurant with this name";
 
     private static final Map<String, String> CONSTRAINS_MAP = Map.of(
             "users_unique_email_idx", EXCEPTION_DUPLICATE_EMAIL,
+            "restaurants_idx", EXCEPTION_DUPLICATE_RESTAURANT,
             "items_idx", EXCEPTION_DUPLICATE_ITEM);
 
     //  http://stackoverflow.com/a/22358422/548473

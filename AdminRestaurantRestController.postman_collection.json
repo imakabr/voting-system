@@ -8,6 +8,21 @@
 		{
 			"name": "http://localhost:8080/voting/rest/admin/restaurants/",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin@gmail.com",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -31,6 +46,21 @@
 		{
 			"name": "http://localhost:8080/voting/rest/admin/restaurants/100002",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin@gmail.com",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -54,6 +84,21 @@
 		{
 			"name": "http://localhost:8080/voting/rest/admin/restaurants/",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin@gmail.com",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -93,6 +138,21 @@
 		{
 			"name": "http://localhost:8080/voting/rest/admin/restaurants/100006",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin@gmail.com",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [
 					{
@@ -132,6 +192,21 @@
 		{
 			"name": "http://localhost:8080/voting/rest/admin/restaurants/100006",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin@gmail.com",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"url": {
@@ -153,8 +228,23 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/voting/rest/admin/restaurants/100002",
+			"name": "http://localhost:8080/voting/rest/admin/restaurants/100002/votes",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin@gmail.com",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -179,6 +269,21 @@
 		{
 			"name": "http://localhost:8080/voting/rest/admin/restaurants/100002/users/filter?date=2019-10-02",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin@gmail.com",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {

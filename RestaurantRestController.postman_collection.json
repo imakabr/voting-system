@@ -6,8 +6,23 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:8080/voting/rest/restaurants",
+			"name": "http://localhost:8080/voting/rest/restaurants/today",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user@yandex.ru",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -30,6 +45,21 @@
 		{
 			"name": "http://localhost:8080/voting/rest/restaurants/filter?date=2019-09-21",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user@yandex.ru",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -58,6 +88,21 @@
 		{
 			"name": "http://localhost:8080/voting/rest/restaurants/100002/today",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user@yandex.ru",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -79,8 +124,23 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/voting/rest/restaurants/100002/today Copy",
+			"name": "http://localhost:8080/voting/rest/restaurants/100003/filter?date=2019-09-21",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user@yandex.ru",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -108,8 +168,23 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/voting/rest/restaurants/100002/today Copy Copy",
+			"name": "http://localhost:8080/voting/rest/restaurants/list",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user@yandex.ru",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -130,8 +205,23 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/voting/rest/restaurants/100002/today Copy Copy Copy",
+			"name": "http://localhost:8080/voting/rest/restaurants/vote/today",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user@yandex.ru",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -155,6 +245,21 @@
 		{
 			"name": "http://localhost:8080/voting/rest/restaurants/vote/filter?date=2019-09-20",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user@yandex.ru",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {

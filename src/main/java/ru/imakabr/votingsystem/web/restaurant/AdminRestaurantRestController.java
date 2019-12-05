@@ -17,6 +17,7 @@ import ru.imakabr.votingsystem.service.VoteService;
 import ru.imakabr.votingsystem.to.RestaurantTO;
 import ru.imakabr.votingsystem.web.SecurityUtil;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
@@ -45,7 +46,7 @@ public class AdminRestaurantRestController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> create(@Valid @RequestBody Restaurant restaurant) {
         log.info("create {}", restaurant);
         Restaurant created = restaurantService.create(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -56,7 +57,7 @@ public class AdminRestaurantRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
+    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
         log.info("update {}", restaurant);
         restaurantService.update(restaurant, id);
     }
