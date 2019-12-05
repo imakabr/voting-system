@@ -13,7 +13,9 @@ import ru.imakabr.votingsystem.model.Vote;
 import ru.imakabr.votingsystem.service.VoteService;
 import ru.imakabr.votingsystem.web.SecurityUtil;
 
+import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 import static ru.imakabr.votingsystem.util.ValidationUtil.checkNew;
@@ -22,7 +24,7 @@ import static ru.imakabr.votingsystem.util.ValidationUtil.checkNew;
 @RequestMapping(value = VoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteRestController {
 
-    public static final String REST_URL = "/rest/votes";
+    public static final String REST_URL = "/rest/restaurants/votes";
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -34,19 +36,30 @@ public class VoteRestController {
         return voteService.getAllVotesByUserId(SecurityUtil.authUserId());
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Vote> create(@RequestBody Restaurant restaurant) {
+    @GetMapping("/today")
+    public Vote getVoteToday() {
+        LocalDate date = LocalDate.now();
+        return voteService.getVoteByUserIdAndDate(SecurityUtil.authUserId(), date);
+    }
+
+    @GetMapping("/filter")
+    public Vote getVoteByDate(@RequestParam(required = false) LocalDate date) {
+        return voteService.getVoteByUserIdAndDate(SecurityUtil.authUserId(), date);
+    }
+
+    @PostMapping()
+    public ResponseEntity<Vote> create(@Valid @RequestBody Restaurant restaurant) {
         log.info("create vote");
         Vote created = voteService.create(restaurant, SecurityUtil.authUserId());
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
+                .path(REST_URL + "/votes/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
+    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
         log.info("update vote");
         voteService.update(restaurant, SecurityUtil.authUserId(), id);
     }

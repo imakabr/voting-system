@@ -39,6 +39,7 @@ public class VoteRestControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(restaurant))
                 .with(userHttpBasic(ADMIN)))
+                .andDo(print())
                 .andExpect(status().isCreated());
 
         Vote returned = readFromJson(action, Vote.class);

@@ -77,7 +77,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void testGetVoteByDate() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/vote/filter").param("date", "2019-09-20")
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/votes/filter").param("date", "2019-09-20")
                 .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

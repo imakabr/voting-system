@@ -7,6 +7,7 @@ import org.springframework.util.Assert;
 import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.model.Vote;
+import ru.imakabr.votingsystem.repository.RestaurantRepository;
 import ru.imakabr.votingsystem.repository.UserRepository;
 import ru.imakabr.votingsystem.repository.VoteRepository;
 

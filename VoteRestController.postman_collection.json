@@ -8,6 +8,21 @@
 		{
 			"name": "http://localhost:8080/voting/rest/votes",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user@yandex.ru",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -19,10 +34,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": 100002,\n    \"name\": \"TOKYO-CITY\"\n}"
+					"raw": "{\n    \"id\": 100002,\n    \"name\": \"TOKYO-CITY\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/voting/rest/votes",
+					"raw": "http://localhost:8080/voting/rest/restaurants/votes",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -31,6 +51,7 @@
 					"path": [
 						"voting",
 						"rest",
+						"restaurants",
 						"votes"
 					]
 				}
@@ -40,6 +61,21 @@
 		{
 			"name": "http://localhost:8080/voting/rest/votes/100003",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user@yandex.ru",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [
 					{
@@ -54,7 +90,7 @@
 					"raw": "{\n    \"id\": 100003,\n    \"name\": \"KETCH-UP\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/voting/rest/votes/100003",
+					"raw": "http://localhost:8080/voting/rest/restaurants/votes/100003",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -63,6 +99,7 @@
 					"path": [
 						"voting",
 						"rest",
+						"restaurants",
 						"votes",
 						"100003"
 					]
@@ -99,10 +136,25 @@
 		{
 			"name": "http://localhost:8080/voting/rest/votes/",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user@yandex.ru",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/voting/rest/votes/",
+					"raw": "http://localhost:8080/voting/rest/restaurants/votes/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -111,8 +163,91 @@
 					"path": [
 						"voting",
 						"rest",
+						"restaurants",
 						"votes",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/restaurants/vote/today",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user@yandex.ru",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/restaurants/votes/today",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"restaurants",
+						"votes",
+						"today"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/voting/rest/restaurants/vote/filter?date=2019-09-20",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user@yandex.ru",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/voting/rest/restaurants/votes/filter?date=2019-09-20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"voting",
+						"rest",
+						"restaurants",
+						"votes",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2019-09-20"
+						}
 					]
 				}
 			},

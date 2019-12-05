@@ -25,9 +25,6 @@ public class RestaurantRestController {
     @Autowired
     protected RestaurantService restaurantService;
 
-    @Autowired
-    protected VoteService voteService;
-
     @GetMapping("/list")
     public List<Restaurant> getAll() {
         log.info("getList");
@@ -56,17 +53,6 @@ public class RestaurantRestController {
     public List<Restaurant> getAllByDate(@RequestParam(required = false) LocalDate date) {
         log.info("getAllByDate/filter");
         return restaurantService.getAllWithItemsByDate(date);
-    }
-
-    @GetMapping("/vote/today")
-    public Vote getVoteToday() {
-        LocalDate date = LocalDate.now();
-        return voteService.getVoteByUserIdAndDate(SecurityUtil.authUserId(), date);
-    }
-
-    @GetMapping("/vote/filter")
-    public Vote getVoteByDate(@RequestParam(required = false) LocalDate date) {
-        return voteService.getVoteByUserIdAndDate(SecurityUtil.authUserId(), date);
     }
 
 }
