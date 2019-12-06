@@ -1,20 +1,13 @@
 package ru.imakabr.votingsystem.service;
 
-import org.hibernate.Filter;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.repository.RestaurantRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static ru.imakabr.votingsystem.util.ValidationUtil.checkNotFoundWithId;

@@ -31,7 +31,4 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     @Query("SELECT r FROM Restaurant r JOIN r.items i on i.date=:date")
     List<Restaurant> getAllWithItemsByDate(@Param("date") LocalDate date);
 
-    @EntityGraph(attributePaths = {"items"}, type = EntityGraph.EntityGraphType.FETCH)
-    List<Restaurant> findAll();
-
 }

@@ -1,8 +1,6 @@
 package ru.imakabr.votingsystem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.data.domain.Sort;
@@ -50,7 +48,6 @@ public class UserService implements UserDetailsService {
 
     public User get(int id) {
         return checkNotFoundWithId(repository.findById(id).orElse(null), id);
-//        return checkNotFoundWithId(repository.findById(id), id);
     }
 
     public User getByEmail(String email) {

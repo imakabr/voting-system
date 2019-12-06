@@ -7,7 +7,6 @@ import org.springframework.util.Assert;
 import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.model.Vote;
-import ru.imakabr.votingsystem.repository.RestaurantRepository;
 import ru.imakabr.votingsystem.repository.UserRepository;
 import ru.imakabr.votingsystem.repository.VoteRepository;
 
@@ -55,10 +54,6 @@ public class VoteService {
         return checkNotFoundWithId(voteRepository.findById(voteId).filter(vote -> vote.getUser().getId() == userId).orElse(null), voteId);
     }
 
-    public List<Vote> getAll() {
-        return voteRepository.findAll(SORT_NAME);
-    }
-
     public List<Vote> getAllVotesByUserId(int userId) {
         return checkNotFoundWithId(voteRepository.getAllVotesByUserId(userId), userId);
     }
@@ -68,7 +63,7 @@ public class VoteService {
     }
 
     public Vote getVoteByUserIdAndDate(int userId, LocalDate date) {
-        return /*checkNotFoundWithId(*/voteRepository.getVoteByUserIdAndDate(userId, date)/*, userId)*/;
+        return checkNotFoundWithId(voteRepository.getVoteByUserIdAndDate(userId, date), userId);
     }
 
     public List<User> getAllUsersByRestaurantIdAndDate(int restId, LocalDate date) {
