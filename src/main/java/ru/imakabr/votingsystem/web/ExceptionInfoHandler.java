@@ -16,12 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import ru.imakabr.votingsystem.util.ValidationUtil;
-import ru.imakabr.votingsystem.util.exception.ErrorInfo;
-import ru.imakabr.votingsystem.util.exception.ErrorType;
-import ru.imakabr.votingsystem.util.exception.IllegalRequestDataException;
-import ru.imakabr.votingsystem.util.exception.NotFoundException;
+import ru.imakabr.votingsystem.util.exception.*;
 
 
+import javax.naming.TimeLimitExceededException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Optional;
@@ -49,6 +47,12 @@ public class ExceptionInfoHandler {
     @ExceptionHandler(NotFoundException.class)
     public ErrorInfo handleError(HttpServletRequest req, NotFoundException e) {
         return logAndGetErrorInfo(req, e, false, DATA_NOT_FOUND);
+    }
+
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(TimeVoteLimitException.class)
+    public ErrorInfo timeVoteLimitError(HttpServletRequest req, TimeVoteLimitException e) {
+        return logAndGetErrorInfo(req, e, true, VOTING_ERROR);
     }
 
     @ResponseStatus(value = HttpStatus.CONFLICT)  // 409

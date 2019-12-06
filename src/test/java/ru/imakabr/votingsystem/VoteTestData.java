@@ -7,12 +7,14 @@ import ru.imakabr.votingsystem.model.Vote;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static ru.imakabr.votingsystem.TestUtil.readFromJsonMvcResult;
 import static ru.imakabr.votingsystem.TestUtil.readListFromJsonMvcResult;
 import static ru.imakabr.votingsystem.model.Vote.START_SEQ;
+import static ru.imakabr.votingsystem.util.ValidationUtil.timeRestriction;
 
 public class VoteTestData {
 
@@ -41,4 +43,10 @@ public class VoteTestData {
     public static ResultMatcher contentJson(Vote expected) {
         return result -> assertMatch(readFromJsonMvcResult(result, Vote.class), expected);
     }
+
+    public static boolean checkTime() {
+        LocalTime now = LocalTime.now();
+        return !timeRestriction.isBefore(now);
+    }
+
 }
