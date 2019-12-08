@@ -1,6 +1,10 @@
 package ru.imakabr.votingsystem.web;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -12,6 +16,8 @@ import ru.imakabr.votingsystem.service.UserService;
 import ru.imakabr.votingsystem.util.exception.ErrorType;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -41,6 +47,12 @@ abstract public class AbstractControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    @Autowired
+    private CacheManager cacheManager;
+
+    @PersistenceContext
+    private EntityManager em;
+
     @PostConstruct
     private void postConstruct() {
         mockMvc = MockMvcBuilders
@@ -48,6 +60,15 @@ abstract public class AbstractControllerTest {
                 .addFilter(CHARACTER_ENCODING_FILTER)
                 .apply(springSecurity())
                 .build();
+    }
+
+    @BeforeEach
+    void setUp() {
+        cacheManager.getCache("allRestaurantsWithItemsByDate").clear();
+        cacheManager.getCache("oneRestaurantWithItemsByDate").clear();
+        Session s = (Session) em.getDelegate();
+        SessionFactory sf = s.getSessionFactory();
+        sf.getCache().evictAllRegions();
     }
 
     public ResultMatcher errorType(ErrorType type) {

@@ -14,19 +14,9 @@
 
     <beans:bean class="org.springframework.security.crypto.factory.PasswordEncoderFactories" id="passwordEncoder" factory-method="createDelegatingPasswordEncoder"/>
 
-
-<!--    <beans:bean class="org.springframework.security.crypto.password.NoOpPasswordEncoder" id="passwordEncoder"/>-->
-
     <authentication-manager>
         <authentication-provider user-service-ref="userService">
-<!--        <authentication-provider>-->
             <password-encoder ref="passwordEncoder"/>
-
-<!--            <user-service>-->
-<!--                <user name="user@yandex.ru" password="password" authorities="ROLE_USER"/>-->
-<!--                <user name="admin@gmail.com" password="admin" authorities="ROLE_ADMIN"/>-->
-<!--            </user-service>-->
-
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

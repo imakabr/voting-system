@@ -1,10 +1,8 @@
 package ru.imakabr.votingsystem;
 
 import org.springframework.test.web.servlet.ResultMatcher;
-import ru.imakabr.votingsystem.model.Item;
 import ru.imakabr.votingsystem.model.Restaurant;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;

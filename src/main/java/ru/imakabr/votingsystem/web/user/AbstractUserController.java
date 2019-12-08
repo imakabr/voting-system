@@ -3,7 +3,6 @@ package ru.imakabr.votingsystem.web.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.service.UserService;
 import ru.imakabr.votingsystem.to.UserTo;
@@ -11,7 +10,6 @@ import ru.imakabr.votingsystem.util.UserUtil;
 
 import static ru.imakabr.votingsystem.util.ValidationUtil.assureIdConsistent;
 import static ru.imakabr.votingsystem.util.ValidationUtil.checkNew;
-import static ru.imakabr.votingsystem.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
 
 public abstract class AbstractUserController {
     protected final Logger log = LoggerFactory.getLogger(getClass());

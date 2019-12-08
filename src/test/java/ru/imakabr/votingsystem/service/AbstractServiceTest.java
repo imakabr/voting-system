@@ -1,35 +1,41 @@
 package ru.imakabr.votingsystem.service;
 
 
-import org.junit.jupiter.api.Test;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
+import org.springframework.cache.CacheManager;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import ru.imakabr.votingsystem.TimingExtension;
-import ru.imakabr.votingsystem.model.Role;
-import ru.imakabr.votingsystem.model.User;
-import ru.imakabr.votingsystem.service.UserService;
-import ru.imakabr.votingsystem.util.exception.NotFoundException;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static ru.imakabr.votingsystem.UserTestData.*;
 
 @SpringJUnitConfig(locations = {
         "classpath:spring/spring-app.xml",
         "classpath:spring/spring-db.xml"
 })
-//@ExtendWith(SpringExtension.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 @ExtendWith(TimingExtension.class)
 class AbstractServiceTest {
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    @PersistenceContext
+    private EntityManager em;
+
+    @BeforeEach
+    void setUp() {
+        cacheManager.getCache("allRestaurantsWithItemsByDate").clear();
+        cacheManager.getCache("oneRestaurantWithItemsByDate").clear();
+        Session s = (Session) em.getDelegate();
+        SessionFactory sf = s.getSessionFactory();
+        sf.getCache().evictAllRegions();
+    }
 }

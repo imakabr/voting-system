@@ -6,11 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.imakabr.votingsystem.model.Restaurant;
-import ru.imakabr.votingsystem.model.Vote;
 import ru.imakabr.votingsystem.service.RestaurantService;
-import ru.imakabr.votingsystem.service.VoteService;
-import ru.imakabr.votingsystem.to.RestaurantTO;
-import ru.imakabr.votingsystem.web.SecurityUtil;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -43,7 +39,7 @@ public class RestaurantRestController {
     }
 
     @GetMapping("/today")
-    public List<Restaurant> getAllToday() {
+    public List<Restaurant> getAllTodayWithItems() {
         log.info("getAll");
         LocalDate date = LocalDate.now();
         return restaurantService.getAllWithItemsByDate(date);

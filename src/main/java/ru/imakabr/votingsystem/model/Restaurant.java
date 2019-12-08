@@ -3,6 +3,7 @@ package ru.imakabr.votingsystem.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @NamedQueries(
         @NamedQuery(name = Restaurant.DELETE, query = "DELETE FROM Restaurant r WHERE r.id=:id")
 )
@@ -21,9 +23,9 @@ public class Restaurant extends AbstractNamedEntity {
 
     public static final String DELETE = "Restaurant.delete";
 
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     @BatchSize(size = 200)
-//    @JsonIgnore
     @JsonManagedReference
     protected List<Item> items;
 

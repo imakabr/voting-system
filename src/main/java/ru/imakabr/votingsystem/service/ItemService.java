@@ -1,6 +1,7 @@
 package ru.imakabr.votingsystem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.imakabr.votingsystem.model.Item;
@@ -25,12 +26,14 @@ public class ItemService {
         this.restaurantRepository = restaurantRepository;
     }
 
+    @CacheEvict(value = {"allRestaurantsWithItemsByDate", "oneRestaurantWithItemsByDate"}, allEntries = true)
     public Item create(Item item, int restaurantId) {
         Assert.notNull(item, "item must not be null");
         item.setRestaurant(restaurantRepository.getOne(restaurantId));
         return itemRepository.save(item);
     }
 
+    @CacheEvict(value = {"allRestaurantsWithItemsByDate", "oneRestaurantWithItemsByDate"}, allEntries = true)
     public void delete(int id) {
         checkNotFoundWithId(itemRepository.delete(id) != 0, id);
     }
@@ -43,6 +46,7 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
+    @CacheEvict(value = {"allRestaurantsWithItemsByDate", "oneRestaurantWithItemsByDate"}, allEntries = true)
     public void update(Item item, int restaurantId, int itemId) {
         Assert.notNull(item, "item must not be null");
         ValidationUtil.assureItemIdConsistent(item, itemId);

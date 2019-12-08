@@ -1,18 +1,20 @@
 package ru.imakabr.votingsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "items")
 @Access(AccessType.FIELD)
@@ -36,14 +38,12 @@ public class Item {
 
     @Column(name = "date_time", nullable = false)
     @NotNull
-    //@JsonIgnore
     private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "rest_id")
     @BatchSize(size = 200)
-//    @JsonIgnore
     @JsonBackReference
     private Restaurant restaurant;
 

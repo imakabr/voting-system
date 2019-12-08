@@ -10,7 +10,6 @@ import ru.imakabr.votingsystem.util.exception.TimeVoteLimitException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -19,7 +18,7 @@ public class ValidationUtil {
     private ValidationUtil() {
     }
 
-    public final static LocalTime timeRestriction = LocalTime.of(22, 0); // 11 00
+    public final static LocalTime timeRestriction = LocalTime.of(23, 59); // 11 00
     private final static DateTimeFormatter timePattern = DateTimeFormatter.ofPattern("hh:mm:ss a");
 
     public static void checkDateTime(LocalDate date) {

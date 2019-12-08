@@ -19,7 +19,6 @@ import ru.imakabr.votingsystem.util.ValidationUtil;
 import ru.imakabr.votingsystem.util.exception.*;
 
 
-import javax.naming.TimeLimitExceededException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Optional;
@@ -42,7 +41,6 @@ public class ExceptionInfoHandler {
             "votes_idx", EXCEPTION_DUPLICATE_VOTE,
             "items_idx", EXCEPTION_DUPLICATE_ITEM);
 
-    //  http://stackoverflow.com/a/22358422/548473
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(NotFoundException.class)
     public ErrorInfo handleError(HttpServletRequest req, NotFoundException e) {

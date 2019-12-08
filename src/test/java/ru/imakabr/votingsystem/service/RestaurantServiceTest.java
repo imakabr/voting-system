@@ -66,15 +66,6 @@ public class RestaurantServiceTest extends AbstractServiceTest {
                 restaurantService.delete(1111));
     }
 
-
-//    @Test
-//    void getWithVotes() throws Exception {
-//        Restaurant actual = restaurantService.getWithVotes(TOKYO_CITY_ID);
-//        Vote vote = actual.getVotes().get(0);
-//        UserTestData.assertMatch(vote.getUser(), UserTestData.USER);
-//        assertMatch(vote.getRestaurant(), TOKYO_CITY);
-//    }
-
     @Test
     void getWithItems() throws Exception {
         Restaurant actual = restaurantService.getWithItems(TOKYO_CITY_ID);

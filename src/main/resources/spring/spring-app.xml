@@ -5,5 +5,6 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <import resource="spring-security.xml"/>
+    <import resource="spring-tools.xml"/>
     <context:component-scan base-package="ru.imakabr.**.service"/>
 </beans>

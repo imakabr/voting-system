@@ -8,19 +8,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.imakabr.votingsystem.model.Item;
-import ru.imakabr.votingsystem.model.Restaurant;
-import ru.imakabr.votingsystem.model.Role;
-import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.service.ItemService;
-import ru.imakabr.votingsystem.to.UserTo;
 import ru.imakabr.votingsystem.web.AbstractControllerTest;
 import ru.imakabr.votingsystem.web.json.JsonUtil;
-import ru.imakabr.votingsystem.web.restaurant.AdminRestaurantRestController;
-import ru.imakabr.votingsystem.web.user.ProfileRestController;
 
 import java.time.LocalDate;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,7 +25,6 @@ import static ru.imakabr.votingsystem.TestUtil.userHttpBasic;
 import static ru.imakabr.votingsystem.UserTestData.*;
 import static ru.imakabr.votingsystem.util.exception.ErrorType.DATA_NOT_FOUND;
 import static ru.imakabr.votingsystem.util.exception.ErrorType.VALIDATION_ERROR;
-import static ru.imakabr.votingsystem.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
 import static ru.imakabr.votingsystem.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_ITEM;
 import static ru.imakabr.votingsystem.web.item.AdminItemRestController.REST_URL;
 
@@ -47,7 +39,6 @@ public class AdminItemRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isUnauthorized());
     }
-
 
     @Test
     void get() throws Exception {

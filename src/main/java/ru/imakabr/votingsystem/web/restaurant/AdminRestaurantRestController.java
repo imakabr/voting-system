@@ -8,14 +8,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.imakabr.votingsystem.model.Item;
 import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.model.Vote;
 import ru.imakabr.votingsystem.service.RestaurantService;
 import ru.imakabr.votingsystem.service.VoteService;
-import ru.imakabr.votingsystem.to.RestaurantTO;
-import ru.imakabr.votingsystem.web.SecurityUtil;
 
 import javax.validation.Valid;
 import java.net.URI;

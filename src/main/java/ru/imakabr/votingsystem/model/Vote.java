@@ -26,7 +26,6 @@ public class Vote {
     @JoinColumn(
             name = "user_id")
     @BatchSize(size = 200)
-    //@JsonIgnore
     protected User user;
 
     @ManyToOne(fetch = FetchType.LAZY)

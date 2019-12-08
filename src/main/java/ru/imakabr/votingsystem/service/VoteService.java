@@ -17,7 +17,6 @@ import static ru.imakabr.votingsystem.util.ValidationUtil.*;
 
 @Service
 public class VoteService {
-    private static final Sort SORT_NAME = new Sort(Sort.Direction.ASC, "date");
 
     private final VoteRepository voteRepository;
 

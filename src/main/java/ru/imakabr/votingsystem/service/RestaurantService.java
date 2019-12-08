@@ -1,6 +1,7 @@
 package ru.imakabr.votingsystem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -46,6 +47,7 @@ public class RestaurantService {
         checkNotFoundWithId(repository.save(restaurant), restaurant.getId());
     }
 
+    @Cacheable("allRestaurantsWithItemsByDate")
     public List<Restaurant> getAllWithItemsByDate(LocalDate date) {
         return repository.getAllWithItemsByDate(date);
     }
@@ -54,6 +56,7 @@ public class RestaurantService {
         return checkNotFoundWithId(repository.getWithItems(id), id);
     }
 
+    @Cacheable("oneRestaurantWithItemsByDate")
     public Restaurant getWithItemsByDate(int id, LocalDate date) {
         return checkNotFoundWithId(repository.getWithItemsByDate(id, date), id);
     }

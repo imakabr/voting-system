@@ -7,20 +7,15 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.imakabr.votingsystem.model.Item;
 import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.model.User;
 import ru.imakabr.votingsystem.service.RestaurantService;
 import ru.imakabr.votingsystem.web.AbstractControllerTest;
-import ru.imakabr.votingsystem.web.item.AdminItemRestController;
 import ru.imakabr.votingsystem.web.json.JsonUtil;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.imakabr.votingsystem.ItemTestData.NEW_ITEM;
-import static ru.imakabr.votingsystem.ItemTestData.START_ITEM_ID;
 import static ru.imakabr.votingsystem.RestaurantTestData.*;
 import static ru.imakabr.votingsystem.TestUtil.userHttpBasic;
 import static ru.imakabr.votingsystem.VoteTestData.*;
@@ -28,7 +23,6 @@ import static ru.imakabr.votingsystem.UserTestData.*;
 import static ru.imakabr.votingsystem.TestUtil.readFromJson;
 import static ru.imakabr.votingsystem.util.exception.ErrorType.DATA_NOT_FOUND;
 import static ru.imakabr.votingsystem.util.exception.ErrorType.VALIDATION_ERROR;
-import static ru.imakabr.votingsystem.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_ITEM;
 import static ru.imakabr.votingsystem.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_RESTAURANT;
 import static ru.imakabr.votingsystem.web.restaurant.AdminRestaurantRestController.REST_URL;
 

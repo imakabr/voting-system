@@ -18,8 +18,6 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
-import static ru.imakabr.votingsystem.util.ValidationUtil.checkNew;
-
 @RestController
 @RequestMapping(value = VoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteRestController {

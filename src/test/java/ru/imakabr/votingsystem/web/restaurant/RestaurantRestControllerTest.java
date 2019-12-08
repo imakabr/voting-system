@@ -6,20 +6,15 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.imakabr.votingsystem.model.Restaurant;
 import ru.imakabr.votingsystem.web.AbstractControllerTest;
-import ru.imakabr.votingsystem.web.item.AdminItemRestController;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.imakabr.votingsystem.RestaurantTestData.*;
 import static ru.imakabr.votingsystem.ItemTestData.*;
 import static ru.imakabr.votingsystem.TestUtil.userHttpBasic;
-import static ru.imakabr.votingsystem.UserTestData.ADMIN;
 import static ru.imakabr.votingsystem.UserTestData.USER;
-import static ru.imakabr.votingsystem.VoteTestData.*;
 import static ru.imakabr.votingsystem.TestUtil.readFromJson;
-import static ru.imakabr.votingsystem.util.exception.ErrorType.DATA_NOT_FOUND;
 import static ru.imakabr.votingsystem.web.restaurant.RestaurantRestController.REST_URL;
 
 public class RestaurantRestControllerTest extends AbstractControllerTest {
