@@ -5,7 +5,8 @@ public enum ErrorType {
     DATA_NOT_FOUND("Data not found!!"),
     DATA_ERROR("Data error!!"),
     VALIDATION_ERROR("Validation error!!"),
-    VOTING_ERROR("Voting error!!");
+    VOTING_ERROR("Voting error!!"),
+    WRONG_REQUEST("Wrong request!!");
 
     private final String errorCode;
 

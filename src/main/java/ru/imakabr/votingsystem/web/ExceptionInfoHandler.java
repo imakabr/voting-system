@@ -2,8 +2,6 @@ package ru.imakabr.votingsystem.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -12,9 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import ru.imakabr.votingsystem.util.ValidationUtil;
 import ru.imakabr.votingsystem.util.exception.*;
 
@@ -25,9 +23,8 @@ import java.util.Optional;
 
 import static ru.imakabr.votingsystem.util.exception.ErrorType.*;
 
-@RestControllerAdvice(annotations = RestController.class)
-@Order(Ordered.HIGHEST_PRECEDENCE + 5)
-public class ExceptionInfoHandler {
+@RestControllerAdvice
+public class ExceptionInfoHandler  {
     private static Logger log = LoggerFactory.getLogger(ExceptionInfoHandler.class);
 
     public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
@@ -40,6 +37,12 @@ public class ExceptionInfoHandler {
             "restaurants_idx", EXCEPTION_DUPLICATE_RESTAURANT,
             "votes_idx", EXCEPTION_DUPLICATE_VOTE,
             "items_idx", EXCEPTION_DUPLICATE_ITEM);
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ErrorInfo wrongRequest(HttpServletRequest req, NoHandlerFoundException e) throws Exception {
+        return logAndGetErrorInfo(req, e, false, ErrorType.WRONG_REQUEST);
+    }
 
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(NotFoundException.class)
@@ -100,4 +103,5 @@ public class ExceptionInfoHandler {
                 errorType.getErrorCode(),
                 details.length != 0 ? details : new String[]{ValidationUtil.getMessage(rootCause)});
     }
+
 }

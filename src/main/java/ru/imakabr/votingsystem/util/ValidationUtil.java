@@ -18,7 +18,7 @@ public class ValidationUtil {
     private ValidationUtil() {
     }
 
-    public final static LocalTime timeRestriction = LocalTime.of(23, 59); // 11 00
+    public final static LocalTime timeRestriction = LocalTime.of(23, 00); // 11 00
     private final static DateTimeFormatter timePattern = DateTimeFormatter.ofPattern("hh:mm:ss a");
 
     public static void checkDateTime(LocalDate date) {
