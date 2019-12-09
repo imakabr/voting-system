@@ -1,17 +1,6 @@
 ### curl samples (application deployed in application context `voting-system`).
 > For windows use `Git Bash`
 
-#### filter Meals
-`curl -s "http://localhost:8080/topjava/rest/profile/meals/filter?startDate=2015-05-30&startTime=07:00:00&endDate=2015-05-31&endTime=11:00:00" --user user@yandex.ru:password`
-
-#### get Meals not found
-`curl -s -v http://localhost:8080/topjava/rest/profile/meals/100008 --user user@yandex.ru:password`
-
-
-#### validate with Error
-`curl -s -X POST -d '{}' -H 'Content-Type: application/json' http://localhost:8080/topjava/rest/admin/users --user admin@gmail.com:admin`
-`curl -s -X PUT -d '{"dateTime":"2015-05-30T07:00"}' -H 'Content-Type: application/json' http://localhost:8080/topjava/rest/profile/meals/100003 --user user@yandex.ru:password`
-
 -------------------
 ### Profile
 
@@ -96,3 +85,45 @@
 
 ### Management Restaurants
 
+#### get all restaurants
+`curl -X GET http://localhost:8080/voting/rest/admin/restaurants/ --user admin@gmail.com:admin`
+
+#### get restaurant
+`curl -X GET http://localhost:8080/voting/rest/admin/restaurants/100002 --user admin@gmail.com:admin`
+
+#### create restaurant
+`curl -X POST http://localhost:8080/voting/rest/admin/restaurants/ -H 'Content-Type: application/json;charset=UTF-8' -d '{"name": "New Pub"}' --user admin@gmail.com:admin`
+
+#### update restaurant
+`curl -X PUT http://localhost:8080/voting/rest/admin/restaurants/100006 -H 'Content-Type: application/json;charset=UTF-8' -d '{"id": 100006,"name": "Old Pub"}' --user admin@gmail.com:admin`
+
+#### delete restaurant
+`curl -X DELETE http://localhost:8080/voting/rest/admin/restaurants/100006 --user admin@gmail.com:admin`
+
+#### get all votes by restaurant
+`curl -X GET http://localhost:8080/voting/rest/admin/restaurants/100002/votes --user admin@gmail.com:admin`
+
+#### get all users who voted for restaurant by date
+`curl -X GET http://localhost:8080/voting/rest/admin/restaurants/100002/users/filter?date=2019-09-20 --user admin@gmail.com:admin`
+
+------------------------------
+
+### Management Items
+
+#### create item
+`curl -X POST http://localhost:8080/voting/rest/admin/restaurants/100002/items -H 'Content-Type: application/json;charset=UTF-8' -d '{"name": "beer","price": 300,"date": "2019-12-08"}' --user admin@gmail.com:admin`
+
+#### update item
+`curl -X PUT http://localhost:8080/voting/rest/admin/restaurants/100002/items/100008 -H 'Content-Type: application/json;charset=UTF-8' -d '{"id": 100008,"name": "bebebe","price": 30,"date": "2019-10-03"}' --user admin@gmail.com:admin`
+
+#### delete item
+`curl -X DELETE http://localhost:8080/voting/rest/admin/restaurants/items/100008 --user admin@gmail.com:admin`
+
+#### get item
+`curl -X GET http://localhost:8080/voting/rest/admin/restaurants/items/100002 --user admin@gmail.com:admin`
+
+#### get all items by restaurant
+`curl -X GET http://localhost:8080/voting/rest/admin/restaurants/100002/items --user admin@gmail.com:admin`
+
+#### get items by restaurant and date
+`curl -X GET http://localhost:8080/voting/rest/admin/restaurants/100002/items/filter?date=2019-09-20 --user admin@gmail.com:admin`

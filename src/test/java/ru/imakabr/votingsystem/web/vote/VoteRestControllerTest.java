@@ -52,31 +52,6 @@ public class VoteRestControllerTest extends AbstractControllerTest {
         }
     }
 
-//    @Test
-//    @Transactional(propagation = Propagation.NEVER)
-//    void createDuplicate() throws Exception {
-//        Restaurant restaurant = new Restaurant(TOKYO_CITY);
-//        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(JsonUtil.writeValue(restaurant))
-//                .with(userHttpBasic(USER)));
-//        if (checkTime()) {
-//            mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .content(JsonUtil.writeValue(restaurant))
-//                    .with(userHttpBasic(USER)))
-//                    .andDo(print())
-//                    .andExpect(status().isConflict())
-//                    .andExpect(errorType(VALIDATION_ERROR))
-//                    .andExpect(detailMessage(EXCEPTION_DUPLICATE_VOTE));
-//
-//        } else {
-//            action.andDo(print())
-//                    .andExpect(status().isUnprocessableEntity())
-//                    .andExpect(errorType(VOTING_ERROR));
-//        }
-//    }
-
     @Test
     void update() throws Exception {
         Restaurant restaurant = new Restaurant(TOKYO_CITY);
