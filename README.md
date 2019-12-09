@@ -1,4 +1,4 @@
-### curl samples (application deployed in application context `voting-system`).
+### curl samples (application deployed in application context `/voting`).
 > For windows use `Git Bash`
 
 -------------------
