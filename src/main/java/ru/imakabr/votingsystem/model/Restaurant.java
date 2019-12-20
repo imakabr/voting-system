@@ -27,18 +27,18 @@ public class Restaurant extends AbstractNamedEntity {
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     @BatchSize(size = 200)
     @JsonManagedReference
-    protected List<Item> items;
+    protected List<Meal> meals;
 
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     @JsonIgnore
     protected List<Vote> votes;
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setMeals(List<Meal> meals) {
+        this.meals = meals;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<Meal> getMeals() {
+        return meals;
     }
 
     public List<Vote> getVotes() {
@@ -56,9 +56,9 @@ public class Restaurant extends AbstractNamedEntity {
         super(restaurant.id, restaurant.name);
     }
 
-    public Restaurant(Integer id, String name, List<Item> items) {
+    public Restaurant(Integer id, String name, List<Meal> meals) {
         super(id, name);
-        this.items = items;
+        this.meals = meals;
     }
 
 

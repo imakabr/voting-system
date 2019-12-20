@@ -47,18 +47,18 @@ public class RestaurantService {
         checkNotFoundWithId(repository.save(restaurant), restaurant.getId());
     }
 
-    @Cacheable("allRestaurantsWithItemsByDate")
-    public List<Restaurant> getAllWithItemsByDate(LocalDate date) {
-        return repository.getAllWithItemsByDate(date);
+    @Cacheable("allRestaurantsWithMealsByDate")
+    public List<Restaurant> getAllWithMenuByDate(LocalDate date) {
+        return repository.getAllWithMenuByDate(date);
     }
 
-    public Restaurant getWithItems(int id) {
-        return checkNotFoundWithId(repository.getWithItems(id), id);
+    public Restaurant getWithMenu(int id) {
+        return checkNotFoundWithId(repository.getWithMenu(id), id);
     }
 
-    @Cacheable("oneRestaurantWithItemsByDate")
-    public Restaurant getWithItemsByDate(int id, LocalDate date) {
-        return checkNotFoundWithId(repository.getWithItemsByDate(id, date), id);
+    @Cacheable("oneRestaurantWithMealsByDate")
+    public Restaurant getWithMenuByDate(int id, LocalDate date) {
+        return checkNotFoundWithId(repository.getWithMenuByDate(id, date), id);
     }
 
 }

@@ -3,7 +3,7 @@ package ru.imakabr.votingsystem.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import ru.imakabr.votingsystem.ItemTestData;
+import ru.imakabr.votingsystem.MealTestData;
 import ru.imakabr.votingsystem.model.*;
 import ru.imakabr.votingsystem.util.exception.NotFoundException;
 
@@ -67,17 +67,17 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    void getWithItems() throws Exception {
-        Restaurant actual = restaurantService.getWithItems(TOKYO_CITY_ID);
+    void getWithMeals() throws Exception {
+        Restaurant actual = restaurantService.getWithMenu(TOKYO_CITY_ID);
         assertMatch(actual, TOKYO_CITY);
-        ItemTestData.assertMatch(actual.getItems(), ItemTestData.ITEMS_FOR_TOKYO_ALL);
+        MealTestData.assertMatch(actual.getMeals(), MealTestData.MEALS_FOR_TOKYO_ALL);
     }
 
     @Test
-    void getAllWithItemsByDate() {
-        List<Restaurant> actual = restaurantService.getAllWithItemsByDate(LocalDate.of(2019, 9, 20));
-        ItemTestData.assertMatch(actual.get(0).getItems(), ItemTestData.ITEMS_FOR_TOKYO_20_09);
-        ItemTestData.assertMatch(actual.get(1).getItems(), ItemTestData.ITEMS_FOR_KETCHUP_20_09);
+    void getAllWithMealsByDate() {
+        List<Restaurant> actual = restaurantService.getAllWithMenuByDate(LocalDate.of(2019, 9, 20));
+        MealTestData.assertMatch(actual.get(0).getMeals(), MealTestData.MEALS_FOR_TOKYO_2009);
+        MealTestData.assertMatch(actual.get(1).getMeals(), MealTestData.MEALS_FOR_KETCHUP_2009);
         assertMatch(actual, TOKYO_CITY, KETCH_UP);
     }
 

@@ -19,16 +19,16 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     @Query("DELETE FROM Restaurant r WHERE r.id=:id")
     int delete(@Param("id") int id);
 
-    @EntityGraph(attributePaths = {"items"}, type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = {"meals"}, type = EntityGraph.EntityGraphType.FETCH)
     @Query("SELECT r FROM Restaurant r WHERE r.id=?1 order by date_time desc")
-    Restaurant getWithItems(int id);
+    Restaurant getWithMenu(int id);
 
-    @EntityGraph(attributePaths = {"items"}, type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = {"meals"}, type = EntityGraph.EntityGraphType.FETCH)
     @Query("SELECT r FROM Restaurant r WHERE r.id=?1 AND date_time=?2")
-    Restaurant getWithItemsByDate(int id, LocalDate date);
+    Restaurant getWithMenuByDate(int id, LocalDate date);
 
-    @EntityGraph(attributePaths = {"items",}, type = EntityGraph.EntityGraphType.FETCH)
-    @Query("SELECT r FROM Restaurant r JOIN r.items i on i.date=:date")
-    List<Restaurant> getAllWithItemsByDate(@Param("date") LocalDate date);
+    @EntityGraph(attributePaths = {"meals",}, type = EntityGraph.EntityGraphType.FETCH)
+    @Query("SELECT r FROM Restaurant r JOIN r.meals i on i.date=:date")
+    List<Restaurant> getAllWithMenuByDate(@Param("date") LocalDate date);
 
 }

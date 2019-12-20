@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.imakabr.votingsystem.RestaurantTestData.*;
-import static ru.imakabr.votingsystem.ItemTestData.*;
+import static ru.imakabr.votingsystem.MealTestData.*;
 import static ru.imakabr.votingsystem.TestUtil.userHttpBasic;
 import static ru.imakabr.votingsystem.UserTestData.USER;
 import static ru.imakabr.votingsystem.TestUtil.readFromJson;
@@ -37,7 +37,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void getRestaurantWithItemsToday() throws Exception {
+    void getRestaurantWithMealsToday() throws Exception {
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/" + TOKYO_CITY_ID + "/today")
                 .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
@@ -45,11 +45,11 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
                 .andExpect(contentJson(TOKYO_CITY))
                 .andDo(print());
         Restaurant returned = readFromJson(action, Restaurant.class);
-        assertMatch(returned.getItems(), ITEMS_FOR_TOKYO_TODAY);
+        assertMatch(returned.getMeals(), MEALS_FOR_TOKYO_TODAY);
     }
 
     @Test
-    void getRestaurantWithItemsByDate() throws Exception {
+    void getRestaurantWithMealsByDate() throws Exception {
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/" + TOKYO_CITY_ID + "/by").param("date", "2019-09-20")
                 .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
@@ -57,7 +57,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
                 .andExpect(contentJson(TOKYO_CITY))
                 .andDo(print());
         Restaurant returned = readFromJson(action, Restaurant.class);
-        assertMatch(returned.getItems(), ITEMS_FOR_TOKYO_20_09);
+        assertMatch(returned.getMeals(), MEALS_FOR_TOKYO_2009);
     }
 
     @Test

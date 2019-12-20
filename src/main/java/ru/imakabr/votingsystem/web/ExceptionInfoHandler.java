@@ -28,7 +28,7 @@ public class ExceptionInfoHandler  {
     private static Logger log = LoggerFactory.getLogger(ExceptionInfoHandler.class);
 
     public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
-    public static final String EXCEPTION_DUPLICATE_ITEM = "You already have item with this name and date for this restaurant";
+    public static final String EXCEPTION_DUPLICATE_MEAL = "You already have meal with this name and date for this restaurant";
     public static final String EXCEPTION_DUPLICATE_RESTAURANT = "You already have restaurant with this name";
     public static final String EXCEPTION_DUPLICATE_VOTE = "You already have vote for this restaurant";
 
@@ -36,7 +36,7 @@ public class ExceptionInfoHandler  {
             "users_unique_email_idx", EXCEPTION_DUPLICATE_EMAIL,
             "restaurants_idx", EXCEPTION_DUPLICATE_RESTAURANT,
             "votes_idx", EXCEPTION_DUPLICATE_VOTE,
-            "items_idx", EXCEPTION_DUPLICATE_ITEM);
+            "meals_idx", EXCEPTION_DUPLICATE_MEAL);
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NoHandlerFoundException.class)

@@ -16,15 +16,15 @@ import java.time.LocalDate;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
-@Table(name = "items")
+@Table(name = "meals")
 @Access(AccessType.FIELD)
-public class Item {
+public class Meal {
 
     public static final int START_SEQ = 100000;
 
     @Id
-    @SequenceGenerator(name = "ITEM_SEQ", sequenceName = "ITEM_SEQ", allocationSize = 1, initialValue = START_SEQ)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ITEM_SEQ")
+    @SequenceGenerator(name = "MEAL_SEQ", sequenceName = "MEAL_SEQ", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEAL_SEQ")
     protected Integer id;
 
     @NotBlank
@@ -66,10 +66,10 @@ public class Item {
         return this.id == null;
     }
 
-    public Item() {
+    public Meal() {
     }
 
-    public Item(Integer id, Restaurant restaurant, String name, int price, LocalDate date) {
+    public Meal(Integer id, Restaurant restaurant, String name, int price, LocalDate date) {
         this.id = id;
         this.name = name;
         this.restaurant = restaurant;
@@ -77,12 +77,12 @@ public class Item {
         this.date = date;
     }
 
-    public Item(Item item) {
-        this.id = item.id;
-        this.name = item.name;
-        this.price = item.price;
-        this.date = item.date;
-        this.restaurant = item.restaurant;
+    public Meal(Meal meal) {
+        this.id = meal.id;
+        this.name = meal.name;
+        this.price = meal.price;
+        this.date = meal.date;
+        this.restaurant = meal.restaurant;
     }
 
     public String getName() {
@@ -117,7 +117,7 @@ public class Item {
         if (o == null || !getClass().equals(Hibernate.getClass(o))) {
             return false;
         }
-        Item that = (Item) o;
+        Meal that = (Meal) o;
         return id != null && id.equals(that.id);
     }
 
@@ -128,7 +128,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" +
+        return "Meal{" +
                 "id = " + id +
                 ", restaurant = " + restaurant +
                 ", name = " + name +

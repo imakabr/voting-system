@@ -28,27 +28,27 @@ public class RestaurantRestController {
     }
 
     @GetMapping("/{id}/today")
-    public Restaurant getRestaurantWithItemsToday(@PathVariable int id) {
+    public Restaurant getRestaurantWithMenuToday(@PathVariable int id) {
         LocalDate date = LocalDate.now();
-        return restaurantService.getWithItemsByDate(id, date);
+        return restaurantService.getWithMenuByDate(id, date);
     }
 
     @GetMapping("/{id}/by")
-    public Restaurant getRestaurantWithItemsByDate(@PathVariable int id, @RequestParam(required = false) LocalDate date) {
-        return restaurantService.getWithItemsByDate(id, date);
+    public Restaurant getRestaurantWithMenuByDate(@PathVariable int id, @RequestParam(required = false) LocalDate date) {
+        return restaurantService.getWithMenuByDate(id, date);
     }
 
     @GetMapping("/today")
-    public List<Restaurant> getAllTodayWithItems() {
+    public List<Restaurant> getAllTodayWithMenu() {
         log.info("getAll");
         LocalDate date = LocalDate.now();
-        return restaurantService.getAllWithItemsByDate(date);
+        return restaurantService.getAllWithMenuByDate(date);
     }
 
     @GetMapping("/by")
     public List<Restaurant> getAllByDate(@RequestParam(required = false) LocalDate date) {
         log.info("getAllByDate/filter");
-        return restaurantService.getAllWithItemsByDate(date);
+        return restaurantService.getAllWithMenuByDate(date);
     }
 
 }

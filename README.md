@@ -19,19 +19,19 @@
 ------------------
 ### Menu
 
-#### get all restaurants with items today
+#### get all restaurants with menu today
 `curl -X GET http://localhost:8080/voting/rest/restaurants/today --user user@yandex.ru:password`
 
-#### get all restaurants with items by date
+#### get all restaurants with menu by date
 `curl -X GET 'http://localhost:8080/voting/rest/restaurants/by?date=2019-09-21' --user user@yandex.ru:password`
 
 #### get list of restaurants
 `curl -X GET http://localhost:8080/voting/rest/restaurants/ --user user@yandex.ru:password`
 
-#### get one restaurant with items today
+#### get one restaurant with menu today
 `curl -X GET http://localhost:8080/voting/rest/restaurants/100002/today --user user@yandex.ru:password`
 
-#### get one restaurant with items by date
+#### get one restaurant with menu by date
 `curl -X GET 'http://localhost:8080/voting/rest/restaurants/100003/by?date=2019-09-21' --user user@yandex.ru:password`
 
 ----------------
@@ -108,22 +108,22 @@
 
 ------------------------------
 
-### Management Items
+### Management Meals
 
-#### create item
-`curl -X POST http://localhost:8080/voting/rest/admin/restaurants/100002/items -H 'Content-Type: application/json;charset=UTF-8' -d '{"name": "beer","price": 300,"date": "2019-12-08"}' --user admin@gmail.com:admin`
+#### create meal
+`curl -X POST http://localhost:8080/voting/rest/admin/restaurants/100002/meals -H 'Content-Type: application/json;charset=UTF-8' -d '{"name": "beer","price": 300,"date": "2019-12-08"}' --user admin@gmail.com:admin`
 
-#### update item
-`curl -X PUT http://localhost:8080/voting/rest/admin/restaurants/100002/items/100008 -H 'Content-Type: application/json;charset=UTF-8' -d '{"id": 100008,"name": "bebebe","price": 30,"date": "2019-10-03"}' --user admin@gmail.com:admin`
+#### update meal
+`curl -X PUT http://localhost:8080/voting/rest/admin/restaurants/100002/meals/100008 -H 'Content-Type: application/json;charset=UTF-8' -d '{"id": 100008,"name": "bebebe","price": 30,"date": "2019-10-03"}' --user admin@gmail.com:admin`
 
-#### delete item
-`curl -X DELETE http://localhost:8080/voting/rest/admin/restaurants/items/100008 --user admin@gmail.com:admin`
+#### delete meal
+`curl -X DELETE http://localhost:8080/voting/rest/admin/restaurants/meals/100008 --user admin@gmail.com:admin`
 
-#### get item
-`curl -X GET http://localhost:8080/voting/rest/admin/restaurants/items/100002 --user admin@gmail.com:admin`
+#### get meal
+`curl -X GET http://localhost:8080/voting/rest/admin/restaurants/meals/100002 --user admin@gmail.com:admin`
 
-#### get all items by restaurant
-`curl -X GET http://localhost:8080/voting/rest/admin/restaurants/100002/items --user admin@gmail.com:admin`
+#### get all meals by restaurant
+`curl -X GET http://localhost:8080/voting/rest/admin/restaurants/100002/meals --user admin@gmail.com:admin`
 
-#### get items by restaurant and date
-`curl -X GET http://localhost:8080/voting/rest/admin/restaurants/100002/items/filter?date=2019-09-20 --user admin@gmail.com:admin`
+#### get meals by restaurant and date
+`curl -X GET http://localhost:8080/voting/rest/admin/restaurants/100002/meals/filter?date=2019-09-20 --user admin@gmail.com:admin`

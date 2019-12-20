@@ -64,8 +64,8 @@ abstract public class AbstractControllerTest {
 
     @BeforeEach
     void setUp() {
-        cacheManager.getCache("allRestaurantsWithItemsByDate").clear();
-        cacheManager.getCache("oneRestaurantWithItemsByDate").clear();
+        cacheManager.getCache("allRestaurantsWithMealsByDate").clear();
+        cacheManager.getCache("oneRestaurantWithMealsByDate").clear();
         Session s = (Session) em.getDelegate();
         SessionFactory sf = s.getSessionFactory();
         sf.getCache().evictAllRegions();

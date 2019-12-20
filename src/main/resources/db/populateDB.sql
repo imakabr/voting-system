@@ -5,13 +5,13 @@ FROM votes;
 DELETE
 FROM users;
 DELETE
-FROM ITEMS;
+FROM meals;
 DELETE
 FROM RESTAURANTS;
 
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 ALTER SEQUENCE VOTE_SEQ RESTART WITH 100000;
-ALTER SEQUENCE ITEM_SEQ RESTART WITH 100000;
+ALTER SEQUENCE MEAL_SEQ RESTART WITH 100000;
 
 INSERT INTO users (name, email, password)
 VALUES ('User', 'user@yandex.ru', '{noop}password'),
@@ -28,7 +28,7 @@ VALUES ('TOKYO-CITY'), /* 100002 */
        ('ХАЧАПУРИ И ВИНО'), /* 100004 */
        ('KWAKINN'); /* 100005 */
 
-INSERT INTO ITEMS (rest_id, name, price, date_time)
+INSERT INTO meals (rest_id, name, price, date_time)
 VALUES (100002, 'beer', 150, '2019-09-20'),
        (100002, 'wok', 200, '2019-09-20'),
        (100003, 'beer', 300, '2019-09-20'),

@@ -3,7 +3,7 @@ package ru.imakabr.votingsystem.util;
 
 import org.slf4j.Logger;
 import ru.imakabr.votingsystem.model.AbstractBaseEntity;
-import ru.imakabr.votingsystem.model.Item;
+import ru.imakabr.votingsystem.model.Meal;
 import ru.imakabr.votingsystem.util.exception.ErrorType;
 import ru.imakabr.votingsystem.util.exception.NotFoundException;
 import ru.imakabr.votingsystem.util.exception.TimeVoteLimitException;
@@ -70,11 +70,11 @@ public class ValidationUtil {
         }
     }
 
-    public static void assureItemIdConsistent(Item item, int id) {
-        if (item.isNew()) {
-            item.setId(id);
-        } else if (item.getId() != id) {
-            throw new IllegalArgumentException(item + " must be with id=" + id);
+    public static void assureMealIdConsistent(Meal meal, int id) {
+        if (meal.isNew()) {
+            meal.setId(id);
+        } else if (meal.getId() != id) {
+            throw new IllegalArgumentException(meal + " must be with id=" + id);
         }
     }
 

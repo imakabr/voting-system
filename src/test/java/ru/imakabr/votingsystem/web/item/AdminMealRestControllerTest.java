@@ -7,8 +7,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.imakabr.votingsystem.model.Item;
-import ru.imakabr.votingsystem.service.ItemService;
+import ru.imakabr.votingsystem.model.Meal;
+import ru.imakabr.votingsystem.service.MealService;
 import ru.imakabr.votingsystem.web.AbstractControllerTest;
 import ru.imakabr.votingsystem.web.json.JsonUtil;
 
@@ -17,42 +17,42 @@ import java.time.LocalDate;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.imakabr.votingsystem.ItemTestData.*;
-import static ru.imakabr.votingsystem.ItemTestData.assertMatch;
+import static ru.imakabr.votingsystem.MealTestData.*;
+import static ru.imakabr.votingsystem.MealTestData.assertMatch;
 import static ru.imakabr.votingsystem.RestaurantTestData.*;
 import static ru.imakabr.votingsystem.TestUtil.readFromJson;
 import static ru.imakabr.votingsystem.TestUtil.userHttpBasic;
 import static ru.imakabr.votingsystem.UserTestData.*;
 import static ru.imakabr.votingsystem.util.exception.ErrorType.DATA_NOT_FOUND;
 import static ru.imakabr.votingsystem.util.exception.ErrorType.VALIDATION_ERROR;
-import static ru.imakabr.votingsystem.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_ITEM;
-import static ru.imakabr.votingsystem.web.item.AdminItemRestController.REST_URL;
+import static ru.imakabr.votingsystem.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_MEAL;
+import static ru.imakabr.votingsystem.web.item.AdminMealRestController.REST_URL;
 
-public class AdminItemRestControllerTest extends AbstractControllerTest {
+public class AdminMealRestControllerTest extends AbstractControllerTest {
 
     @Autowired
-    private ItemService itemService;
+    private MealService mealService;
 
     @Test
     void getUnAuth() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/items/" + START_ITEM_ID))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/meals/" + START_MEAL_ID))
                 .andDo(print())
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
     void get() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/items/" + START_ITEM_ID)
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/meals/" + START_MEAL_ID)
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(ITEM0))
+                .andExpect(contentJson(MEAL_0))
                 .andDo(print());
     }
 
     @Test
     void getInvalid() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/items/" + 1000)
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/meals/" + 1000)
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
@@ -61,22 +61,22 @@ public class AdminItemRestControllerTest extends AbstractControllerTest {
 
     @Test
     void create() throws Exception {
-        Item expected = new Item(NEW_ITEM);
-        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "/" + TOKYO_CITY_ID + "/items")
+        Meal expected = new Meal(NEW_MEAL);
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "/" + TOKYO_CITY_ID + "/meals")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(expected))
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isCreated());
-        Item returned = readFromJson(action, Item.class);
+        Meal returned = readFromJson(action, Meal.class);
         expected.setId(returned.getId());
         assertMatch(returned, expected);
     }
 
     @Test
     void createForbiddenAuth() throws Exception {
-        Item expected = new Item(NEW_ITEM);
-        mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "/" + TOKYO_CITY_ID + "/items")
+        Meal expected = new Meal(NEW_MEAL);
+        mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "/" + TOKYO_CITY_ID + "/meals")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(expected))
                 .with(userHttpBasic(USER)))
@@ -87,36 +87,36 @@ public class AdminItemRestControllerTest extends AbstractControllerTest {
     @Test
     @Transactional(propagation = Propagation.NEVER)
     void createDuplicate() throws Exception {
-        Item updated = new Item(ITEM0);
+        Meal updated = new Meal(MEAL_0);
         updated.setId(null);
-        mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "/" + TOKYO_CITY_ID + "/items")
+        mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "/" + TOKYO_CITY_ID + "/meals")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
                 .content(JsonUtil.writeValue(updated)))
                 .andDo(print())
                 .andExpect(status().isConflict())
                 .andExpect(errorType(VALIDATION_ERROR))
-                .andExpect(detailMessage(EXCEPTION_DUPLICATE_ITEM));
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_MEAL));
     }
 
     @Test
     void update() throws Exception {
-        Item updated = new Item(ITEM0);
+        Meal updated = new Meal(MEAL_0);
         updated.setName("wine");
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + "/" + TOKYO_CITY_ID + "/items/" + START_ITEM_ID)
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + "/" + TOKYO_CITY_ID + "/meals/" + START_MEAL_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated))
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isNoContent());
-        assertMatch(itemService.get(START_ITEM_ID), updated);
+        assertMatch(mealService.get(START_MEAL_ID), updated);
     }
 
     @Test
     void updateInvalid() throws Exception {
-        Item updated = new Item(ITEM0);
+        Meal updated = new Meal(MEAL_0);
         updated.setName(null);
 
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + "/" + TOKYO_CITY_ID + "/items/" + START_ITEM_ID)
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + "/" + TOKYO_CITY_ID + "/meals/" + START_MEAL_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
                 .content(JsonUtil.writeValue(updated)))
@@ -128,30 +128,30 @@ public class AdminItemRestControllerTest extends AbstractControllerTest {
     @Test
     @Transactional(propagation = Propagation.NEVER)
     void updateDuplicate() throws Exception {
-        Item updated = new Item(ITEM0);
+        Meal updated = new Meal(MEAL_0);
         updated.setDate(LocalDate.of(2019, 9, 21));
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + "/" + TOKYO_CITY_ID + "/items/" + START_ITEM_ID)
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + "/" + TOKYO_CITY_ID + "/meals/" + START_MEAL_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated))
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isConflict())
                 .andExpect(errorType(VALIDATION_ERROR))
-                .andExpect(detailMessage(EXCEPTION_DUPLICATE_ITEM));
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_MEAL));
     }
 
     @Test
     void delete() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + "/items/" + START_ITEM_ID)
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + "/meals/" + START_MEAL_ID)
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        assertMatch(itemService.getAll(), ITEM1, ITEM2, ITEM3, ITEM4, ITEM5, ITEM6, ITEM7);
+        assertMatch(mealService.getAll(), MEAL_1, MEAL_2, MEAL_3, MEAL_4, MEAL_5, MEAL_6, MEAL_7);
     }
 
     @Test
     void deleteInvalid() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + "/items/" + 10000)
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + "/meals/" + 10000)
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
@@ -160,7 +160,7 @@ public class AdminItemRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAllByRestaurantId() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/" + TOKYO_CITY_ID  + "/items")
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/" + TOKYO_CITY_ID  + "/meals")
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

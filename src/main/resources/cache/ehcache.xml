@@ -21,6 +21,6 @@
         <heap>500</heap>
     </cache-template>
 
-    <cache alias="allRestaurantsWithItemsByDate" uses-template="nonExpiryCache"/>
-    <cache alias="oneRestaurantWithItemsByDate" uses-template="nonExpiryCache"/>
+    <cache alias="allRestaurantsWithMealsByDate" uses-template="nonExpiryCache"/>
+    <cache alias="oneRestaurantWithMealsByDate" uses-template="nonExpiryCache"/>
 </config>

@@ -8,9 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.imakabr.votingsystem.model.Item;
+import ru.imakabr.votingsystem.model.Meal;
 import ru.imakabr.votingsystem.model.Restaurant;
-import ru.imakabr.votingsystem.service.ItemService;
+import ru.imakabr.votingsystem.service.MealService;
 import ru.imakabr.votingsystem.service.RestaurantService;
 
 
@@ -19,55 +19,55 @@ import java.net.URI;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping(value = AdminItemRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminItemRestController {
+@RequestMapping(value = AdminMealRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class AdminMealRestController {
 
     public static final String REST_URL = "/rest/admin/restaurants";
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    protected ItemService itemService;
+    protected MealService mealService;
 
     @Autowired
     protected RestaurantService restaurantService;
 
-    @GetMapping("items/{id}")
-    public Item get(@PathVariable int id) {
-        return itemService.get(id);
+    @GetMapping("meals/{id}")
+    public Meal get(@PathVariable int id) {
+        return mealService.get(id);
     }
 
-    @PostMapping(value = "/{restaurantId}/items", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Item> create(@Valid @RequestBody Item item, @PathVariable int restaurantId) {
-        log.info("create {}", item);
-        Item created = itemService.create(item, restaurantId);
+    @PostMapping(value = "/{restaurantId}/meals", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Meal> create(@Valid @RequestBody Meal meal, @PathVariable int restaurantId) {
+        log.info("create {}", meal);
+        Meal created = mealService.create(meal, restaurantId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @PutMapping(value = "/{restaurantId}/items/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{restaurantId}/meals/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody Item item, @PathVariable int restaurantId, @PathVariable int id) {
-        log.info("update {}", item);
-        itemService.update(item, restaurantId, id);
+    public void update(@Valid @RequestBody Meal meal, @PathVariable int restaurantId, @PathVariable int id) {
+        log.info("update {}", meal);
+        mealService.update(meal, restaurantId, id);
     }
 
-    @DeleteMapping("items/{id}")
+    @DeleteMapping("meals/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
-        log.info("delete item = " + id);
-        itemService.delete(id);
+        log.info("delete meal = " + id);
+        mealService.delete(id);
     }
 
-    @GetMapping("/{id}/items")
+    @GetMapping("/{id}/meals")
     public Restaurant getAllByRestaurantId(@PathVariable int id) {
-        return restaurantService.getWithItems(id);
+        return restaurantService.getWithMenu(id);
     }
 
-    @GetMapping("/{id}/items/filter")
+    @GetMapping("/{id}/meals/filter")
     public Restaurant getAllByRestaurantIdAndDate(@PathVariable int id, @RequestParam(required = false) LocalDate date) {
-        return restaurantService.getWithItemsByDate(id, date);
+        return restaurantService.getWithMenuByDate(id, date);
     }
 
 }

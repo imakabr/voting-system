@@ -62,7 +62,7 @@ public class AdminRestaurantRestController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
-        log.info("delete item = " + id);
+        log.info("delete meal = " + id);
         restaurantService.delete(id);
     }
 

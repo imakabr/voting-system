@@ -4,73 +4,73 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import ru.imakabr.votingsystem.RestaurantTestData;
-import ru.imakabr.votingsystem.model.Item;
+import ru.imakabr.votingsystem.model.Meal;
 import ru.imakabr.votingsystem.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static ru.imakabr.votingsystem.ItemTestData.*;
+import static ru.imakabr.votingsystem.MealTestData.*;
 import static ru.imakabr.votingsystem.RestaurantTestData.TOKYO_CITY;
 import static ru.imakabr.votingsystem.RestaurantTestData.TOKYO_CITY_ID;
 
-public class ItemServiceTest extends AbstractServiceTest {
+public class MealServiceTest extends AbstractServiceTest {
 
     @Autowired
-    protected ItemService itemService;
+    protected MealService mealService;
 
     @Test
     void create() throws Exception {
-        Item newItem = new Item(null, RestaurantTestData.TOKYO_CITY, "vodka", 700, LocalDate.of(2019, 9, 22));
-        Item created = itemService.create(newItem, TOKYO_CITY_ID);
-        newItem.setId(created.getId());
-        assertMatch(created, newItem);
+        Meal newMeal = new Meal(null, RestaurantTestData.TOKYO_CITY, "vodka", 700, LocalDate.of(2019, 9, 22));
+        Meal created = mealService.create(newMeal, TOKYO_CITY_ID);
+        newMeal.setId(created.getId());
+        assertMatch(created, newMeal);
     }
 
     @Test
     void duplicateCreate() throws Exception {
         assertThrows(DataAccessException.class, () ->
-                itemService.create(new Item(null, TOKYO_CITY, "wok", 200, LocalDate.of(2019, 9, 20)), TOKYO_CITY_ID));
+                mealService.create(new Meal(null, TOKYO_CITY, "wok", 200, LocalDate.of(2019, 9, 20)), TOKYO_CITY_ID));
     }
 
     @Test
     void update() throws Exception {
-        Item updated = new Item(ITEM0);
+        Meal updated = new Meal(MEAL_0);
         updated.setPrice(200);
-        itemService.update(updated, TOKYO_CITY_ID, updated.getId());
+        mealService.update(updated, TOKYO_CITY_ID, updated.getId());
         Integer id = updated.getId();
-        assertMatch(itemService.get(id), updated);
+        assertMatch(mealService.get(id), updated);
     }
 
     @Test
     void get() throws Exception {
-        Item actual = itemService.get(ITEM0.getId());
-        assertMatch(actual, ITEM0);
+        Meal actual = mealService.get(MEAL_0.getId());
+        assertMatch(actual, MEAL_0);
     }
 
     @Test
     void getNotFound() throws Exception {
         assertThrows(NotFoundException.class, () ->
-                itemService.get(1));
+                mealService.get(1));
     }
 
     @Test
     void delete() throws Exception {
-        itemService.delete(ITEM0.getId());
-        assertMatch(itemService.getAll(), ITEM1, ITEM2, ITEM3, ITEM4, ITEM5, ITEM6, ITEM7);
+        mealService.delete(MEAL_0.getId());
+        assertMatch(mealService.getAll(), MEAL_1, MEAL_2, MEAL_3, MEAL_4, MEAL_5, MEAL_6, MEAL_7);
     }
 
     @Test
     void deletedNotFound() throws Exception {
         assertThrows(NotFoundException.class, () ->
-                itemService.delete(1111));
+                mealService.delete(1111));
     }
 
     @Test
     void getAll() throws Exception {
-        List<Item> all = itemService.getAll();
-        assertMatch(all, ALL_ITEMS);
+        List<Meal> all = mealService.getAll();
+        assertMatch(all, ALL_MEALS);
     }
 
 
