@@ -33,7 +33,7 @@ public class RestaurantRestController {
         return restaurantService.getWithItemsByDate(id, date);
     }
 
-    @GetMapping("/{id}/filter")
+    @GetMapping("/{id}/by")
     public Restaurant getRestaurantWithItemsByDate(@PathVariable int id, @RequestParam(required = false) LocalDate date) {
         return restaurantService.getWithItemsByDate(id, date);
     }
@@ -45,7 +45,7 @@ public class RestaurantRestController {
         return restaurantService.getAllWithItemsByDate(date);
     }
 
-    @GetMapping("/filter")
+    @GetMapping("/by")
     public List<Restaurant> getAllByDate(@RequestParam(required = false) LocalDate date) {
         log.info("getAllByDate/filter");
         return restaurantService.getAllWithItemsByDate(date);
