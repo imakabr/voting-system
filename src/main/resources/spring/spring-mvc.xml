@@ -21,13 +21,8 @@
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper" ref="objectMapper"/>
             </bean>
-            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
         </mvc:message-converters>
     </mvc:annotation-driven>
-
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-          p:prefix="/WEB-INF/"
-          p:suffix=".html"/>
 
     <context:component-scan base-package="ru.imakabr.**.web"/>
 
