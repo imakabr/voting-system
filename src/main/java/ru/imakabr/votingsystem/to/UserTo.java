@@ -9,12 +9,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-public class UserTo extends AbstractNamedEntity implements Serializable {
+public class UserTo  implements Serializable {
     private static final long serialVersionUID = 1L;
 
-//    @NotBlank
-//    @Size(min = 2, max = 100)
-//    private String name;
+    private Integer id;
+
+    @NotBlank
+    @Size(min = 2, max = 100)
+    private String name;
 
     @Email
     @NotBlank
@@ -29,8 +31,8 @@ public class UserTo extends AbstractNamedEntity implements Serializable {
     }
 
     public UserTo(Integer id, String name, String email, String password) {
-        super(id, name);
-//        this.name = name;
+        this.id = id;
+        this.name = name;
         this.email = email;
         this.password = password;
     }
@@ -47,8 +49,16 @@ public class UserTo extends AbstractNamedEntity implements Serializable {
         return name;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmail() {
