@@ -21,7 +21,7 @@ public class RestaurantRestController {
     @Autowired
     protected RestaurantService restaurantService;
 
-    @GetMapping("/list")
+    @GetMapping
     public List<Restaurant> getAll() {
         log.info("getList");
         return restaurantService.getAll();

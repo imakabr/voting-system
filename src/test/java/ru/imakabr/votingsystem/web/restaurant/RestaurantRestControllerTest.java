@@ -28,7 +28,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getList() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/list")
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL)
                 .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

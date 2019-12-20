@@ -26,7 +26,7 @@
 `curl -X GET 'http://localhost:8080/voting/rest/restaurants/by?date=2019-09-21' --user user@yandex.ru:password`
 
 #### get list of restaurants
-`curl -X GET http://localhost:8080/voting/rest/restaurants/list --user user@yandex.ru:password`
+`curl -X GET http://localhost:8080/voting/rest/restaurants/ --user user@yandex.ru:password`
 
 #### get one restaurant with items today
 `curl -X GET http://localhost:8080/voting/rest/restaurants/100002/today --user user@yandex.ru:password`
